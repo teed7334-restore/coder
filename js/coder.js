@@ -14,6 +14,18 @@ $(document).ready(function() {
         $('pre[data-id=display-get2set]').text(getToSet);
         $('pre[data-id=display-model]').text(model);
     });
+
+    $('button[data-id=reset]').click(function() {
+        var namespaces = $('input[data-id=namespaces]').val('Linux/Groups');
+        var className = $('input[data-id=class]').val('Users');
+        var args = $('input[data-id=args]').val('id:使用者id:int,name:使用者名稱:string,account:使用者帳號:string,password:使用者密碼:string');
+
+        $('pre[data-id=display-html]').text('');
+        $('pre[data-id=display-class]').text('');
+        $('pre[data-id=display-from2object]').text('');
+        $('pre[data-id=display-get2set]').text('');
+        $('pre[data-id=display-model]').text('');
+    });
 });
 
 /**
@@ -79,26 +91,9 @@ function generatorClass(args, className, namespaces) {
     classCode += '\tconst RULES = array(\n';
     for(i = 0; i < num; i++) {
         name = $.trim(args[i]).split(':')[0];
-        classCode += "\t\t'" + name + "' => '',\n";
+        classCode += "\t\t" + name + " => '',\n";
     }
     classCode += '\t);\n';
-
-    /** 生成驗証失敗訊息內容 **/
-    classCode += '\n';
-    for(i = 0; i < num; i++) {
-
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        type = $.trim(args[i]).split(':')[2];
-        bigFirstName = args[i].split(':')[0].replace(/^\S/g,function(s){return s.toUpperCase();});
-
-        classCode += '\t/**\n';
-        classCode += '\t * ' + description + '欄位驗証失敗訊息\n';
-        classCode += '\t * @var string\n';
-        classCode += '\t**/\n';
-        classCode += "\tconst VALIDATE_" + name.toUpperCase() + "_MESSAGE = '';\n";
-        classCode += '\n';
-    }
 
     /** 生成驗証函式 **/
     classCode += '\n';
@@ -227,6 +222,10 @@ function generatorFormToObject(args, className, namespaces) {
 function generatorGetToSet(args, className, namespaces) {
 
     /** 初始化參數 **/
+    /**
+     * [num description]
+     * @var [type]
+     */
     var num = args.length;
     var classCode = '';
     var classVar = className.replace(/^\S/g,function(s){return s.toLowerCase();});

@@ -3,14 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <title>碼農 v0.1</title>
-<link href="bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container-fluid">
+<div class="container container-fluid">
+    <div class="page-header">
+        <h1>碼農 <small>v0.1</small></h1>
+    </div>
     <div class="row">
         <div class="form-group">
             <label for="namespaces">Namespaces</label>
-            <input class="form-control" type="text" id="namespaces" data-id="namespaces" value="Company\Groups" />
+            <input class="form-control" type="text" id="namespaces" data-id="namespaces" value="Linux\Groups" />
         </div>
         <div class="form-group">
             <label for="class">Class</label>
@@ -21,7 +25,12 @@
             <input class="form-control" type="text" id="args" data-id="args" value="id:使用者id:int,name:使用者名稱:string,account:使用者帳號:string,password:使用者密碼:string" />
         </div>
         <div class="form-group">
-            <button class="btn btn-success" data-id="go" type="button">送出</button>
+            <button class="btn btn-success" data-id="go" type="button">
+                <i class="fa fa-clone"> 送出</i>
+            </button>
+            <button class="btn btn-danger" data-id="reset" type="button">
+                <i class="fa fa-close"> 重置</i>
+            </button>
         </div>
     </div>
     <div class="row">
@@ -50,8 +59,8 @@
         </pre>
     </div>
 </div>
-<script src="jquery-3.1.1.min.js"></script>
-<script src="bootstrap.min.js"></script>
-<script src="coder.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/coder.js"></script>
 </body>
 </html>
