@@ -1,13 +1,13 @@
 $(document).ready(function() {
     $('button[data-id=go]').click(function() {
-        var namespaces = $('input[data-id=namespaces]').val();
+        var namespace = $('input[data-id=namespace]').val();
         var className = $('input[data-id=class]').val();
         var args = $('input[data-id=args]').val().split(',');
         var html = generatorHTML(args, className);
-        var classCode = generatorClass(args, className, namespaces);
-        var formToObject = generatorFormToObject(args, className, namespaces);
-        var getToSet = generatorGetToSet(args, className, namespaces);
-        var model = generatorModel(args, className, namespaces);
+        var classCode = generatorClass(args, className, namespace);
+        var formToObject = generatorFormToObject(args, className, namespace);
+        var getToSet = generatorGetToSet(args, className, namespace);
+        var model = generatorModel(args, className, namespace);
         $('pre[data-id=display-html]').text(html);
         $('pre[data-id=display-class]').text(classCode);
         $('pre[data-id=display-from2object]').text(formToObject);
@@ -16,7 +16,7 @@ $(document).ready(function() {
     });
 
     $('button[data-id=reset]').click(function() {
-        var namespaces = $('input[data-id=namespaces]').val('Linux/Groups');
+        var namespace = $('input[data-id=namespace]').val('Linux/Groups');
         var className = $('input[data-id=class]').val('Users');
         var args = $('input[data-id=args]').val('id:使用者id:int,name:使用者名稱:string,account:使用者帳號:string,password:使用者密碼:string');
 
@@ -50,7 +50,7 @@ function generatorHTML(args, className) {
         bigFirstName = args[i].split(':')[0].replace(/^\S/g,function(s){return s.toUpperCase();});
         html += '\n';
         html += '\t<' + '?php /** ' + description + ' **/ ?' + '>\n';
-        html += '\t<input type="text" name="' + name + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '();" />\n';
+        html += '\t<input type="text" name="' + name + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
     }
 
     /** 生成檔尾設定 **/
@@ -63,10 +63,10 @@ function generatorHTML(args, className) {
  * 生成PHP Class
  * @param  array  args        要用到的變數
  * @param  string className   物件名
- * @param  string namespaces  命名空間
+ * @param  string namespace   命名空間
  * @return string             PHP程式碼
  */
-function generatorClass(args, className, namespaces) {
+function generatorClass(args, className, namespace) {
 
     /** 初始化參數 **/
     var num = args.length;
@@ -76,7 +76,7 @@ function generatorClass(args, className, namespaces) {
 
     /** 生成標頭設定 **/
     classCode += '<' + '?php' + '\n';
-    classCode += 'namespaces ' + namespaces + ';\n';
+    classCode += 'namespace ' + namespace + ';\n';
     classCode += '\n';
     classCode += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     classCode += '\n';
@@ -91,26 +91,9 @@ function generatorClass(args, className, namespaces) {
     classCode += '\tconst RULES = array(\n';
     for(i = 0; i < num; i++) {
         name = $.trim(args[i]).split(':')[0];
-        classCode += "\t\t'" + name + "' => '',\n";
+        classCode += "\t\t" + name + " => '',\n";
     }
     classCode += '\t);\n';
-
-    /** 生成驗証失敗訊息內容 **/
-    classCode += '\n';
-    for(i = 0; i < num; i++) {
-
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        type = $.trim(args[i]).split(':')[2];
-        bigFirstName = args[i].split(':')[0].replace(/^\S/g,function(s){return s.toUpperCase();});
-
-        classCode += '\t/**\n';
-        classCode += '\t * ' + description + '欄位驗証失敗訊息\n';
-        classCode += '\t * @var string\n';
-        classCode += '\t**/\n';
-        classCode += "\tconst VALIDATE_" + name.toUpperCase() + "_MESSAGE = '';\n";
-        classCode += '\n';
-    }
 
     /** 生成驗証函式 **/
     classCode += '\n';
@@ -128,6 +111,23 @@ function generatorClass(args, className, namespaces) {
     classCode += '\t\t}\n';
     classCode += '\t\treturn $failure;\n';
     classCode += '\t}\n';
+
+    /** 生成驗証失敗訊息內容 **/
+    classCode += '\n';
+    for(i = 0; i < num; i++) {
+
+        name = $.trim(args[i]).split(':')[0];
+        description = $.trim(args[i]).split(':')[1];
+        type = $.trim(args[i]).split(':')[2];
+        bigFirstName = args[i].split(':')[0].replace(/^\S/g,function(s){return s.toUpperCase();});
+
+        classCode += '\t/**\n';
+        classCode += '\t * ' + description + '欄位驗証失敗訊息\n';
+        classCode += '\t * @var string\n';
+        classCode += '\t**/\n';
+        classCode += "\tconst VALIDATE_" + name.toUpperCase() + "_MESSAGE = '';\n";
+        classCode += '\n';
+    }
 
     for(i = 0; i < num; i++) {
 
@@ -180,10 +180,10 @@ function generatorClass(args, className, namespaces) {
  * 生成表單資料注入物件容器程式
  * @param  array  args        要用到的變數
  * @param  string className   物件名
- * @param  string namespaces  命名空間
+ * @param  string namespace  命名空間
  * @return string             PHP程式碼
  */
-function generatorFormToObject(args, className, namespaces) {
+function generatorFormToObject(args, className, namespace) {
 
     /** 初始化參數 **/
     var num = args.length;
@@ -233,10 +233,10 @@ function generatorFormToObject(args, className, namespaces) {
  * 生成物件與物件間，GET注入容器程式
  * @param  array  args        要用到的變數
  * @param  string className   物件名
- * @param  string namespaces  命名空間
+ * @param  string namespace  命名空間
  * @return string             PHP程式碼
  */
-function generatorGetToSet(args, className, namespaces) {
+function generatorGetToSet(args, className, namespace) {
 
     /** 初始化參數 **/
     /**
@@ -265,7 +265,7 @@ function generatorGetToSet(args, className, namespaces) {
     return classCode;
 }
 
-function generatorModel(args, className, namespaces) {
+function generatorModel(args, className, namespace) {
 
     /** 初始化參數 **/
     var num = args.length;
@@ -318,7 +318,7 @@ function generatorModel(args, className, namespaces) {
     classCode += '\t * 透過主鍵取得資料\n';
     classCode += '\t * @return object ' + className + '單筆資料\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function getList(' + namespaces + '\\' + className + ' $' + className + ') {\n';
+    classCode += '\tpublic function getList(' + namespace + '\\' + className + ' $' + className + ') {\n';
     classCode += "\t\t$this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     classCode += "\t\treturn $this->db->get(self::TABLE)->result(); \n";
     classCode += '\t}\n';
@@ -329,7 +329,7 @@ function generatorModel(args, className, namespaces) {
     classCode += '\t * 插入一筆資料\n';
     classCode += '\t * @return int ' + className + '影響的資料筆數\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function insert(' + namespaces + '\\' + className + ' $' + className + ') : int {\n';
+    classCode += '\tpublic function insert(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
     classCode += '\t\t$this->db->insert(self::TABLE, $' + className + ');\n';
     classCode += "\t\treturn $this->db->affected_rows(); \n";
     classCode += '\t}\n';
@@ -340,7 +340,7 @@ function generatorModel(args, className, namespaces) {
     classCode += '\t * 透過主鍵修改資料\n';
     classCode += '\t * @return int ' + className + '影響的資料筆數\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function update(' + namespaces + '\\' + className + ' $' + className + ') : int {\n';
+    classCode += '\tpublic function update(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
     classCode += "\t\t$this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     classCode += "\t\t$this->db->update(self::TABLE, $" + className + "); \n";
     classCode += "\t\treturn $this->db->affected_rows(); \n";
@@ -352,7 +352,7 @@ function generatorModel(args, className, namespaces) {
     classCode += '\t * 透過主鍵刪除資料\n';
     classCode += '\t * @return int ' + className + '影響的資料筆數\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function remove(' + namespaces + '\\' + className + ' $' + className + ') : int {\n';
+    classCode += '\tpublic function remove(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
     classCode += "\t\t$this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     classCode += "\t\t$this->db->delete(self::TABLE); \n";
     classCode += "\t\treturn $this->db->affected_rows(); \n";
