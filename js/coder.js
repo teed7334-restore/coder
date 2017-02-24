@@ -91,7 +91,7 @@ function generatorClass(args, className, namespace) {
     classCode += '\tconst RULES = array(\n';
     for(i = 0; i < num; i++) {
         name = $.trim(args[i]).split(':')[0];
-        classCode += "\t\t" + name + " => '',\n";
+        classCode += "\t\t'" + name + "' => '',\n";
     }
     classCode += '\t);\n';
 
