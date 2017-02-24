@@ -91,9 +91,26 @@ function generatorClass(args, className, namespaces) {
     classCode += '\tconst RULES = array(\n';
     for(i = 0; i < num; i++) {
         name = $.trim(args[i]).split(':')[0];
-        classCode += "\t\t" + name + " => '',\n";
+        classCode += "\t\t'" + name + "' => '',\n";
     }
     classCode += '\t);\n';
+
+    /** 生成驗証失敗訊息內容 **/
+    classCode += '\n';
+    for(i = 0; i < num; i++) {
+
+        name = $.trim(args[i]).split(':')[0];
+        description = $.trim(args[i]).split(':')[1];
+        type = $.trim(args[i]).split(':')[2];
+        bigFirstName = args[i].split(':')[0].replace(/^\S/g,function(s){return s.toUpperCase();});
+
+        classCode += '\t/**\n';
+        classCode += '\t * ' + description + '欄位驗証失敗訊息\n';
+        classCode += '\t * @var string\n';
+        classCode += '\t**/\n';
+        classCode += "\tconst VALIDATE_" + name.toUpperCase() + "_MESSAGE = '';\n";
+        classCode += '\n';
+    }
 
     /** 生成驗証函式 **/
     classCode += '\n';
