@@ -3,26 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <title>碼農 v0.1</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
 </head>
 <body>
 <div class="container container-fluid">
     <div class="page-header">
-        <h1>碼農 <small>v0.1</small></h1>
+        <h1>碼農 <small>v0.2</small></h1>
     </div>
     <div class="row">
         <div class="form-group">
             <label for="namespace">namespace</label>
-            <input class="form-control" type="text" id="namespace" data-id="namespace" value="Linux/Groups" />
+            <input class="form-control" type="text" id="namespace" data-id="namespace" value="Linux\Groups" />
         </div>
         <div class="form-group">
             <label for="class">Class</label>
             <input class="form-control" type="text" id="class" data-id="class" value="Users" />
         </div>
         <div class="form-group">
-            <label for="args">變數︰格式-[屬性名稱]:[註解內容]:[資料格式]</label>
+            <label for="args">屬性︰格式-[屬性名稱]:[註解內容]:[資料格式]</label>
             <input class="form-control" type="text" id="args" data-id="args" value="id:使用者id:int,name:使用者名稱:string,account:使用者帳號:string,password:使用者密碼:string" />
+        </div>
+        <div class="form-group">
+            <label for="methods">
+                方法︰格式-[使用權限]:[方法名稱]:[註解內容]:[[代入參數1]>[參數1注解]|[代入參數2]>[參數2注解]|...]:[回傳類型] <br />
+                <br />
+                [使用權限] <br />
+                + => public <br />
+                - => protected <br />
+                * => private
+            </label>
+            <input class="form-control" type="text" id="methods" data-id="methods" value="-:getUser:透過pk取得使用者資訊:Linux\Groups\Users $users>使用者物件,-:getGroup:透過pk取得群組資訊:Linux\Groups\Users $users>使用者物件|$limit = 1>限制筆數,+:getUserInfo:透過pk取得使用者與群組資訊:Linux\Groups\Users $users>使用者物件|Linux\Groups\Groups $groups>群組物件:array" />
         </div>
         <div class="form-group">
             <button class="btn btn-success" data-id="go" type="button">
@@ -58,9 +70,21 @@
         <pre data-id="display-model">
         </pre>
     </div>
+    <div class="row">
+        <p>Method</p>
+        <pre data-id="display-method">
+        </pre>
+    </div>
 </div>
-<script src="js/jquery-3.1.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="node_modules/code-prettify/loader/prettify.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/classes/docblock.class.js"></script>
+<script src="js/classes/html.class.js"></script>
+<script src="js/classes/generator.class.js"></script>
+<script src="js/classes/model.class.js"></script>
+<script src="js/classes/method.class.js"></script>
+<script src="js/classes/section.class.js"></script>
 <script src="js/coder.js"></script>
 </body>
 </html>
