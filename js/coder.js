@@ -91,7 +91,7 @@ function generatorClass(args, className, namespace) {
     classCode += '\tconst RULES = array(\n';
     for(i = 0; i < num; i++) {
         name = $.trim(args[i]).split(':')[0];
-        classCode += "\t\t'" + name + "' => '',\n";
+        classCode += "\t\t" + name + " => '',\n";
     }
     classCode += '\t);\n';
 
@@ -318,7 +318,7 @@ function generatorModel(args, className, namespace) {
     classCode += '\t * 透過主鍵取得資料\n';
     classCode += '\t * @return object ' + className + '單筆資料\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function getList(' + namespace + '\\' + className + ' $' + className + ') {\n';
+    classCode += '\tpublic function getList(' + namespace + '/' + className + ' $' + className + ') {\n';
     classCode += "\t\t$this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     classCode += "\t\treturn $this->db->get(self::TABLE)->result(); \n";
     classCode += '\t}\n';
@@ -329,7 +329,7 @@ function generatorModel(args, className, namespace) {
     classCode += '\t * 插入一筆資料\n';
     classCode += '\t * @return int ' + className + '影響的資料筆數\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function insert(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
+    classCode += '\tpublic function insert(' + namespace + '/' + className + ' $' + className + ') : int {\n';
     classCode += '\t\t$this->db->insert(self::TABLE, $' + className + ');\n';
     classCode += "\t\treturn $this->db->affected_rows(); \n";
     classCode += '\t}\n';
@@ -340,7 +340,7 @@ function generatorModel(args, className, namespace) {
     classCode += '\t * 透過主鍵修改資料\n';
     classCode += '\t * @return int ' + className + '影響的資料筆數\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function update(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
+    classCode += '\tpublic function update(' + namespace + '/' + className + ' $' + className + ') : int {\n';
     classCode += "\t\t$this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     classCode += "\t\t$this->db->update(self::TABLE, $" + className + "); \n";
     classCode += "\t\treturn $this->db->affected_rows(); \n";
@@ -352,7 +352,7 @@ function generatorModel(args, className, namespace) {
     classCode += '\t * 透過主鍵刪除資料\n';
     classCode += '\t * @return int ' + className + '影響的資料筆數\n';
     classCode += '\t */\n';
-    classCode += '\tpublic function remove(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
+    classCode += '\tpublic function remove(' + namespace + '/' + className + ' $' + className + ') : int {\n';
     classCode += "\t\t$this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     classCode += "\t\t$this->db->delete(self::TABLE); \n";
     classCode += "\t\treturn $this->db->affected_rows(); \n";
