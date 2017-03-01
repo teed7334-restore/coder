@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>碼農 v0.1</title>
+<title>碼農 v0.21</title>
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <body>
 <div class="container container-fluid">
     <div class="page-header">
-        <h1>碼農 <small>v0.2</small></h1>
+        <h1>碼農 <small>v0.21</small></h1>
     </div>
     <div class="row">
         <div class="form-group">
@@ -40,29 +40,39 @@
             <button class="btn btn-success" data-id="go" type="button">
                 <i class="fa fa-clone"> 送出</i>
             </button>
-            <button class="btn btn-danger" data-id="reset" type="button">
+            <button class="btn btn-danger" type="reset">
                 <i class="fa fa-close"> 重置</i>
             </button>
         </div>
     </div>
     <div class="row">
-        <p>HTML</p>
-        <pre data-id="display-html">
+        <p>資料列表HTML</p>
+        <pre data-id="display-generatorHTMLGetListForm">
+        </pre>
+    </div>
+    <div class="row">
+        <p>資料列表JS</p>
+        <pre data-id="display-generatorJSGetListForm">
+        </pre>
+    </div>
+    <div class="row">
+        <p>新增單筆資料用表單HTML</p>
+        <pre data-id="display-generatorHTMLInsertForm">
+        </pre>
+    </div>
+    <div class="row">
+        <p>新增單筆資料用表單JS</p>
+        <pre data-id="display-generatorJSInsertForm">
+        </pre>
+    </div>
+    <div class="row">
+        <p>Controller</p>
+        <pre data-id="display-controller">
         </pre>
     </div>
     <div class="row">
         <p>CLASS</p>
         <pre data-id="display-class">
-        </pre>
-    </div>
-    <div class="row">
-        <p>FORM TO OBJECT</p>
-        <pre data-id="display-from2object">
-        </pre>
-    </div>
-    <div class="row">
-        <p>OBJECT GET TO SET</p>
-        <pre data-id="display-get2set">
         </pre>
     </div>
     <div class="row">
@@ -81,10 +91,11 @@
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="js/classes/docblock.class.js"></script>
 <script src="js/classes/html.class.js"></script>
+<script src="js/classes/js.class.js"></script>
 <script src="js/classes/generator.class.js"></script>
+<script src="js/classes/controller.class.js"></script>
 <script src="js/classes/model.class.js"></script>
 <script src="js/classes/method.class.js"></script>
-<script src="js/classes/section.class.js"></script>
 <script src="js/coder.js"></script>
 </body>
 </html>

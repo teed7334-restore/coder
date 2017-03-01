@@ -9,7 +9,6 @@ function generatorModel(args, className, namespace) {
 
     /** 初始化參數 **/
     var code = '';
-    var num = args.length;
 
     /** 生成屬性值 **/
     name = args[0].split(':')[0];

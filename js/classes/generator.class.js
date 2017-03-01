@@ -13,7 +13,7 @@ function generatorClass(args, className, namespace) {
     code += generatorPHPDataVaildateRules(args);
     code += generatorPHPFailureMessage(args);
     code += generatorPHPClassProperty(args);
-    code += generatorPHPDataVaildate();
+    code += generatorPHPDataVaildate(args);
     code += generatorPHPGetMethod(args);
     code += generatorPHPSetMethod(args);
     code += generatorPHPClassFooter();
@@ -53,13 +53,14 @@ function generatorPHPDataVaildateRules(args) {
     var code = '';
     var num = args.length;
 
-    code += generatorConstDocBlock('資料驗証規則', 'array', 'RULES', 'array([驗証的資料欄位] => [正規表示式])');
-    code += '    const RULES = array(\n';
     for(i = 0; i < num; i++) {
+
         name = $.trim(args[i]).split(':')[0];
-        code += "        '" + name + "' => '',\n";
+
+        code += generatorConstDocBlock(description + '欄位驗証規則', 'string', "VALIDATE_" + name.toUpperCase() + "_RULE", '');
+        code += "    const VALIDATE_" + name.toUpperCase() + "_RULES = '';\n";
+        code += '\n';
     }
-    code += '    );\n';
 
     return code;
 }
@@ -109,7 +110,7 @@ function generatorPHPClassProperty(args) {
 
         /** 生成屬性值 **/
         code += '\n';
-        code += generatorVarDocBlock(description, type, '$' + name, '');
+        code += generatorVarDocBlock(description, type, '$' + name);
         code += '    public $' + name + ';\n';
     }
 
@@ -120,9 +121,10 @@ function generatorPHPClassProperty(args) {
  * 生成資料驗証
  * @return string 資料驗証函式
  */
-function generatorPHPDataVaildate() {
+function generatorPHPDataVaildate(args) {
 
     var code = '';
+    var num = args.length;
 
     code += '\n';
     code += generatorMethodDocBlock('資料驗証函式', ['array $deny 要排除的驗証'], 'array', '未通過驗証的欄位');
@@ -130,11 +132,22 @@ function generatorPHPDataVaildate() {
     code += '\n';
     code += '        $failure = array();\n';
     code += '\n';
-    code += '        foreach(self::RULES as $property => $pattern) {\n';
-    code += '            if(!in_array($this->{$property}, $deny) && 1 !== preg_match($pattern, $this->{$property})) {\n';
-    code += '                $failure[] = $this->{$property};\n';
-    code += '            }\n';
-    code += '        }\n';
+
+    for(i = 0; i < num; i++) {
+
+        name = $.trim(args[i]).split(':')[0];
+        description = $.trim(args[i]).split(':')[1];
+        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        bigName = name.toUpperCase();
+
+        code += '        /** 驗証' + description + '欄位資料格式 **/\n';
+        code += '        $pattern = VALIDATE_' + bigName + '_RULE;\n';
+        code += '        $errorMessage = VALIDATE_' + bigName + '_MESSAGE;\n';
+        code += "        if(!in_array('" + name + "', $deny) && 1 !== preg_match($pattern, $this->" + name + ")) { /** " + description + "欄位驗証失敗 **/\n";
+        code += "            $failure['" + name + "'] = $errorMessage;\n";
+        code += '        }\n';
+        code += '\n';
+    }
     code += '\n';
     code += '        return $failure;\n';
     code += '    }\n';
