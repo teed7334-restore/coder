@@ -10,44 +10,71 @@ function generatorPackageDocBlock(className, namespace) {
     return code;
 }
 
-function generatorConstDocBlock(description, type, varName, returnType) {
+function generatorConstDocBlock(description, type, varName, spaceLength) {
 
     var code = '';
+    var addSpace = '';
 
-    code += '    /**\n';
-    code += '     * ' + description + '\n';
-    code += '     * @const ' + type + ' ' + varName + ' ' + returnType + '\n';
-    code += '    **/\n';
+    if('undefined' === typeof(spaceLength) || '' === spaceLength) {
+        spaceLength = 4;
+    }
+
+    for(i = 0; i < spaceLength; i++) {
+        addSpace += ' ';
+    }
+
+    code += addSpace + '/**\n';
+    code += addSpace + ' * ' + description + '\n';
+    code += addSpace + ' * @const ' + type + ' ' + varName + '\n';
+    code += addSpace + '**/\n';
 
     return code;
 }
 
-function generatorVarDocBlock(description, type, varName, returnType) {
+function generatorVarDocBlock(description, type, varName, spaceLength) {
 
     var code = '';
+    var addSpace = '';
 
-    code += '    /**\n';
-    code += '     * ' + description + '\n';
-    code += '     * @var ' + type + ' ' + varName + ' ' + returnType + '\n';
-    code += '    **/\n';
+    if('undefined' === typeof(spaceLength) || '' === spaceLength) {
+        spaceLength = 4;
+    }
+
+    for(i = 0; i < spaceLength; i++) {
+        addSpace += ' ';
+    }
+
+    code += addSpace + '/**\n';
+    code += addSpace + ' * ' + description + '\n';
+    code += addSpace + ' * @var ' + type + ' ' + varName + '\n';
+    code += addSpace + '**/\n';
 
     return code;
 }
 
-function generatorMethodDocBlock(description, params, rtn, returnDescription) {
+function generatorMethodDocBlock(description, params, rtn, returnDescription, spaceLength) {
 
     var code = '';
     var num = params.length;
+    var addSpace = '';
 
-    code += '    /**\n';
-    code += '     * ' + description + '\n';
+    if('undefined' === typeof(spaceLength) || '' === spaceLength) {
+        spaceLength = 4;
+    }
+
+    for(i = 0; i < spaceLength; i++) {
+        addSpace += ' ';
+    }
+
+    code += addSpace + '/**\n';
+    code += addSpace + ' * ' + description + '\n';
     for(var i = 0; i < num; i++) {
         if('' != params[i]) {
-            code += '     * @param ' + params[i] + '\n';
+            code += addSpace + ' * @param ' + params[i] + '\n';
         }
     }
-    code += '     * @return ' + rtn + ' ' + returnDescription + '\n';
-    code += '     */\n';
+    code += addSpace + ' * @return ' + rtn + ' ' + returnDescription + '\n';
+    code += addSpace + '**/\n';
 
     return code;
 }
