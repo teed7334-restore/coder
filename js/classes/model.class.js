@@ -21,7 +21,7 @@ function generatorModel(args, className, namespace) {
     code += generatorPHPModelGetList(className, namespace, bigFirstName);
     code += generatorPHPModelInsertBatch(className, namespace);
     code += generatorPHPModelInsert(className, namespace);
-    code += generatorPHPModelUpdate(className, namespace, name, bigFirstName);
+    code += generatorPHPModelEdit(className, namespace, name, bigFirstName);
     code += generatorPHPModelRemove(className, namespace, name, bigFirstName);
     code += generatorPHPModelFooter();
 
@@ -157,12 +157,12 @@ function generatorPHPModelInsert(className, namespace) {
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵修改資料函數
  */
-function generatorPHPModelUpdate(className, namespace, name, bigFirstName) {
+function generatorPHPModelEdit(className, namespace, name, bigFirstName) {
 
     var code = '';
 
     code += generatorMethodDocBlock('透過主鍵修改資料', [namespace + '\\' + className + ' $' + className], 'int', '影響的資料筆數');
-    code += '    public function update(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
+    code += '    public function edit(' + namespace + '\\' + className + ' $' + className + ') : int {\n';
     code += "        $this->db->where('" + name + "', $" + className + '->get' + bigFirstName + '());\n';
     code += "        $this->db->update(self::TABLE, $" + className + "); \n";
     code += "        return $this->db->affected_rows(); \n";

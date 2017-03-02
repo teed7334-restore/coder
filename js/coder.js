@@ -16,6 +16,8 @@ $(document).ready(function() {
         var jsGetAllListForm = generatorJSGetAllList(args, className);
         var htmlInsertForm = generatorHTMLInsertForm(args, className);
         var jsInsertForm = generatorJSInsertForm(args, className);
+        var htmlEditForm = generatorHTMLEditForm(args, className);
+        var jsEditForm = generatorJSEditForm(args, className);
         var controller = generatorController(args, className, namespace);
         var classCode = generatorClass(args, className, namespace);
         var model = generatorModel(args, className, namespace);
@@ -24,6 +26,8 @@ $(document).ready(function() {
         $('pre[data-id=display-generatorJSGetListForm]').text(jsGetAllListForm).addClass('prettyprint');
         $('pre[data-id=display-generatorHTMLInsertForm]').text(htmlInsertForm).addClass('prettyprint');
         $('pre[data-id=display-generatorJSInsertForm]').text(jsInsertForm).addClass('prettyprint');
+        $('pre[data-id=display-generatorHTMLEditForm]').text(htmlEditForm).addClass('prettyprint');
+        $('pre[data-id=display-generatorJSEditForm]').text(jsEditForm).addClass('prettyprint');
         $('pre[data-id=display-controller]').text(controller).addClass('prettyprint');
         $('pre[data-id=display-class]').text(classCode).addClass('prettyprint');
         $('pre[data-id=display-model]').text(model).addClass('prettyprint');
