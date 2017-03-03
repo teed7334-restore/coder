@@ -14,9 +14,9 @@ function generatorHTMLGetAllList(args, className) {
 
     /** 生成標頭設定 **/
     html += '<div class="row">\n';
-    html += '<button type="button" data-group="insert" class="btn btn-primary">\n'
-    html += '    <i class="fa fa-plus"> 新增</i>\n'
-    html += '</button>\n'
+    html += '    <button type="button" data-group="insert" class="btn btn-primary">\n'
+    html += '        <i class="fa fa-plus"> 新增</i>\n'
+    html += '    </button>\n'
     html += '</div>\n';
     html += '<div class="row">\n';
     html += '    <table class="table table-striped">\n';
