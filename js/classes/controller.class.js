@@ -41,8 +41,6 @@ function generatorPHPControllerHeader(namespace, className) {
     code += '\n';
     code += 'class ' + className.toLowerCase() + ' extends CI_Controller {\n';
     code += '\n';
-    code += '    public $' + className + ';\n';
-    code += '\n';
 
     return code;
 }
@@ -78,15 +76,12 @@ function generatorPHPControllerGetAllList(className) {
     code += generatorMethodDocBlock('查詢所有資料頁面', [''], 'void', className + '所有資料');
     code += '    public function index() {\n';
     code += '\n';
-    code += '        $this->' + className + ' = new ' + className + '();\n';
-    code += '\n';
     code += '        $response = array();\n';
     code += "        $response['" + className + "'] = array();\n";
     code += "        $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
     code += "        $response['" + className + "'] = $this->" + className + "_model->getAllList();\n";
     code += '\n';
     code += "        $this->load->view('" + className + "/index', $response);\n";
-    code += '\n';
     code += '    }\n';
     code += '\n';
 
@@ -108,16 +103,16 @@ function generatorPHPControllerEdit(args, className) {
     code += generatorMethodDocBlock('生成修改資料頁面', ['string $pk'], 'void', className + '所有資料');
     code += "    public function edit(string $pk = '') {\n";
     code += '\n';
-    code += '        $this->' + className + ' = new ' + className + '();\n';
+    code += '        $' + className + ' = new ' + className + '();\n';
     code += '\n';
     code += '        $response = array();\n';
     code += "        $response['invalidatePK'] = false;\n";
-    code += "        $response['" + className + "'] = $this->" + className + ";\n";
+    code += "        $response['" + className + "'] = $" + className + ";\n";
     code += "        $response['validateResult'] = array();\n";
     code += "        $response['databaseResult'] = '';\n";
     code += "        $response['isPost'] = '0';\n";
     code += '\n';
-    code += "        $result = $this->checkData($this->' + className + ');\n";
+    code += "        $result = $this->checkData($" + className + ");\n";
     code += '        if(0 === count($result)) { /** 無效的主鍵 **/\n';
     code += "            $response['invalidatePK'] = true;\n";
     code += "            $_POST = array();\n";
@@ -134,13 +129,13 @@ function generatorPHPControllerEdit(args, className) {
         type = args[i].split(':')[2];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
-        code += "            $this->" + className + "->set" + bigFirstName + "((" + type + ") $_POST['" + name + "']);\n";
+        code += "            $" + className + "->set" + bigFirstName + "((" + type + ") $_POST['" + name + "']);\n";
     }
     code += '\n';
-    code += "            $response['validateResult'] = $this->" + className + "->validator();\n";
+    code += "            $response['validateResult'] = $" + className + "->validator();\n";
     code += "            if(empty($response['validateResult'])) { /** 通過表單驗証 **/\n";
     code += "                $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
-    code += "                $result = $this->" + className + "_model->edit($this->" + className + ");\n";
+    code += "                $result = $this->" + className + "_model->edit($" + className + ");\n";
     code += "                $response['databaseResult'] = $result;\n";
     code += '            }\n';
     code += "            $response['validateResult'] = json_encode($response['validateResult']);\n";
@@ -169,11 +164,11 @@ function generatorPHPControllerCheckData(args, className) {
     code += generatorMethodDocBlock('生成檢查資料頁面', ['string $pk'], 'int', className + '所有資料');
     code += "    private function checkData(string $pk = '') : int {\n";
     code += '\n';
-    code += '        $this->' + className + ' = new ' + className + '();\n';
-    code += '        $this->' + className + '->set' + pkName + '($pk);\n';
+    code += '        $' + className + ' = new ' + className + '();\n';
+    code += '        $' + className + '->set' + pkName + '($pk);\n';
     code += '\n';
     code += "        $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
-    code += "        $result = $this->" + className + "_model->getList($this->" + className + ");\n";
+    code += "        $result = $this->" + className + "_model->getList($" + className + ");\n";
     code += "        return $result;\n";
     code += '\n';
     code += '    }\n';
@@ -198,10 +193,10 @@ function generatorPHPControllerInsert(args, className, namespace) {
     code += generatorMethodDocBlock('新增單筆資料頁面', [''], 'void', className + '單筆資料');
     code += '    public function insert() {\n';
     code += '\n';
-    code += '        $this->' + className + ' = new ' + className + '();\n';
+    code += '        $' + className + ' = new ' + className + '();\n';
     code += '\n';
     code += '        $response = array();\n';
-    code += "        $response['" + className + "'] = $this->" + className + ";\n";
+    code += "        $response['" + className + "'] = $" + className + ";\n";
     code += "        $response['validateResult'] = array();\n";
     code += "        $response['databaseResult'] = '';\n";
     code += "        $response['isPost'] = '0';\n";
@@ -217,15 +212,15 @@ function generatorPHPControllerInsert(args, className, namespace) {
         type = args[i].split(':')[2];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
-        code += '            $this->' + className + '->set' + bigFirstName + '((' + type + ') $_POST[\'' + name + '\']);\n';
+        code += '            $' + className + '->set' + bigFirstName + '((' + type + ') $_POST[\'' + name + '\']);\n';
     }
     code += "\n";
     code += "            $deny = array('" + pkName + "');\n";
-    code += "            $response['validateResult'] = $this->" + className + '->validator();\n';
+    code += "            $response['validateResult'] = $" + className + '->validator();\n';
     code += "            if(empty($response['validateResult'])) { /** 通過表單驗証 **/\n";
     code += "                $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
     code += '                unset($' + className + '->' + pkName + ');\n';
-    code += "                $response['databaseResult'] = $this->" + className + "->insert($" + className + ");\n";
+    code += "                $response['databaseResult'] = $this->" + className + "_model->insert($" + className + ");\n";
     code += "            }\n";
     code += "            $response['validateResult'] = json_encode($response['validateResult']);\n";
     code += "            $response['isPost'] = '1';\n";

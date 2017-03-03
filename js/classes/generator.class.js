@@ -55,9 +55,10 @@ function generatorPHPDataVaildateRules(args) {
 
     for(i = 0; i < num; i++) {
 
-        name = $.trim(args[i]).split(':')[0];
+        name = args[i].split(':')[0];
+        description = args[i].split(':')[1];
 
-        code += generatorConstDocBlock(description + '欄位驗証規則', 'string', "VALIDATE_" + name.toUpperCase() + "_RULE", '');
+        code += generatorConstDocBlock(description + '欄位驗証規則', 'string', "VALIDATE_" + name.toUpperCase() + "_RULE");
         code += "    const VALIDATE_" + name.toUpperCase() + "_RULES = '';\n";
         code += '\n';
     }
@@ -78,9 +79,9 @@ function generatorPHPFailureMessage(args) {
     code += '\n';
     for(i = 0; i < num; i++) {
 
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        type = $.trim(args[i]).split(':')[2];
+        name = args[i].split(':')[0];
+        description = args[i].split(':')[1];
+        type = args[i].split(':')[2];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         code += generatorConstDocBlock(description + '欄位驗証失敗訊息', 'string', "VALIDATE_" + name.toUpperCase() + "_MESSAGE", '');
@@ -103,9 +104,9 @@ function generatorPHPClassProperty(args) {
 
     for(i = 0; i < num; i++) {
 
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        type = $.trim(args[i]).split(':')[2];
+        name = args[i].split(':')[0];
+        description = args[i].split(':')[1];
+        type = args[i].split(':')[2];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         /** 生成屬性值 **/
@@ -135,8 +136,8 @@ function generatorPHPDataVaildate(args) {
 
     for(i = 0; i < num; i++) {
 
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
+        name = args[i].split(':')[0];
+        description = args[i].split(':')[1];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
         bigName = name.toUpperCase();
 
@@ -167,9 +168,9 @@ function generatorPHPGetMethod(args) {
 
     for(i = 0; i < num; i++) {
 
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        type = $.trim(args[i]).split(':')[2];
+        name = args[i].split(':')[0];
+        description = args[i].split(':')[1];
+        type = args[i].split(':')[2];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         /** 生成get函數 **/
@@ -195,9 +196,9 @@ function generatorPHPSetMethod(args) {
 
     for(i = 0; i < num; i++) {
 
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        type = $.trim(args[i]).split(':')[2];
+        name = args[i].split(':')[0];
+        description = args[i].split(':')[1];
+        type = args[i].split(':')[2];
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         code += '\n';

@@ -19,7 +19,7 @@ function generatorConstDocBlock(description, type, varName, spaceLength) {
         spaceLength = 4;
     }
 
-    for(i = 0; i < spaceLength; i++) {
+    for(ii = 0; ii < spaceLength; ii++) {
         addSpace += ' ';
     }
 
@@ -40,7 +40,7 @@ function generatorVarDocBlock(description, type, varName, spaceLength) {
         spaceLength = 4;
     }
 
-    for(i = 0; i < spaceLength; i++) {
+    for(ii = 0; ii < spaceLength; ii++) {
         addSpace += ' ';
     }
 
@@ -62,15 +62,15 @@ function generatorMethodDocBlock(description, params, rtn, returnDescription, sp
         spaceLength = 4;
     }
 
-    for(i = 0; i < spaceLength; i++) {
+    for(ii = 0; ii < spaceLength; ii++) {
         addSpace += ' ';
     }
 
     code += addSpace + '/**\n';
     code += addSpace + ' * ' + description + '\n';
-    for(var i = 0; i < num; i++) {
-        if('' != params[i]) {
-            code += addSpace + ' * @param ' + params[i] + '\n';
+    for(var ii = 0; ii < num; ii++) {
+        if('' != params[ii]) {
+            code += addSpace + ' * @param ' + params[ii] + '\n';
         }
     }
     code += addSpace + ' * @return ' + rtn + ' ' + returnDescription + '\n';
