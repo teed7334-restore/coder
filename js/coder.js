@@ -22,6 +22,7 @@ $(document).ready(function() {
         var classCode = generatorClass(args, className, namespace);
         var model = generatorModel(args, className, namespace);
         var method = generatorPHPMethod(methods);
+        var resultObject = generatorPHPResultObject();
         $('pre[data-id=display-generatorHTMLGetListForm]').text(htmlGetAllList).addClass('prettyprint');
         $('pre[data-id=display-generatorJSGetListForm]').text(jsGetAllListForm).addClass('prettyprint');
         $('pre[data-id=display-generatorHTMLInsertForm]').text(htmlInsertForm).addClass('prettyprint');
@@ -32,6 +33,7 @@ $(document).ready(function() {
         $('pre[data-id=display-class]').text(classCode).addClass('prettyprint');
         $('pre[data-id=display-model]').text(model).addClass('prettyprint');
         $('pre[data-id=display-method]').text(method).addClass('prettyprint');
+        $('pre[data-id=display-resultObject]').text(resultObject).addClass('prettyprint');
         prettyPrint();
     });
 });

@@ -7,7 +7,9 @@ function generatorJSGetAllList(args, className) {
     code += generatorJSInsertClick(className);
     code += generatorJSEditClick(className);
     code += generatorJSRemoveClick(className);
+    code += generatorJSRunResultObject();
     code += generatorJSDocumentReadyFooter();
+    code += generatorJSResultObject();
     code += '</script>\n';
 
     return code;
@@ -19,12 +21,11 @@ function generatorJSInsertForm(args, className) {
 
     code += '<script>\n';
     code += generatorJSDocumentReadyTitle();
-    code += generatorJSCheckData(className);
     code += generatorJSInsertSubmitClick(className);
-    code += generatorJSRunInsertIsPost();
+    code += generatorJSRunResultObjectAndReDirect(className);
     code += generatorJSDocumentReadyFooter();
     code += generatorJSInsertFormValidate(args);
-    code += generatorJSInsertIsPost();
+    code += generatorJSResultObject();
     code += '</script>\n';
 
     return code;
@@ -37,10 +38,10 @@ function generatorJSEditForm(args, className) {
     code += '<script>\n';
     code += generatorJSDocumentReadyTitle();
     code += generatorJSEditSubmitClick();
-    code += generatorJSRunEditIsPost();
+    code += generatorJSRunResultObjectAndReDirect(className);
     code += generatorJSDocumentReadyFooter();
     code += generatorJSEditFormValidate(args);
-    code += generatorJSEditIsPost();
+    code += generatorJSResultObject();
     code += '</script>\n';
 
     return code;
@@ -68,7 +69,7 @@ function generatorJSInsertSubmitClick() {
     code += "    $('form[data-id=coder-form] button[data-id=coder-submit]').click(function() {\n";
     code += "\n";
     code += generatorVarDocBlock('存放驗証失敗訊息', 'string', 'errorMessage', 8);
-    code += '        var errorMessage = insertFormValidate();\n';
+    code += '        var errorMessage = formValidate();\n';
     code += '\n';
     code += "        /** 檢查表單所有資料是否通過驗証 **/\n";
     code += "        if('' === errorMessage) { /** 表單驗証成功 **/\n";
@@ -78,26 +79,6 @@ function generatorJSInsertSubmitClick() {
     code += "            alert(errorMessage);\n";
     code += "        }\n";
     code += "    });\n";
-    code += '\n';
-
-    return code;
-}
-
-function generatorJSCheckData(className) {
-
-    var code = '';
-
-    code += generatorConstDocBlock('代入的參數有誤', 'string', 'INVALIDATE_PARAMS');
-    code += "    const INVALIDATE_PARAMS = '代入的參數有誤';\n";
-    code += '\n';
-    code += generatorVarDocBlock('無效的主鍵', 'string', 'invalidatePK');
-    code += "    var invalidatePK = '<?php echo $invalidatePK; ?>';\n";
-    code += '\n';
-    code += "    if('' !== invalidatePK) { /** 無效的主鍵 **/\n";
-    code += '        alert(INVALIDATE_PARAMS);\n';
-    code += "        location.href = '/" + className + "/index';\n";
-    code += "        return;\n";
-    code += "    }\n";
     code += '\n';
 
     return code;
@@ -115,7 +96,7 @@ function generatorJSEditSubmitClick() {
     code += "    $('form[data-id=coder-form] button[data-id=coder-submit]').click(function() {\n";
     code += "\n";
     code += generatorVarDocBlock('存放驗証失敗訊息', 'string', 'errorMessage', 8);
-    code += '        var errorMessage = editFormValidate();\n';
+    code += '        var errorMessage = formValidate();\n';
     code += '\n';
     code += "        /** 檢查表單所有資料是否通過驗証 **/\n";
     code += "        if('' === errorMessage) { /** 表單驗証成功 **/\n";
@@ -130,116 +111,64 @@ function generatorJSEditSubmitClick() {
     return code;
 }
 
-function generatorJSRunInsertIsPost() {
+function generatorJSRunResultObjectAndReDirect(className) {
 
     var code = '';
 
     code += '\n';
-    code += '    insertIsPost();\n';
+    code += '    var result = resultObject();\n';
+    code += '    if(result) {\n';
+    code += "        location.href = '/" + className + "/index';\n";
+    code += '    }\n';
     code += '\n';
 
     return code;
 }
 
-function generatorJSRunEditIsPost() {
+function generatorJSRunResultObject() {
 
     var code = '';
 
     code += '\n';
-    code += '    editIsPost();\n';
+    code += '    resultObject();\n';
     code += '\n';
 
     return code;
 }
 
-function generatorJSInsertIsPost() {
+function generatorJSResultObject() {
 
     var code = '';
 
     code += '\n';
-    code += generatorMethodDocBlock('處裡伺服器端回傳錯誤', [''], 'void', '', 0);
-    code += 'function insertIsPost() {\n';
+    code += generatorMethodDocBlock('處理伺服器端回傳訊息', [''], 'void', '', 0);
+    code += 'function resultObject() {\n';
     code += '\n';
-    code += generatorConstDocBlock('資料寫入成功', 'string', 'DATABASE_WRITE_SUCCESS_MESSAGE');
-    code += "    const DATABASE_WRITE_SUCCESS_MESSAGE = '資料寫入成功';\n";
+    code += generatorConstDocBlock('資料待輸入系統代號', 'string', "DATA_WAIT_CODE");
+    code += "    const DATA_WAIT_CODE = '100';\n";
     code += '\n';
-    code += generatorConstDocBlock('資料寫入失敗', 'string', 'DATABASE_WRITE_FAILURE_MESSAGE');
-    code += "    const DATABASE_WRITE_FAILURE_MESSAGE = '資料寫入失敗';\n";
+    code += generatorConstDocBlock('資料處理完成系統代號', 'string', "SUCCESS_CODE");
+    code += "    const SUCCESS_CODE = '200';\n";
     code += '\n';
-    code += generatorVarDocBlock('己Post過', 'string', 'isPost');
-    code += "    var isPost = '<?php echo $isPost; ?>';\n";
+    code += generatorConstDocBlock('參數驗証失敗系統代號', 'string', "INVALIDATE_PARAMS_CODE");
+    code += "    const INVALIDATE_PARAMS_CODE = '201';\n";
     code += '\n';
-    code += generatorVarDocBlock('驗証失敗資訊', 'string', 'validateResult');
-    code += "    var validateResult = '<?php echo $validateResult; ?>';\n";
+    code += generatorConstDocBlock('系統代號', 'string', "RESULT_CODE");
+    code += "    const RESULT_CODE = '<" + '?php' + " $resultObject->getResultCode(); ?>';\n";
     code += '\n';
-    code += generatorVarDocBlock('資料庫寫入資訊', 'string', 'databaseResult');
-    code += "    var databaseResult = '<?php echo $databaseResult; ?>';\n";
+    code += generatorConstDocBlock('系統訊息', 'string', "RESULT_MESSAGE");
+    code += "    const RESULT_MESSAGE = '<" + '?php' + " $resultObject->getResultMessage(); ?>';\n";
     code += '\n';
-    code += generatorVarDocBlock('存放驗証失敗訊息', 'string', 'errorMessage');
-    code += "    var errorMessage = '';\n";
-    code += "\n";
-    code += "    if('1' === isPost) { /** 己POST過 **/\n";
-    code += '        /** 取得表單驗証失敗訊息 **/\n';
-    code += "        errorMessage = insertFormValidate();\n";
-    code += "        if('' !== errorMessage) { /** 表單驗証失敗 **/\n";
-    code += "            alert(errorMessage);\n";
-    code += "        }\n";
-    code += "        else { /** 表單驗証成功 **/\n";
-    code += "            if('1' !== databaseResult) { /** 資料庫寫入失敗 **/\n";
-    code += "                alert(DATABASE_WRITE_FAILURE_MESSAGE);\n";
-    code += "            }\n";
-    code += "            else { /** 資料庫寫入成功 **/\n";
-    code += "                alert(DATABASE_WRITE_SUCCESS_MESSAGE);\n";
-    code += "            }\n";
-    code += "        }\n";
-    code += "    }\n";
-    code += '}\n';
+    code += '    if(INVALIDATE_PARAMS_CODE === RESULT_CODE) { /** PHP資料驗証失敗時 **/\n';
+    code += '        formValidate();\n';
+    code += '        return false;\n';
+    code += '    }\n';
+    code += '    elseif(SUCCESS_CODE !== RESULT_CODE && DATA_WAIT_CODE !== RESULT_CODE) { /** 其他問題導致無法成功時 **/\n';
+    code += '        alert(RESULT_MESSAGE);\n';
+    code += '        return false;\n';
+    code += '    }\n';
     code += '\n';
-
-    return code;
-}
-
-function generatorJSEditIsPost() {
-
-    var code = '';
-
-    code += '\n';
-    code += generatorMethodDocBlock('處裡伺服器端回傳錯誤', [''], 'void', '', 0);
-    code += 'function editIsPost() {\n';
-    code += '\n';
-    code += generatorConstDocBlock('資料寫入成功', 'string', 'DATABASE_WRITE_SUCCESS_MESSAGE');
-    code += "    const DATABASE_WRITE_SUCCESS_MESSAGE = '資料寫入成功';\n";
-    code += '\n';
-    code += generatorConstDocBlock('資料寫入失敗', 'string', 'DATABASE_WRITE_FAILURE_MESSAGE');
-    code += "    const DATABASE_WRITE_FAILURE_MESSAGE = '資料寫入失敗';\n";
-    code += '\n';
-    code += generatorVarDocBlock('己Post過', 'string', 'isPost');
-    code += "    var isPost = '<?php echo $isPost; ?>';\n";
-    code += '\n';
-    code += generatorVarDocBlock('驗証失敗資訊', 'string', 'validateResult');
-    code += "    var validateResult = '<?php echo $validateResult; ?>';\n";
-    code += '\n';
-    code += generatorVarDocBlock('資料庫寫入資訊', 'string', 'databaseResult');
-    code += "    var databaseResult = '<?php echo $databaseResult; ?>';\n";
-    code += '\n';
-    code += generatorVarDocBlock('存放驗証失敗訊息', 'string', 'errorMessage');
-    code += "    var errorMessage = '';\n";
-    code += "\n";
-    code += "    if('1' === isPost) { /** 己POST過 **/\n";
-    code += '        /** 取得表單驗証失敗訊息 **/\n';
-    code += "        errorMessage = editFormValidate();\n";
-    code += "        if('' !== errorMessage) { /** 表單驗証失敗 **/\n";
-    code += "            alert(errorMessage);\n";
-    code += "        }\n";
-    code += "        else { /** 表單驗証成功 **/\n";
-    code += "            if('1' !== databaseResult) { /** 資料庫寫入失敗 **/\n";
-    code += "                alert(DATABASE_WRITE_FAILURE_MESSAGE);\n";
-    code += "            }\n";
-    code += "            else { /** 資料庫寫入成功 **/\n";
-    code += "                alert(DATABASE_WRITE_SUCCESS_MESSAGE);\n";
-    code += "            }\n";
-    code += "        }\n";
-    code += "    }\n";
+    code += '    return true;;\n'
     code += '}\n';
     code += '\n';
 
@@ -253,7 +182,7 @@ function generatorJSInsertFormValidate(args) {
 
     code += '\n';
     code += generatorMethodDocBlock('表單資料驗証', [''], 'string', '驗証失敗訊息', 0);
-    code += 'function insertFormValidate() {\n';
+    code += 'function formValidate() {\n';
     code += "\n";
     code += generatorVarDocBlock('存放驗証失敗訊息', 'string', 'errorMessage');
     code += "    var errorMessage = '';\n";
@@ -288,7 +217,7 @@ function generatorJSEditFormValidate(args) {
 
     code += '\n';
     code += generatorMethodDocBlock('表單資料驗証', [''], 'string', '驗証失敗訊息', 0);
-    code += 'function editFormValidate() {\n';
+    code += 'function formValidate() {\n';
     code += "\n";
     code += generatorVarDocBlock('存放驗証失敗訊息', 'string', 'errorMessage');
     code += "    var errorMessage = '';\n";

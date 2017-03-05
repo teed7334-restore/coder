@@ -156,6 +156,78 @@ function generatorPHPDataVaildate(args) {
     return code;
 }
 
+function generatorPHPResultObject() {
+
+    var code = '';
+
+    code += "class ResultObject {\n";
+    code += "\n";
+    code += generatorConstDocBlock('資料待輸入系統代號', 'string', "DATA_WAIT_CODE");
+    code += "    const DATA_WAIT_CODE = '100';\n";
+    code += "\n";
+    code += generatorConstDocBlock('資料待輸入系統訊息', 'string', "DATA_WAIT");
+    code += "    const DATA_WAIT = '資料待輸入';\n";
+    code += "\n";
+    code += generatorConstDocBlock('資料處理完成系統代號', 'string', "SUCCESS_CODE");
+    code += "    const SUCCESS_CODE = '200';\n";
+    code += "\n";
+    code += generatorConstDocBlock('資料處理完成系統訊息', 'string', "SUCCESS");
+    code += "    const SUCCESS = '資料處理完成';\n";
+    code += "\n";
+    code += generatorConstDocBlock('參數驗証失敗系統代號', 'string', "INVALIDATE_PARAMS_CODE");
+    code += "    const INVALIDATE_PARAMS_CODE = '201';\n";
+    code += "\n";
+    code += generatorConstDocBlock('參數驗証失敗系統訊息', 'string', "INVALIDATE_PARAMS");
+    code += "    const INVALIDATE_PARAMS = '參數驗証失敗';\n";
+    code += "\n";
+    code += generatorConstDocBlock('無任何資料系統代號', 'string', "DATABASE_EMPTY_CODE");
+    code += "    const DATABASE_EMPTY_CODE = '301';\n";
+    code += "\n";
+    code += generatorConstDocBlock('無任何資料系統訊息', 'string', "DATABASE_EMPTY");
+    code += "    const DATABASE_EMPTY = '無任何資料';\n";
+    code += "\n";
+    code += generatorConstDocBlock('資料寫入失敗系統代號', 'string', "DATABASE_WRITE_FAILURE_CODE");
+    code += "    const DATABASE_WRITE_FAILURE_CODE = '302';\n";
+    code += "\n";
+    code += generatorConstDocBlock('資料寫入失敗系統訊息', 'string', "DATABASE_WRITE_FAILURE");
+    code += "    const DATABASE_WRITE_FAILURE = '資料寫入失敗';\n";
+    code += "\n";
+    code += generatorVarDocBlock('系統代號', 'string', "$resultCode");
+    code += "    private $resultCode;\n";
+    code += "\n";
+    code += generatorVarDocBlock('系統訊息', 'string', "$resultMessage");
+    code += "    private $resultMessage;\n";
+    code += "\n";
+    code += generatorMethodDocBlock('建構式', [''], 'void', '');
+    code += "    public function __construct() {\n";
+    code += "        $this->resultCode = self::SUCCESS_CODE;\n";
+    code += "        $this->resultMessage = self::SUCCESS;\n";
+    code += "    }\n";
+    code += "\n";
+    code += generatorMethodDocBlock('取得系統代號', [''], 'string', '系統代號');
+    code += "    public function getResultCode() {\n";
+    code += "        return $this->resultCode;\n";
+    code += "    }\n";
+    code += "\n";
+    code += generatorMethodDocBlock('取得系統訊息', [''], 'string', '系統訊息');
+    code += "    public function getResultMessage() {\n";
+    code += "        return $this->resultMessage;\n";
+    code += "    }\n";
+    code += "\n";
+    code += generatorMethodDocBlock('指定系統代號', ['string $resultCode = self::SUCCESS_CODE'], 'void', '');
+    code += "    public function setResultCode(string $resultCode = self::SUCCESS_CODE) {\n";
+    code += "        $this->resultCode = $resultCode;\n";
+    code += "    }\n";
+    code += "\n";
+    code += generatorMethodDocBlock('指定系統訊息', ['string $resultCode = self::SUCCESS'], 'void', '');
+    code += "    public function setResultMessage(string $resultMessage = self::SUCCESS) {\n";
+    code += "        $this->resultMessage = $resultMessage;\n";
+    code += "    }\n";
+    code += "}\n";
+
+    return code;
+}
+
 /**
  * 生成類別get方法
  * @param  array  args    屬性設定
