@@ -79,7 +79,7 @@ function generatorPHPModelGetAllList(className) {
 
     code += '\n';
     code += generatorMethodDocBlock('取得所有資料', [''], 'object', className + '所有資料');
-    code += '    public function getAllList() {\n';
+    code += '    public function getAllList() : array {\n';
     code += "        return $this->db->get(self::TABLE)->result(); \n";
     code += '    }\n';
     code += '\n';
