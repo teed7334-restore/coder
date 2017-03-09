@@ -8,10 +8,11 @@ js/coder.js 碼農主程式<br />
 <br />
 <br />
 # js/classes資料夾<br />
-controller.class.js 負責生成CI Controller<br />
-docblock.class.js 負責生成註解<br />
-generator.class.js 負責生成PHP class<br />
-html.class.js 負責生成View HTML<br />
-js.class.js 負責生成View JS<br />
-method.class.js 負責生成PHP method<br />
-model.class.js 負責生成CI Model<br />
+controller.js 負責生成CI Controller<br />
+docblock.js 負責生成註解<br />
+generator.js 負責生成PHP class<br />
+html.js 負責生成View HTML<br />
+js.js 負責生成View JS<br />
+method.js 負責生成PHP method<br />
+model.js 負責生成CI Model<br />
+repository.js 負責生成Repository<br />
