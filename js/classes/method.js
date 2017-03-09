@@ -1,12 +1,16 @@
+var Method = function(docblock) {
+    this.docblock = docblock;
+};
+
 /**
  * 生成PHP Method
  * @param  array  args 要用到method的設定
  * @return string      PHP Method
  */
-function generatorPHPMethod(args) {
+Method.prototype.generatorPHPMethod = function(args) {
 
-    var code = '';
-    var num = args.length;
+    code = '';
+    num = args.length;
 
     for(i = 0; i < num; i++) {
 
@@ -47,6 +51,7 @@ function generatorPHPMethod(args) {
                 paramsArray.push();
             }
             paramsString += tmp[0] + ', ';
+            paramsArray.push(tmp[0]);
         }
         paramsString = paramsString.substr(0, paramsString.length - 2);
 
@@ -59,7 +64,15 @@ function generatorPHPMethod(args) {
             returnType = ' : ' + returnType;
         }
 
-        code += generatorMethodDocBlock(description, paramsArray, returnTypeDescription, '');
+        code += '    /**\n';
+        code += '     * ' + description + '\n';
+
+        for(j = 0; j < paramsNum; j++) {
+            code += '     * @params ' + paramsArray[j] + '\n';
+        }
+
+        code += '     * @return ' + returnTypeDescription + '\n';
+        code += '    */\n';
         code += permission + ' function ' + methodName + '(' + paramsString + ')' + returnType + ' {\n';
         code += '        /** @todo 要新增的程式碼 **/\n';
         code += '    }\n';

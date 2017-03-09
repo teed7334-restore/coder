@@ -1,3 +1,7 @@
+var Controller = function(docblock){
+    this.docblock = docblock;
+};
+
 /**
  * 生成PHP Controller
  * @param  array  args 要用到的變數
@@ -5,24 +9,24 @@
  * @param  string namespace 命名空間
  * @return string           CI Controller
  */
-function generatorController(args, className, namespace) {
+Controller.prototype.generatorPHPController = function(args, className, namespace) {
 
     /** 初始化參數 **/
-    var code = '';
+    code = '';
 
     /** 生成屬性值 **/
     name = args[0].split(':')[0];
     description = args[0].split(':')[1];
     bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
-    code += generatorPHPControllerHeader(namespace, className);
-    code += generatorPHPControllerInit();
-    code += generatorPHPControllerGetAllList(className);
-    code += generatorPHPControllerInsert(args, className, namespace);
-    code += generatorPHPControllerEdit(args, className);
-    code += generatorPHPControllerRemove(args, className);
-    code += generatorPHPControllerCheckData(args, className);
-    code += generatorPHPControllerFooter();
+    code += this.generatorPHPControllerHeader(namespace, className);
+    code += this.generatorPHPControllerInit(className);
+    code += this.generatorPHPControllerGetAllList(className);
+    code += this.generatorPHPControllerInsert(args, className, namespace);
+    code += this.generatorPHPControllerEdit(args, className);
+    code += this.generatorPHPControllerRemove(args, className);
+    code += this.generatorPHPControllerCheckData(args, className);
+    code += this.generatorPHPControllerFooter();
 
     return code;
 }
@@ -31,16 +35,17 @@ function generatorController(args, className, namespace) {
  * 生成php類別標頭設定
  * @return string php類別標頭設定
  */
-function generatorPHPControllerHeader(namespace, className) {
+Controller.prototype.generatorPHPControllerHeader = function(namespace, className) {
 
-    var code = '';
+    code = '';
+    shortClassName = className.toLowerCase();
 
     code += '<' + '?php' + '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
     code += 'use ' + namespace + '\\' + className + ' as ' + className + ';\n';
     code += '\n';
-    code += 'class ' + className.toLowerCase() + ' extends CI_Controller {\n';
+    code += 'class ' + shortClassName + ' extends CI_Controller {\n';
     code += '\n';
 
     return code;
@@ -50,23 +55,29 @@ function generatorPHPControllerHeader(namespace, className) {
  * 生成建構式
  * @return void
  */
-function generatorPHPControllerInit() {
+Controller.prototype.generatorPHPControllerInit = function(className) {
 
-    var code = '';
+    code = '';
+    shortClassName = className.toLowerCase();
 
     code += '\n';
-    code += generatorConstDocBlock('參數驗証失敗系統代號', 'string', "INVALIDATE_PARAMS_CODE");
+    code += this.docblock.generatorConstDocBlock('參數驗証失敗系統代號', 'string', "INVALIDATE_PARAMS_CODE");
     code += "    const INVALIDATE_PARAMS_CODE = '-1';\n";
     code += '\n';
-    code += generatorConstDocBlock('資料寫入失敗系統代號', 'string', "DATABASE_WRITE_FAILURE_CODE");
+    code += this.docblock.generatorConstDocBlock('資料寫入失敗系統代號', 'string', "DATABASE_WRITE_FAILURE_CODE");
     code += "    const DATABASE_WRITE_FAILURE_CODE = '-2';\n";
     code += '\n';
-    code += generatorConstDocBlock('無任何資料系統代號', 'string', "DATABASE_EMPTY_CODE");
+    code += this.docblock.generatorConstDocBlock('無任何資料系統代號', 'string', "DATABASE_EMPTY_CODE");
     code += "    const DATABASE_EMPTY_CODE = '-3';\n";
     code += '\n';
-    code += generatorMethodDocBlock('建構式', [''], 'void', '');
+    code += this.docblock.generatorVarDocBlock('要注入的Repository容器', 'object', shortClassName + "Repository");
+    code += "    protected $" + shortClassName + "Repository;\n";
+    code += '\n';
+    code += this.docblock.generatorMethodDocBlock('建構式', [''], 'void', '');
     code += '    public function __construct() {\n';
     code += "        parent::__construct();\n";
+    code += "        $this->load->model('" + shortClassName + "Model', null, '" + shortClassName + "Model');\n";
+    code += "        $this->" + shortClassName + "Repository = new " + shortClassName + "Repository($this->" + shortClassName + "Model);\n";
     code += '    }\n';
     code += '\n';
 
@@ -78,12 +89,13 @@ function generatorPHPControllerInit() {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-function generatorPHPControllerGetAllList(className) {
+Controller.prototype.generatorPHPControllerGetAllList = function(className) {
 
-    var code = '';
+    code = '';
+    shortClassName = className.toLowerCase();
 
     code += '\n';
-    code += generatorMethodDocBlock('查詢所有資料頁面', [''], 'void', className + '所有資料');
+    code += this.docblock.generatorMethodDocBlock('查詢所有資料頁面', [''], 'void', className + '所有資料');
     code += '    public function index() {\n';
     code += '\n';
     code += '        $resultObject = new resultObject;\n';
@@ -92,8 +104,7 @@ function generatorPHPControllerGetAllList(className) {
     code += "        $response['resultObject'] = '';\n";
     code += "        $response['" + className + "'] = '';\n";
     code += '\n';
-    code += "        $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
-    code += "        $" + className + " = $this->" + className + "_model->getAllList();\n";
+    code += "        $" + className + " = $this->" + shortClassName + "Repository->getAllList();\n";
     code += '\n';
     code += '        if(0 >= count($' + className + ')) { /** 檢查是否有資料 **/\n';
     code += '            $resultObject->setResultCode($resultObject::DATABASE_EMPTY_CODE);\n';
@@ -114,14 +125,15 @@ function generatorPHPControllerGetAllList(className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-function generatorPHPControllerEdit(args, className) {
+Controller.prototype.generatorPHPControllerEdit = function(args, className) {
 
-    var code = '';
-    var num = args.length;
-    var pkName = args[0].split(':')[0];
+    code = '';
+    num = args.length;
+    pkName = args[0].split(':')[0];
+    shortClassName = className.toLowerCase();
 
     code += '\n';
-    code += generatorMethodDocBlock('生成修改資料頁面', ['string $pk'], 'void', className + '所有資料');
+    code += this.docblock.generatorMethodDocBlock('生成修改資料頁面', ['string $pk'], 'void', className + '所有資料');
     code += "    public function edit(string $pk = '') {\n";
     code += '\n';
     code += '        $' + className + ' = new ' + className + ';\n';
@@ -157,8 +169,7 @@ function generatorPHPControllerEdit(args, className) {
     code += "                    throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '                }\n';
     code += '\n';
-    code += "                $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
-    code += "                $result = $this->" + className + "_model->edit($" + className + ");\n";
+    code += "                $result = $this->" + shortClassName + "Repository->edit($" + className + ");\n";
     code += '\n';
     code += '                if(0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                    throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
@@ -191,15 +202,16 @@ function generatorPHPControllerEdit(args, className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-function generatorPHPControllerRemove(args, className) {
+Controller.prototype.generatorPHPControllerRemove = function(args, className) {
 
-    var code = '';
-    var num = args.length;
-    var pkName = args[0].split(':')[0];
-    var pkType = args[0].split(':')[2];
+    code = '';
+    num = args.length;
+    pkName = args[0].split(':')[0];
+    pkType = args[0].split(':')[2];
+    shortClassName = className.toLowerCase();
 
     code += '\n';
-    code += generatorMethodDocBlock('生成刪除資料頁面', ['string $pk'], 'void', className + '所有資料');
+    code += this.docblock.generatorMethodDocBlock('生成刪除資料頁面', ['string $pk'], 'void', className + '所有資料');
     code += "    public function remove(string $pk = '') {\n";
     code += '\n';
     code += '        $' + className + ' = new ' + className + '();\n';
@@ -215,8 +227,7 @@ function generatorPHPControllerRemove(args, className) {
     code += "                throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '            }\n';
     code += '\n';
-    code += "            $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
-    code += "            $result = $this->" + className + "_model->remove($" + className + ");\n";
+    code += "            $result = $this->" + shortClassName + "Repository->remove($" + className + ");\n";
     code += '            if(0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
     code += '            }\n';
@@ -246,14 +257,15 @@ function generatorPHPControllerRemove(args, className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-function generatorPHPControllerInsert(args, className, namespace) {
+Controller.prototype.generatorPHPControllerInsert = function(args, className, namespace) {
 
-    var code = '';
-    var num = args.length;
-    var pkName = args[0].split(':')[0];
+    code = '';
+    num = args.length;
+    pkName = args[0].split(':')[0];
+    shortClassName = className.toLowerCase();
 
     code += '\n';
-    code += generatorMethodDocBlock('新增單筆資料頁面', [''], 'void', className + '單筆資料');
+    code += this.docblock.generatorMethodDocBlock('新增單筆資料頁面', [''], 'void', className + '單筆資料');
     code += '    public function insert() {\n';
     code += '\n';
     code += '        $' + className + ' = new ' + className + '();\n';
@@ -285,9 +297,8 @@ function generatorPHPControllerInsert(args, className, namespace) {
     code += "                    throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '                }\n';
     code += '\n';
-    code += "                $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
     code += '                unset($' + className + '->' + pkName + ');\n';
-    code += "                $result = $this->" + className + "_model->insert($" + className + ");\n";
+    code += "                $result = $this->" + shortClassName + "Repository->insert($" + className + ");\n";
     code += '\n';
     code += '                if(0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                    throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
@@ -320,20 +331,20 @@ function generatorPHPControllerInsert(args, className, namespace) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-function generatorPHPControllerCheckData(args, className) {
+Controller.prototype.generatorPHPControllerCheckData = function (args, className) {
 
-    var code = '';
-    var pkName = args[0].split(':')[0];
+    code = '';
+    pkName = args[0].split(':')[0];
+    shortClassName = className.toLowerCase();
 
     code += '\n';
-    code += generatorMethodDocBlock('生成檢查資料頁面', ['string $pk'], 'int', className + '所有資料');
+    code += this.docblock.generatorMethodDocBlock('生成檢查資料頁面', ['string $pk'], 'int', className + '所有資料');
     code += "    private function checkData(string $pk = '') : int {\n";
     code += '\n';
     code += '        $' + className + ' = new ' + className + '();\n';
     code += '        $' + className + '->set' + pkName + '($pk);\n';
     code += '\n';
-    code += "        $this->load->model('" + className + "_model', null, '" + className + "_model');\n";
-    code += "        $result = $this->" + className + "_model->getList($" + className + ");\n";
+    code += "        $result = $this->" + shortClassName + "Repository->getList($" + className + ");\n";
     code += "        return $result;\n";
     code += '\n';
     code += '    }\n';
@@ -346,9 +357,9 @@ function generatorPHPControllerCheckData(args, className) {
  * 生成PHP Model檔尾
  * @return string PHP Model檔尾
  */
-function generatorPHPControllerFooter() {
+Controller.prototype.generatorPHPControllerFooter = function () {
 
-    var code = '';
+    code = '';
 
     code += '}\n';
 
