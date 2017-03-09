@@ -1,6 +1,8 @@
-function generatorPackageDocBlock(className, namespace) {
+var Docblock = function() {};
 
-    var code = '';
+Docblock.prototype.generatorPackageDocBlock = function(className, namespace) {
+
+    code = '';
 
     code += '/**\n';
     code += ' * ' + className + '\n';
@@ -10,16 +12,16 @@ function generatorPackageDocBlock(className, namespace) {
     return code;
 }
 
-function generatorConstDocBlock(description, type, varName, spaceLength) {
+Docblock.prototype.generatorConstDocBlock = function(description, type, varName, spaceLength) {
 
-    var code = '';
-    var addSpace = '';
+    code = '';
+    addSpace = '';
 
     if('undefined' === typeof(spaceLength) || '' === spaceLength) {
         spaceLength = 4;
     }
 
-    for(ii = 0; ii < spaceLength; ii++) {
+    for(i = 0; i < spaceLength; i++) {
         addSpace += ' ';
     }
 
@@ -31,16 +33,16 @@ function generatorConstDocBlock(description, type, varName, spaceLength) {
     return code;
 }
 
-function generatorVarDocBlock(description, type, varName, spaceLength) {
+Docblock.prototype.generatorVarDocBlock = function(description, type, varName, spaceLength) {
 
-    var code = '';
-    var addSpace = '';
+    code = '';
+    addSpace = '';
 
     if('undefined' === typeof(spaceLength) || '' === spaceLength) {
         spaceLength = 4;
     }
 
-    for(ii = 0; ii < spaceLength; ii++) {
+    for(i = 0; i < spaceLength; i++) {
         addSpace += ' ';
     }
 
@@ -52,27 +54,29 @@ function generatorVarDocBlock(description, type, varName, spaceLength) {
     return code;
 }
 
-function generatorMethodDocBlock(description, params, rtn, returnDescription, spaceLength) {
+Docblock.prototype.generatorMethodDocBlock = function(description, params, rtn, returnDescription, spaceLength) {
 
-    var code = '';
-    var num = params.length;
-    var addSpace = '';
+    code = '';
+    num = params.length;
+    addSpace = '';
 
     if('undefined' === typeof(spaceLength) || '' === spaceLength) {
         spaceLength = 4;
     }
 
-    for(ii = 0; ii < spaceLength; ii++) {
+    for(i = 0; i < spaceLength; i++) {
         addSpace += ' ';
     }
 
     code += addSpace + '/**\n';
     code += addSpace + ' * ' + description + '\n';
-    for(var ii = 0; ii < num; ii++) {
-        if('' != params[ii]) {
-            code += addSpace + ' * @param ' + params[ii] + '\n';
+
+    for(i = 0; i < num; i++) {
+        if('' != params[i]) {
+            code += addSpace + ' * @param ' + params[i] + '\n';
         }
     }
+
     code += addSpace + ' * @return ' + rtn + ' ' + returnDescription + '\n';
     code += addSpace + '**/\n';
 
