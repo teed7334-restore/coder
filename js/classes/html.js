@@ -80,7 +80,7 @@ Html.prototype.generatorHTMLInsertForm = function(args, className) {
         bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
         html += '        <div data-id="coder-' + name + '-div" class="form-group">\n'
         html += '            <label for="coder-' + name + '">' + description + '</label>\n';
-        html += '            <input type="text" id="coder-' + name + '" name="' + name + '" class="form-control" pattern="<' + '?php' + ' echo $' + className + '::VALIDATE_' + name.toUpperCase() + '_RULE; ?>" title="<' + '?php' + ' echo $' + className + '::VALIDATE_' + name.toUpperCase() + '_MESSAGE; ?>" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
+        html += '            <input type="text" id="coder-' + name + '" name="' + name + '" class="form-control" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
         html += '        </div>\n'
     }
 
@@ -126,11 +126,11 @@ Html.prototype.generatorHTMLEditForm = function(args, className) {
         if(0 < i) {
             html += '        <div data-id="coder-' + name + '-div" class="form-group">\n'
             html += '            <label for="coder-' + name + '">' + description + '</label>\n';
-            html += '            <input type="text" id="coder-' + name + '" name="' + name + '" class="form-control" pattern="<' + '?php' + ' echo $' + className + '::VALIDATE_' + name.toUpperCase() + '_RULE; ?>" title="<' + '?php' + ' echo $' + className + '::VALIDATE_' + name.toUpperCase() + '_MESSAGE; ?>" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
+            html += '            <input type="text" id="coder-' + name + '" name="' + name + '" class="form-control" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
             html += '        </div>\n'
         }
         else {
-            html += '        <input type="hidden" id="coder-' + name + '" name="' + name + '" class="form-control" pattern="<' + '?php' + ' echo $' + className + '::VALIDATE_' + name.toUpperCase() + '_RULE; ?>" title="<' + '?php' + ' echo $' + className + '::VALIDATE_' + name.toUpperCase() + '_MESSAGE; ?>" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
+            html += '        <input type="hidden" id="coder-' + name + '" name="' + name + '" class="form-control" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
         }
     }
 

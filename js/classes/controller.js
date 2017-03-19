@@ -43,7 +43,9 @@ Controller.prototype.generatorPHPControllerHeader = function(namespace, classNam
     code += '<' + '?php' + '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
-    code += 'use ' + namespace + '\\' + className + ' as ' + className + ';\n';
+    code += 'use viewModels\\' + namespace + '\\' + className + ' as ' + className + ';\n';
+    code += 'use repository\\' + namespace + '\\' + shortClassName + 'Repository as ' + shortClassName + 'Repository;\n';
+    code += 'use classes\\resultObject as resultObject;\n';
     code += '\n';
     code += 'class ' + shortClassName + ' extends CI_Controller {\n';
     code += '\n';
@@ -142,8 +144,12 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
     code += '        $response = array();\n';
     code += "        $response['resultObject'] = '';\n";
     code += "        $response['" + className + "'] = '';\n";
+    code += "        $response['validateErrorMessage'] = '';\n";
     code += '\n';
     code += '        try {\n';
+    code += '\n';
+    code += '            $resultObject->setResultCode($resultObject::DATA_WAIT_CODE);\n';
+    code += '            $resultObject->setResultMessage($resultObject::DATA_WAIT);\n';
     code += '\n';
     code += "            $result = $this->checkData($pk);\n";
     code += '            if(0 === count($result)) { /** 無效的主鍵 **/\n';
@@ -153,19 +159,11 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
     code += '            if(!empty($_POST)) { /** 透過表單POST時 **/\n';
     code += '\n';
     code += "                /** 將POST過來的資料扔進容器 **/\n";
-    for(i = 0; i < num; i++) {
-
-        /** 生成屬性值 **/
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        type = args[i].split(':')[2];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
-
-        code += "                $" + className + "->set" + bigFirstName + "((" + type + ") $_POST['" + name + "']);\n";
-    }
+    code += '                $' + className + '->bind($_POST);\n';
     code += '\n';
     code += "                $result = $" + className + "->validator();\n";
     code += "                if(!empty($result)) { /** 表單驗証失敗 **/\n";
+    code += "                    $response['validateErrorMessage'] = json_encode($result);\n";
     code += "                    throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '                }\n';
     code += '\n';
@@ -174,6 +172,10 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
     code += '                if(0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                    throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
     code += '                }\n';
+    code += '\n';
+    code += '                $resultObject->setResultCode($resultObject::SUCCESS_CODE);\n';
+    code += '                $resultObject->setResultMessage($resultObject::SUCCESS);\n';
+    code += '\n';
     code += '            }\n';
     code += '        }\n';
     code += '        catch (Exception $e) {\n';
@@ -274,35 +276,34 @@ Controller.prototype.generatorPHPControllerInsert = function(args, className, na
     code += '        $response = array();\n';
     code += "        $response['resultObject'] = '';\n";
     code += "        $response['" + className + "'] = '';\n";
+    code += "        $response['validateErrorMessage'] = '';\n";
     code += '\n';
     code += '        try {\n';
+    code += '\n';
+    code += '            $resultObject->setResultCode($resultObject::DATA_WAIT_CODE);\n';
+    code += '            $resultObject->setResultMessage($resultObject::DATA_WAIT);\n';
     code += '\n';
     code += "            if(!empty($_POST)) { /** 透過表單POST時 **/\n";
     code += '\n';
     code += "                /** 將POST過來的資料扔進容器 **/\n";
-    for(i = 1; i < num; i++) {
-
-        /** 生成屬性值 **/
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        type = args[i].split(':')[2];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
-
-        code += '                $' + className + '->set' + bigFirstName + '((' + type + ') $_POST[\'' + name + '\']);\n';
-    }
+    code += '                $' + className + '->bind($_POST);\n';
     code += "\n";
     code += "                $deny = array('" + pkName + "');\n";
-    code += "                $result = $" + className + "->validator();\n";
+    code += "                $result = $" + className + "->validator($deny);\n";
     code += "                if(!empty($result)) { /** 表單驗証失敗 **/\n";
+    code += "                    $response['validateErrorMessage'] = json_encode($result);\n";
     code += "                    throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '                }\n';
     code += '\n';
-    code += '                unset($' + className + '->' + pkName + ');\n';
     code += "                $result = $this->" + shortClassName + "Repository->insert($" + className + ");\n";
     code += '\n';
     code += '                if(0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                    throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
     code += '                }\n';
+    code += '\n';
+    code += '                $resultObject->setResultCode($resultObject::SUCCESS_CODE);\n';
+    code += '                $resultObject->setResultMessage($resultObject::SUCCESS);\n';
+    code += '\n';
     code += "            }\n";
     code += '        }\n';
     code += '        catch (Exception $e) {\n';
