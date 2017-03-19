@@ -1,4 +1,4 @@
-# 碼農 v0.25
+# 碼農 v0.26
 針對PHP CI Framework，生成IoC風格的程式，減少開發時程<br />
 <br />
 <br />

@@ -42,8 +42,12 @@ Repository.prototype.generatorPHPRepositoryHeader = function(namespace, classNam
     shortClassName = className.toLowerCase();
 
     code += '<' + '?php' + '\n';
+    code += '\n';
+    code += 'namespace repository\\' + namespace + ';\n';
+    code += '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
+    code += this.docblock.generatorPackageDocBlock('class ' + shortClassName + 'Repository', 'repository\\' + namespace);
     code += 'class ' + shortClassName + 'Repository {\n';
     code += '\n';
     code += this.docblock.generatorVarDocBlock('注入用容器', 'object', '$' + shortClassName, '');

@@ -17,6 +17,7 @@ Generator.prototype.generatorClass = function(args, className, namespace) {
     code += this.generatorPHPDataVaildateRules(args);
     code += this.generatorPHPFailureMessage(args);
     code += this.generatorPHPClassProperty(args);
+    code += this.generatorPHPDataBind(args);
     code += this.generatorPHPDataVaildate(args);
     code += this.generatorPHPGetMethod(args);
     code += this.generatorPHPSetMethod(args);
@@ -36,11 +37,11 @@ Generator.prototype.generatorPHPClassHeader = function(namespace, className) {
     code = '';
 
     code += '<' + '?php' + '\n';
-    code += 'namespace ' + namespace + ';\n';
+    code += 'namespace viewModel\\' + namespace + ';\n';
     code += '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
-    code += this.docblock.generatorPackageDocBlock('class ' + className, namespace);
+    code += this.docblock.generatorPackageDocBlock('class ' + className, 'viewModel\\' + namespace);
     code += 'class ' + className + ' {\n';
     code += '\n';
 
@@ -93,7 +94,7 @@ Generator.prototype.generatorPHPFailureMessage = function(args) {
         code += '    /**\n';
         code += '     * @const string VALIDATE_' + name.toUpperCase() + '_MESSAGE ' + description + '欄位驗証失敗訊息\n';
         code += '    */\n';
-        code += "    const VALIDATE_" + name.toUpperCase() + "_MESSAGE = '';\n";
+        code += "    const VALIDATE_" + name.toUpperCase() + "_MESSAGE = '" + description + "資料有誤';\n";
         code += '\n';
     }
 
@@ -129,6 +130,28 @@ Generator.prototype.generatorPHPClassProperty = function(args) {
 }
 
 /**
+ * 生成資料綁定
+ * @return string 資料綁定函式
+ */
+Generator.prototype.generatorPHPDataBind = function(args) {
+
+    code = '';
+    num = args.length;
+
+    code += '\n';
+    code += this.docblock.generatorMethodDocBlock('資料綁定函式', ['array $data 要綁定的資料'], 'void', '');
+    code += '    public function bind(array $data = array()) {\n';
+    code += '        foreach($data as $key => $value) {\n';
+    code += '            if(property_exists($this, $key)) {\n';
+    code += '                $this->{$key} = $value;\n';
+    code += '            }\n';
+    code += '        }\n';
+    code += '    }\n';
+
+    return code;
+}
+
+/**
  * 生成資料驗証
  * @return string 資料驗証函式
  */
@@ -143,22 +166,14 @@ Generator.prototype.generatorPHPDataVaildate = function(args) {
     code += '\n';
     code += '        $failure = array();\n';
     code += '\n';
-
-    for(i = 0; i < num; i++) {
-
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
-        bigName = name.toUpperCase();
-
-        code += '        /** 驗証' + description + '欄位資料格式 **/\n';
-        code += '        $pattern = VALIDATE_' + bigName + '_RULE;\n';
-        code += '        $errorMessage = VALIDATE_' + bigName + '_MESSAGE;\n';
-        code += "        if(!in_array('" + name + "', $deny) && 1 !== preg_match($pattern, $this->" + name + ")) { /** " + description + "欄位驗証失敗 **/\n";
-        code += "            $failure['" + name + "'] = $errorMessage;\n";
-        code += '        }\n';
-        code += '\n';
-    }
+    code += '        foreach($this as $key => $value) {\n';
+    code += '            $bigName = strtoupper($key);\n';
+    code += '            $pattern = constant("self::VALIDATE_{$bigName}_RULE");\n';
+    code += '            $errorMessage = constant("self::VALIDATE_{$bigName}_MESSAGE");\n';
+    code += '            if(!in_array($key, $deny) && 1 !== preg_match($pattern, $value)) { /** 主鍵欄位驗証失敗 **/\n';
+    code += '                $failure[$key] = $errorMessage;\n';
+    code += '            }\n';
+    code += '        }\n';
     code += '\n';
     code += '        return $failure;\n';
     code += '    }\n';
@@ -170,7 +185,13 @@ Generator.prototype.generatorPHPResultObject = function() {
 
     code = '';
 
-    code += "class ResultObject {\n";
+    code += '<' + '?php' + '\n';
+    code += 'namespace classes\\resultObject;\n';
+    code += '\n';
+    code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
+    code += '\n';
+    code += this.docblock.generatorPackageDocBlock('class resultObject', 'classes\\resultObject');
+    code += "class resultObject {\n";
     code += "\n";
     code += this.docblock.generatorConstDocBlock('資料待輸入系統代號', 'string', "DATA_WAIT_CODE");
     code += "    const DATA_WAIT_CODE = '100';\n";
@@ -215,22 +236,22 @@ Generator.prototype.generatorPHPResultObject = function() {
     code += "    }\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('取得系統代號', [''], 'string', '系統代號');
-    code += "    public function getResultCode() {\n";
-    code += "        return $this->resultCode;\n";
+    code += "    public function getResultCode() : string {\n";
+    code += "        return (string) $this->resultCode;\n";
     code += "    }\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('取得系統訊息', [''], 'string', '系統訊息');
-    code += "    public function getResultMessage() {\n";
-    code += "        return $this->resultMessage;\n";
+    code += "    public function getResultMessage() : string {\n";
+    code += "        return (string) $this->resultMessage;\n";
     code += "    }\n";
     code += "\n";
-    code += this.docblock.generatorMethodDocBlock('指定系統代號', ['string $resultCode = self::SUCCESS_CODE'], 'void', '');
-    code += "    public function setResultCode(string $resultCode = self::SUCCESS_CODE) {\n";
+    code += this.docblock.generatorMethodDocBlock('指定系統代號', ["string $resultCode = ''"], 'void', '');
+    code += "    public function setResultCode(string $resultCode = '') {\n";
     code += "        $this->resultCode = $resultCode;\n";
     code += "    }\n";
     code += "\n";
-    code += this.docblock.generatorMethodDocBlock('指定系統訊息', ['string $resultCode = self::SUCCESS'], 'void', '');
-    code += "    public function setResultMessage(string $resultMessage = self::SUCCESS) {\n";
+    code += this.docblock.generatorMethodDocBlock('指定系統訊息', ["string $resultCode = ''"], 'void', '');
+    code += "    public function setResultMessage(string $resultMessage = '') {\n";
     code += "        $this->resultMessage = $resultMessage;\n";
     code += "    }\n";
     code += "}\n";
@@ -262,7 +283,7 @@ Generator.prototype.generatorPHPGetMethod = function(args) {
         code += '     * @return ' + type + ' $this->' + name + ' 取得' + description + '\n';
         code += '    */\n';
         code += '    public function get' + bigFirstName + '() : ' + type + ' {\n';
-        code += '        return $this->' + name + ';\n';
+        code += '        return (' + type + ') $this->' + name + ';\n';
         code += '    }\n';
     }
 
