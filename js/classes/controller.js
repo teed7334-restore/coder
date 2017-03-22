@@ -45,9 +45,10 @@ Controller.prototype.generatorPHPControllerHeader = function(namespace, classNam
     code += '\n';
     code += 'use viewModels\\' + namespace + '\\' + className + ' as ' + className + ';\n';
     code += 'use repository\\' + namespace + '\\' + shortClassName + 'Repository as ' + shortClassName + 'Repository;\n';
-    code += 'use classes\\resultObject as resultObject;\n';
+    code += 'use status\\resultObject as resultObject;\n';
     code += '\n';
-    code += 'class ' + shortClassName + ' extends CI_Controller {\n';
+    code += 'class ' + shortClassName + ' extends CI_Controller \n';
+    code += '{\n';
     code += '\n';
 
     return code;
@@ -76,7 +77,8 @@ Controller.prototype.generatorPHPControllerInit = function(className) {
     code += "    protected $" + shortClassName + "Repository;\n";
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('建構式', [''], 'void', '');
-    code += '    public function __construct() {\n';
+    code += '    public function __construct() \n';
+    code += '    {\n';
     code += "        parent::__construct();\n";
     code += "        $this->load->model('" + shortClassName + "Model', null, '" + shortClassName + "Model');\n";
     code += "        $this->" + shortClassName + "Repository = new " + shortClassName + "Repository($this->" + shortClassName + "Model);\n";
@@ -98,7 +100,8 @@ Controller.prototype.generatorPHPControllerGetAllList = function(className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('查詢所有資料頁面', [''], 'void', className + '所有資料');
-    code += '    public function index() {\n';
+    code += '    public function index() \n';
+    code += '    {\n';
     code += '\n';
     code += '        $resultObject = new resultObject;\n';
     code += '\n';
@@ -108,7 +111,7 @@ Controller.prototype.generatorPHPControllerGetAllList = function(className) {
     code += '\n';
     code += "        $" + className + " = $this->" + shortClassName + "Repository->getAllList();\n";
     code += '\n';
-    code += '        if(0 >= count($' + className + ')) { /** 檢查是否有資料 **/\n';
+    code += '        if (0 >= count($' + className + ')) { /** 檢查是否有資料 **/\n';
     code += '            $resultObject->setResultCode($resultObject::DATABASE_EMPTY_CODE);\n';
     code += '            $resultObject->setResultMessage($resultObject::DATABASE_EMPTY);\n';
     code += '        }\n';
@@ -136,7 +139,8 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('生成修改資料頁面', ['string $pk'], 'void', className + '所有資料');
-    code += "    public function edit(string $pk = '') {\n";
+    code += "    public function edit(string $pk = '') \n";
+    code += '    {\n';
     code += '\n';
     code += '        $' + className + ' = new ' + className + ';\n';
     code += '        $resultObject = new resultObject;\n';
@@ -152,24 +156,24 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
     code += '            $resultObject->setResultMessage($resultObject::DATA_WAIT);\n';
     code += '\n';
     code += "            $result = $this->checkData($pk);\n";
-    code += '            if(0 === count($result)) { /** 無效的主鍵 **/\n';
+    code += '            if (0 === count($result)) { /** 無效的主鍵 **/\n';
     code += "                throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '            }\n';
     code += '\n';
-    code += '            if(!empty($_POST)) { /** 透過表單POST時 **/\n';
+    code += '            if (!empty($_POST)) { /** 透過表單POST時 **/\n';
     code += '\n';
     code += "                /** 將POST過來的資料扔進容器 **/\n";
     code += '                $' + className + '->bind($_POST);\n';
     code += '\n';
     code += "                $result = $" + className + "->validator();\n";
-    code += "                if(!empty($result)) { /** 表單驗証失敗 **/\n";
+    code += "                if (!empty($result)) { /** 表單驗証失敗 **/\n";
     code += "                    $response['validateErrorMessage'] = json_encode($result);\n";
     code += "                    throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '                }\n';
     code += '\n';
     code += "                $result = $this->" + shortClassName + "Repository->edit($" + className + ");\n";
     code += '\n';
-    code += '                if(0 >= $result) { /** 資料寫入失敗 **/\n';
+    code += '                if (0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                    throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
     code += '                }\n';
     code += '\n';
@@ -179,11 +183,10 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
     code += '            }\n';
     code += '        }\n';
     code += '        catch (Exception $e) {\n';
-    code += '            if(self::INVALIDATE_PARAMS_CODE === $e->getMessage()) {\n';
+    code += '            if (self::INVALIDATE_PARAMS_CODE === $e->getMessage()) {\n';
     code += '                $resultObject->setResultCode($resultObject::INVALIDATE_PARAMS_CODE);\n';
     code += '                $resultObject->setResultMessage($resultObject::INVALIDATE_PARAMS);\n';
-    code += '            }\n';
-    code += '            elseif(self::DATABASE_WRITE_FAILURE_CODE === $e->getMessage()) {\n';
+    code += '            } elseif (self::DATABASE_WRITE_FAILURE_CODE === $e->getMessage()) {\n';
     code += '                $resultObject->setResultCode($resultObject::DATABASE_WRITE_FAILURE_CODE);\n';
     code += '                $resultObject->setResultMessage($resultObject::DATABASE_WRITE_FAILURE);\n';
     code += '            }\n';
@@ -214,7 +217,8 @@ Controller.prototype.generatorPHPControllerRemove = function(args, className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('生成刪除資料頁面', ['string $pk'], 'void', className + '所有資料');
-    code += "    public function remove(string $pk = '') {\n";
+    code += "    public function remove(string $pk = '') \n";
+    code += '    {\n';
     code += '\n';
     code += '        $' + className + ' = new ' + className + '();\n';
     code += '        $resultObject = new resultObject;\n';
@@ -225,21 +229,20 @@ Controller.prototype.generatorPHPControllerRemove = function(args, className) {
     code += '        try {\n';
     code += '\n';
     code += "            $result = $this->checkData($pk);\n";
-    code += '            if(0 === count($result)) { /** 無效的主鍵 **/\n';
+    code += '            if (0 === count($result)) { /** 無效的主鍵 **/\n';
     code += "                throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '            }\n';
     code += '\n';
     code += "            $result = $this->" + shortClassName + "Repository->remove($" + className + ");\n";
-    code += '            if(0 >= $result) { /** 資料寫入失敗 **/\n';
+    code += '            if (0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
     code += '            }\n';
     code += '        }\n';
     code += '        catch (Exception $e) {\n';
-    code += '            if(self::INVALIDATE_PARAMS_CODE === $e->getMessage()) { /** 資料驗証失敗 **/\n';
+    code += '            if (self::INVALIDATE_PARAMS_CODE === $e->getMessage()) { /** 資料驗証失敗 **/\n';
     code += '                $resultObject->setResultCode($resultObject::INVALIDATE_PARAMS_CODE);\n';
     code += '                $resultObject->setResultMessage($resultObject::INVALIDATE_PARAMS);\n';
-    code += '            }\n';
-    code += '            elseif(self::DATABASE_WRITE_FAILURE_CODE === $e->getMessage()) { /** 資料寫入失敗 **/\n';
+    code += '            } elseif (self::DATABASE_WRITE_FAILURE_CODE === $e->getMessage()) { /** 資料寫入失敗 **/\n';
     code += '                $resultObject->setResultCode($resultObject::DATABASE_WRITE_FAILURE_CODE);\n';
     code += '                $resultObject->setResultMessage($resultObject::DATABASE_WRITE_FAILURE);\n';
     code += '            }\n';
@@ -268,7 +271,8 @@ Controller.prototype.generatorPHPControllerInsert = function(args, className, na
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('新增單筆資料頁面', [''], 'void', className + '單筆資料');
-    code += '    public function insert() {\n';
+    code += '    public function insert() \n';
+    code += '    {\n';
     code += '\n';
     code += '        $' + className + ' = new ' + className + '();\n';
     code += '        $resultObject = new resultObject;\n';
@@ -283,21 +287,21 @@ Controller.prototype.generatorPHPControllerInsert = function(args, className, na
     code += '            $resultObject->setResultCode($resultObject::DATA_WAIT_CODE);\n';
     code += '            $resultObject->setResultMessage($resultObject::DATA_WAIT);\n';
     code += '\n';
-    code += "            if(!empty($_POST)) { /** 透過表單POST時 **/\n";
+    code += "            if (!empty($_POST)) { /** 透過表單POST時 **/\n";
     code += '\n';
     code += "                /** 將POST過來的資料扔進容器 **/\n";
     code += '                $' + className + '->bind($_POST);\n';
     code += "\n";
     code += "                $deny = array('" + pkName + "');\n";
     code += "                $result = $" + className + "->validator($deny);\n";
-    code += "                if(!empty($result)) { /** 表單驗証失敗 **/\n";
+    code += "                if (!empty($result)) { /** 表單驗証失敗 **/\n";
     code += "                    $response['validateErrorMessage'] = json_encode($result);\n";
     code += "                    throw new Exception(self::INVALIDATE_PARAMS_CODE);\n";
     code += '                }\n';
     code += '\n';
     code += "                $result = $this->" + shortClassName + "Repository->insert($" + className + ");\n";
     code += '\n';
-    code += '                if(0 >= $result) { /** 資料寫入失敗 **/\n';
+    code += '                if (0 >= $result) { /** 資料寫入失敗 **/\n';
     code += "                    throw new Exception(self::DATABASE_WRITE_FAILURE_CODE);\n";
     code += '                }\n';
     code += '\n';
@@ -307,11 +311,10 @@ Controller.prototype.generatorPHPControllerInsert = function(args, className, na
     code += "            }\n";
     code += '        }\n';
     code += '        catch (Exception $e) {\n';
-    code += '            if(self::INVALIDATE_PARAMS_CODE === $e->getMessage()) { /** 資料驗証失敗 **/\n';
+    code += '            if (self::INVALIDATE_PARAMS_CODE === $e->getMessage()) { /** 資料驗証失敗 **/\n';
     code += '                $resultObject->setResultCode($resultObject::INVALIDATE_PARAMS_CODE);\n';
     code += '                $resultObject->setResultMessage($resultObject::INVALIDATE_PARAMS);\n';
-    code += '            }\n';
-    code += '            elseif(self::DATABASE_WRITE_FAILURE_CODE === $e->getMessage()) { /** 資料寫入失敗 **/\n';
+    code += '            } elseif (self::DATABASE_WRITE_FAILURE_CODE === $e->getMessage()) { /** 資料寫入失敗 **/\n';
     code += '                $resultObject->setResultCode($resultObject::DATABASE_WRITE_FAILURE_CODE);\n';
     code += '                $resultObject->setResultMessage($resultObject::DATABASE_WRITE_FAILURE);\n';
     code += '            }\n';
@@ -340,7 +343,8 @@ Controller.prototype.generatorPHPControllerCheckData = function (args, className
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('生成檢查資料頁面', ['string $pk'], 'int', className + '所有資料');
-    code += "    private function checkData(string $pk = '') : int {\n";
+    code += "    private function checkData(string $pk = '') : int \n"
+    code += '    {\n';
     code += '\n';
     code += '        $' + className + ' = new ' + className + '();\n';
     code += '        $' + className + '->set' + pkName + '($pk);\n';

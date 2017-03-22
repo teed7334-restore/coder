@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON 轉註解</title>
+<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="page-header">
+        <h1>JSON <small>轉註解</small></h1>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="json">
+                物件名
+            </label>
+            <input class="form-control" type="text" id="objectName" data-id="objectName" value="order" />
+        </div>
+        <div class="form-group">
+            <label for="json">
+                JSON
+            </label>
+            <textarea class="form-control" type="text" id="json" data-id="json">
+                [
+                    {"orderId":"2017032100001","orderTotalPrice":2650,"orderPayName":"Peter"},
+                    {"orderId":"2017032100002","orderTotalPrice":2840,"orderPayName":"Peter"},
+                    {"orderId":"2017032100003","orderTotalPrice":2720,"orderPayName":"Peter"}
+                ]
+            </textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" data-id="go" type="button">
+                <i class="fa fa-clone"> 送出</i>
+            </button>
+            <button class="btn btn-danger" type="reset">
+                <i class="fa fa-close"> 重置</i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <p>註解</p>
+        <pre data-id="display-annotations">
+        </pre>
+    </div>
+</div>
+<script src="node_modules/code-prettify/loader/prettify.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/classes/annotations.js"></script>
+<script src="js/json2annotations.js"></script>
+</body>
+</html>

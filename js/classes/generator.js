@@ -42,7 +42,8 @@ Generator.prototype.generatorPHPClassHeader = function(namespace, className) {
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
     code += this.docblock.generatorPackageDocBlock('class ' + className, 'viewModel\\' + namespace);
-    code += 'class ' + className + ' {\n';
+    code += 'class ' + className + ' \n';
+    code += '{\n';
     code += '\n';
 
     return code;
@@ -140,9 +141,10 @@ Generator.prototype.generatorPHPDataBind = function(args) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('資料綁定函式', ['array $data 要綁定的資料'], 'void', '');
-    code += '    public function bind(array $data = array()) {\n';
-    code += '        foreach($data as $key => $value) {\n';
-    code += '            if(property_exists($this, $key)) {\n';
+    code += '    public function bind(array $data = array()) \n';
+    code += '    {\n';
+    code += '        foreach ($data as $key => $value) {\n';
+    code += '            if (property_exists($this, $key)) {\n';
     code += '                $this->{$key} = $value;\n';
     code += '            }\n';
     code += '        }\n';
@@ -162,15 +164,16 @@ Generator.prototype.generatorPHPDataVaildate = function(args) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('資料驗証函式', ['array $deny 要排除的驗証'], 'array', '未通過驗証的欄位');
-    code += '    public function validator(array $deny = array()) : array {\n';
+    code += '    public function validator(array $deny = array()) : array \n';
+    code += '    {\n';
     code += '\n';
     code += '        $failure = array();\n';
     code += '\n';
-    code += '        foreach($this as $key => $value) {\n';
+    code += '        foreach ($this as $key => $value) {\n';
     code += '            $bigName = strtoupper($key);\n';
     code += '            $pattern = constant("self::VALIDATE_{$bigName}_RULE");\n';
     code += '            $errorMessage = constant("self::VALIDATE_{$bigName}_MESSAGE");\n';
-    code += '            if(!in_array($key, $deny) && 1 !== preg_match($pattern, $value)) { /** 主鍵欄位驗証失敗 **/\n';
+    code += '            if (!in_array($key, $deny) && 1 !== preg_match($pattern, $value)) { /** 主鍵欄位驗証失敗 **/\n';
     code += '                $failure[$key] = $errorMessage;\n';
     code += '            }\n';
     code += '        }\n';
@@ -186,12 +189,13 @@ Generator.prototype.generatorPHPResultObject = function() {
     code = '';
 
     code += '<' + '?php' + '\n';
-    code += 'namespace classes\\resultObject;\n';
+    code += 'namespace status;\n';
     code += '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
-    code += this.docblock.generatorPackageDocBlock('class resultObject', 'classes\\resultObject');
-    code += "class resultObject {\n";
+    code += this.docblock.generatorPackageDocBlock('class resultObject', 'status\\resultObject');
+    code += "class resultObject \n";
+    code += '{\n';
     code += "\n";
     code += this.docblock.generatorConstDocBlock('資料待輸入系統代號', 'string', "DATA_WAIT_CODE");
     code += "    const DATA_WAIT_CODE = '100';\n";
@@ -230,28 +234,33 @@ Generator.prototype.generatorPHPResultObject = function() {
     code += "    private $resultMessage;\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('建構式', [''], 'void', '');
-    code += "    public function __construct() {\n";
+    code += "    public function __construct() \n";
+    code += '    {\n';
     code += "        $this->resultCode = self::SUCCESS_CODE;\n";
     code += "        $this->resultMessage = self::SUCCESS;\n";
     code += "    }\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('取得系統代號', [''], 'string', '系統代號');
-    code += "    public function getResultCode() : string {\n";
+    code += "    public function getResultCode() : string \n";
+    code += '    {\n';
     code += "        return (string) $this->resultCode;\n";
     code += "    }\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('取得系統訊息', [''], 'string', '系統訊息');
-    code += "    public function getResultMessage() : string {\n";
+    code += "    public function getResultMessage() : string \n";
+    code += '    {\n';
     code += "        return (string) $this->resultMessage;\n";
     code += "    }\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('指定系統代號', ["string $resultCode = ''"], 'void', '');
-    code += "    public function setResultCode(string $resultCode = '') {\n";
+    code += "    public function setResultCode(string $resultCode = '') \n";
+    code += '    {\n';
     code += "        $this->resultCode = $resultCode;\n";
     code += "    }\n";
     code += "\n";
     code += this.docblock.generatorMethodDocBlock('指定系統訊息', ["string $resultCode = ''"], 'void', '');
-    code += "    public function setResultMessage(string $resultMessage = '') {\n";
+    code += "    public function setResultMessage(string $resultMessage = '') \n";
+    code += '    {\n';
     code += "        $this->resultMessage = $resultMessage;\n";
     code += "    }\n";
     code += "}\n";
@@ -282,7 +291,8 @@ Generator.prototype.generatorPHPGetMethod = function(args) {
         code += '     * 取得' + description + '\n';
         code += '     * @return ' + type + ' $this->' + name + ' 取得' + description + '\n';
         code += '    */\n';
-        code += '    public function get' + bigFirstName + '() : ' + type + ' {\n';
+        code += '    public function get' + bigFirstName + '() : ' + type + ' \n';
+        code += '    {\n';
         code += '        return (' + type + ') $this->' + name + ';\n';
         code += '    }\n';
     }
@@ -313,7 +323,8 @@ Generator.prototype.generatorPHPSetMethod = function(args) {
         code += '     * @param ' + type + ' $' + name + ' 設定' + description + '\n';
         code += '     * @return void \n';
         code += '    */\n';
-        code += '    public function set' + bigFirstName + '(' + type + ' $' + name + ') {\n';
+        code += '    public function set' + bigFirstName + '(' + type + ' $' + name + ') \n';
+        code += '    {\n';
         code += '        $this->' + name + ' = $' + name + ';\n';
         code += '    }\n';
     }

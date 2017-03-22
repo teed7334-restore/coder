@@ -44,7 +44,8 @@ Model.prototype.generatorPHPModelHeader = function(namespace, className) {
     code += '<' + '?php' + '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
-    code += 'class ' + shortClassName + 'Model extends CI_Model {\n';
+    code += 'class ' + shortClassName + 'Model extends CI_Model \n';
+    code += '{\n';
     code += '\n';
     code += this.docblock.generatorConstDocBlock('對應的資料表', 'string', 'TABLE', '');
     code += "    const TABLE = '" + className + "';\n";
@@ -64,7 +65,8 @@ Model.prototype.generatorPHPModelInit = function(className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('建構式', [''], 'void', '');
-    code += '    public function __construct() {\n';
+    code += '    public function __construct() \n';
+    code += '    {\n';
     code += "        parent::__construct();\n";
     code += '    }\n';
     code += '\n';
@@ -83,7 +85,8 @@ Model.prototype.generatorPHPModelGetAllList = function(className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('取得所有資料', [''], 'object', className + '所有資料');
-    code += '    public function getAllList() : array {\n';
+    code += '    public function getAllList() : array \n';
+    code += '    {\n';
     code += "        return $this->db->get(self::TABLE)->result(); \n";
     code += '    }\n';
     code += '\n';
@@ -104,7 +107,8 @@ Model.prototype.generatorPHPModelGetList = function(className, namespace, bigFir
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵取得資料', ['$' + shortClassName], 'object', className + '單筆資料');
-    code += '    public function getList($' + shortClassName + ') {\n';
+    code += '    public function getList($' + shortClassName + ') : array \n';
+    code += '    {\n';
     code += "        $this->db->where('" + name + "', $" + shortClassName + '->get' + bigFirstName + '());\n';
     code += "        return $this->db->get(self::TABLE)->result(); \n";
     code += '    }\n';
@@ -124,7 +128,8 @@ Model.prototype.generatorPHPModelInsertBatch = function(className, namespace) {
     code = '';
 
     code += this.docblock.generatorMethodDocBlock('插入多筆資料', ['array $data 物件陣列'], 'int', '影響的資料筆數');
-    code += '    public function insertBatch(array $data = array()) : int {\n';
+    code += '    public function insertBatch(array $data = array()) : int \n';
+    code += '    {\n';
     code += '        $this->db->insert_batch(self::TABLE, $data);\n';
     code += "        return $this->db->affected_rows(); \n";
     code += '    }\n';
@@ -146,7 +151,8 @@ Model.prototype.generatorPHPModelInsert = function(className, namespace) {
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('插入一筆資料', ['$' + shortClassName], 'int', '影響的資料筆數');
-    code += '    public function insert($' + shortClassName + ') : int {\n';
+    code += '    public function insert($' + shortClassName + ') : int \n';
+    code += '    {\n';
     code += '        $this->db->insert(self::TABLE, $' + shortClassName + ');\n';
     code += "        return $this->db->affected_rows(); \n";
     code += '    }\n';
@@ -169,7 +175,8 @@ Model.prototype.generatorPHPModelEdit = function(className, namespace, name, big
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵修改資料', ['$' + shortClassName], 'int', '影響的資料筆數');
-    code += '    public function edit($' + shortClassName + ') : int {\n';
+    code += '    public function edit($' + shortClassName + ') : int \n';
+    code += '    {\n';
     code += "        $this->db->where('" + name + "', $" + shortClassName + '->get' + bigFirstName + '());\n';
     code += "        $this->db->update(self::TABLE, $" + shortClassName + "); \n";
     code += "        return $this->db->affected_rows(); \n";
@@ -193,7 +200,8 @@ Model.prototype.generatorPHPModelRemove = function(className, namespace, name, b
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵刪除資料', ['$' + shortClassName], 'int', '影響的資料筆數');
-    code += '    public function remove($' + shortClassName + ') : int {\n';
+    code += '    public function remove($' + shortClassName + ') : int \n';
+    code += '    {\n';
     code += "        $this->db->where('" + name + "', $" + shortClassName + '->get' + bigFirstName + '());\n';
     code += "        $this->db->delete(self::TABLE); \n";
     code += "        return $this->db->affected_rows(); \n";

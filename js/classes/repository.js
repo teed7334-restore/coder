@@ -48,7 +48,8 @@ Repository.prototype.generatorPHPRepositoryHeader = function(namespace, classNam
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
     code += this.docblock.generatorPackageDocBlock('class ' + shortClassName + 'Repository', 'repository\\' + namespace);
-    code += 'class ' + shortClassName + 'Repository {\n';
+    code += 'class ' + shortClassName + 'Repository \n';
+    code += '{\n';
     code += '\n';
     code += this.docblock.generatorVarDocBlock('注入用容器', 'object', '$' + shortClassName, '');
     code += "    protected $" + shortClassName + "Model;\n";
@@ -68,8 +69,8 @@ Repository.prototype.generatorPHPRepositoryInit = function(className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('建構式', ['$' + shortClassName], 'void', '');
-    code += '    public function __construct($' + shortClassName + 'Model) {\n';
-    code += "        parent::__construct();\n";
+    code += '    public function __construct($' + shortClassName + 'Model) \n';
+    code += '    {\n';
     code += "        $this->" + shortClassName + "Model = $" + shortClassName + "Model;\n";
     code += '    }\n';
     code += '\n';
@@ -89,7 +90,8 @@ Repository.prototype.generatorPHPRepositoryGetAllList = function(className) {
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('取得所有資料', [''], 'object', className + '所有資料');
-    code += '    public function getAllList() : array {\n';
+    code += '    public function getAllList() : array \n';
+    code += '    {\n';
     code += "        return $this->" + shortClassName + "Model->getAllList(); \n";
     code += '    }\n';
     code += '\n';
@@ -110,7 +112,8 @@ Repository.prototype.generatorPHPRepositoryGetList = function(className, namespa
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵取得資料', ['$' + shortClassName], 'object', className + '單筆資料');
-    code += '    public function getList($' + shortClassName + ') {\n';
+    code += '    public function getList($' + shortClassName + ') \n';
+    code += '    {\n';
     code += "        return $this->" + shortClassName + "Model->getList($" + shortClassName + ");\n";
     code += '    }\n';
     code += '\n';
@@ -130,7 +133,8 @@ Repository.prototype.generatorPHPRepositoryInsertBatch = function(className, nam
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('插入多筆資料', ['array $data 物件陣列'], 'int', '影響的資料筆數');
-    code += '    public function insertBatch(array $data = array()) : int {\n';
+    code += '    public function insertBatch(array $data = array()) : int \n';
+    code += '    {\n';
     code += '        return $this->' + shortClassName + 'Model->insertBatch($data);\n';
     code += '    }\n';
     code += '\n';
@@ -151,8 +155,9 @@ Repository.prototype.generatorPHPRepositoryInsert = function(className, namespac
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('插入一筆資料', ['$' + shortClassName], 'int', '影響的資料筆數');
-    code += '    public function insert($' + shortClassName + ') : int {\n';
-    code += '        return $this->' + shortClassName + 'Model->insert($' + shortClassName + ')\n';
+    code += '    public function insert($' + shortClassName + ') : int \n';
+    code += '    {\n';
+    code += '        return $this->' + shortClassName + 'Model->insert($' + shortClassName + ');\n';
     code += '    }\n';
     code += '\n';
 
@@ -173,7 +178,8 @@ Repository.prototype.generatorPHPRepositoryEdit = function(className, namespace,
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵修改資料', ['$' + shortClassName], 'int', '影響的資料筆數');
-    code += '    public function edit($' + shortClassName + ') : int {\n';
+    code += '    public function edit($' + shortClassName + ') : int \n';
+    code += '    {\n';
     code += "        return $this->" + shortClassName + "Model->edit($" + shortClassName + "); \n";
     code += '    }\n';
     code += '\n';
@@ -195,7 +201,8 @@ Repository.prototype.generatorPHPRepositoryRemove = function(className, namespac
     shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵刪除資料', ['$' + shortClassName], 'int', '影響的資料筆數');
-    code += '    public function remove($' + shortClassName + ') : int {\n';
+    code += '    public function remove($' + shortClassName + ') : int \n';
+    code += '    {\n';
     code += '        return $this->' + shortClassName + 'Model->remove($' + shortClassName + ');\n';
     code += '    }\n';
     code += '\n';
