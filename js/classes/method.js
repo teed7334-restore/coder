@@ -73,7 +73,8 @@ Method.prototype.generatorPHPMethod = function(args) {
 
         code += '     * @return ' + returnTypeDescription + '\n';
         code += '    */\n';
-        code += permission + ' function ' + methodName + '(' + paramsString + ')' + returnType + ' {\n';
+        code += permission + ' function ' + methodName + '(' + paramsString + ')' + returnType + ' \n';
+        code += '    {\n';
         code += '        /** @todo 要新增的程式碼 **/\n';
         code += '    }\n';
         code += '\n';
