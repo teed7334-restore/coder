@@ -189,11 +189,11 @@ Generator.prototype.generatorPHPResultObject = function() {
     code = '';
 
     code += '<' + '?php' + '\n';
-    code += 'namespace classes\\resultObject;\n';
+    code += 'namespace status;\n';
     code += '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
     code += '\n';
-    code += this.docblock.generatorPackageDocBlock('class resultObject', 'classes\\resultObject');
+    code += this.docblock.generatorPackageDocBlock('class resultObject', 'status\\resultObject');
     code += "class resultObject \n";
     code += '{\n';
     code += "\n";
