@@ -5,9 +5,10 @@ var Annotations = function() {};
  * @param  string      json
  * @return string      PHP Method
  */
-Annotations.prototype.generatorAnnotations = function(name, json) {
+Annotations.prototype.generatorAnnotations = function(name, json, io) {
 
     let code = '';
+    let title = '1' === io.toString() ? '@param' : '@return';
     let index = '';
     let type = '';
     let deny1 = [];
@@ -21,7 +22,7 @@ Annotations.prototype.generatorAnnotations = function(name, json) {
         }
 
         if('object' !== type && 0 > jQuery.inArray(i, deny1)) {
-            code += ' * @param ' + type + ' $' + i + '\n';
+            code += ' * ' + title + ' ' + type + ' $' + i + '\n';
             deny1.push(i);
         } else {
             for(j in json[i]) {
@@ -32,7 +33,7 @@ Annotations.prototype.generatorAnnotations = function(name, json) {
                 }
 
                 if('object' !== type && 0 > jQuery.inArray(j, deny2)) {
-                    code += ' * @param ' + type + ' $' + name + '[' + i + ']->' + j + '\n';
+                    code += ' * ' + title + ' ' + type + ' $' + name + '[' + i + ']->' + j + '\n';
                     deny2.push(j);
                 }
             }
