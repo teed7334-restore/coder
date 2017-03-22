@@ -3,8 +3,8 @@
 <br />
 <br />
 # 版本號說明
-<br />
 碼農 v[Github滿100星 + 1].[有支持新的程式語言與Framework + 1].[每次git push + 1]<br />
+<br />
 <br />
 # 主程式<br />
 index.html  碼農功能導覽頁<br />
