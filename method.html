@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Method 產生器</title>
+<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="page-header">
+        <h1>Method <small>產生器</small></h1>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="methods">
+                方法︰格式-[使用權限]:[方法名稱]:[註解內容]:[[代入參數1]>[參數1注解]|[代入參數2]>[參數2注解]|...]:[回傳類型] <br />
+                <br />
+                [使用權限] <br />
+                + => public <br />
+                - => private <br />
+                * => protected
+            </label>
+            <input class="form-control" type="text" id="methods" data-id="methods" value="-:getUser:透過pk取得使用者資訊:Linux\Groups\Users $users>使用者物件,-:getGroup:透過pk取得群組資訊:Linux\Groups\Users $users>使用者物件|$limit = 1>限制筆數,+:getUserInfo:透過pk取得使用者與群組資訊:Linux\Groups\Users $users>使用者物件|Linux\Groups\Groups $groups>群組物件:array" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" data-id="go" type="button">
+                <i class="fa fa-clone"> 送出</i>
+            </button>
+            <button class="btn btn-danger" type="reset">
+                <i class="fa fa-close"> 重置</i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <p>Method</p>
+        <pre data-id="display-method">
+        </pre>
+    </div>
+</div>
+<script src="node_modules/code-prettify/loader/prettify.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/classes/docblock.js"></script>
+<script src="js/classes/method.js"></script>
+<script src="js/method.js"></script>
+</body>
+</html>

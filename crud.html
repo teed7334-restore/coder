@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>碼農 v0.26</title>
+<title>CRUD 產生器</title>
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <body>
 <div class="container container-fluid">
     <div class="page-header">
-        <h1>碼農 <small>v0.26</small></h1>
+        <h1>CRUD <small>產生器</small></h1>
     </div>
     <div class="row">
         <div class="form-group">
@@ -24,17 +24,6 @@
         <div class="form-group">
             <label for="args">屬性︰格式-[屬性名稱]:[註解內容]:[資料格式]</label>
             <input class="form-control" type="text" id="args" data-id="args" value="id:使用者id:int,name:使用者名稱:string,account:使用者帳號:string,password:使用者密碼:string" />
-        </div>
-        <div class="form-group">
-            <label for="methods">
-                方法︰格式-[使用權限]:[方法名稱]:[註解內容]:[[代入參數1]>[參數1注解]|[代入參數2]>[參數2注解]|...]:[回傳類型] <br />
-                <br />
-                [使用權限] <br />
-                + => public <br />
-                - => private <br />
-                * => protected
-            </label>
-            <input class="form-control" type="text" id="methods" data-id="methods" value="-:getUser:透過pk取得使用者資訊:Linux\Groups\Users $users>使用者物件,-:getGroup:透過pk取得群組資訊:Linux\Groups\Users $users>使用者物件|$limit = 1>限制筆數,+:getUserInfo:透過pk取得使用者與群組資訊:Linux\Groups\Users $users>使用者物件|Linux\Groups\Groups $groups>群組物件:array" />
         </div>
         <div class="form-group">
             <button class="btn btn-success" data-id="go" type="button">
@@ -100,11 +89,6 @@
         <pre data-id="display-generatorJSEditForm">
         </pre>
     </div>
-    <div class="row">
-        <p>Method</p>
-        <pre data-id="display-method">
-        </pre>
-    </div>
 </div>
 <script src="node_modules/code-prettify/loader/prettify.js"></script>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -116,7 +100,6 @@
 <script src="js/classes/controller.js"></script>
 <script src="js/classes/model.js"></script>
 <script src="js/classes/repository.js"></script>
-<script src="js/classes/method.js"></script>
-<script src="js/coder.js"></script>
+<script src="js/crud.js"></script>
 </body>
 </html>
