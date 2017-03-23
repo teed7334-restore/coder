@@ -14,25 +14,27 @@ Annotations.prototype.generatorAnnotations = function(name, json, io) {
     let deny1 = [];
     let deny2 = [];
 
-    for(i in json) {
+    code += ' * ' + title + ' object $' + name + '\n';
+
+    for (i in json) {
         type = typeof(json[i]);
 
-        if('number' === type) {
+        if ('number' === type) {
             type = 'int';
         }
 
-        if('object' !== type && 0 > jQuery.inArray(i, deny1)) {
-            code += ' * ' + title + ' ' + type + ' $' + i + '\n';
+        if ('object' !== type && 0 > jQuery.inArray(i, deny1)) {
+            code += ' * ' + title + ' ' + type + ' $' + name + '->' + i + '\n';
             deny1.push(i);
         } else {
-            for(j in json[i]) {
+            for (j in json[i]) {
                 type = typeof(json[i][j]);
 
-                if('number' === type) {
+                if ('number' === type) {
                     type = 'int';
                 }
 
-                if('object' !== type && 0 > jQuery.inArray(j, deny2)) {
+                if ('object' !== type && 0 > jQuery.inArray(j, deny2)) {
                     code += ' * ' + title + ' ' + type + ' $' + name + '[' + i + ']->' + j + '\n';
                     deny2.push(j);
                 }
