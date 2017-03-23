@@ -13,7 +13,7 @@ method.html  Method 產生器<br />
 json2annotations.html  JSON 轉註解<br />
 js/crud.js CRUD 產生器主程式<br />
 js/method.js Method 產生器主程式<br />
-json2annotations.js JSON 轉註解主程式<br />
+js/json2annotations.js JSON 轉註解主程式<br />
 <br />
 <br />
 # js/classes資料夾<br />
