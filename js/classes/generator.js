@@ -125,6 +125,15 @@ Generator.prototype.generatorPHPClassProperty = function(args) {
         code += '     * @var ' + type + ' $' + name + ' ' + description + '\n';
         code += '    */\n';
         code += '    public $' + name + ';\n';
+
+        //將用過的變數寫回Local Storage中回存
+        key = '@' + name.toLowerCase();
+        value = {
+            type: type,
+            description: description
+        };
+        value = JSON.stringify(value);
+        localStorage.setItem(key, value);
     }
 
     return code;
