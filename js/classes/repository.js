@@ -1,4 +1,5 @@
-var Repository = function(docblock) {
+var Repository = function(docblock)
+{
     this.docblock = docblock;
 };
 
@@ -9,15 +10,15 @@ var Repository = function(docblock) {
  * @param  string namespace 命名空間
  * @return string           PHP Repository
  */
-Repository.prototype.generatorRepository = function(args, className, namespace) {
-
+Repository.prototype.generatorRepository = function(args, className, namespace)
+{
     /** 初始化參數 **/
-    code = '';
+    let code = '';
 
     /** 生成屬性值 **/
-    name = args[0].split(':')[0];
-    description = args[0].split(':')[1];
-    bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+    let name = args[0].split(':')[0];
+    let description = args[0].split(':')[1];
+    let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
     code += this.generatorPHPRepositoryHeader(namespace, className);
     code += this.generatorPHPRepositoryInit(className);
@@ -36,10 +37,10 @@ Repository.prototype.generatorRepository = function(args, className, namespace) 
  * 生成php類別標頭設定
  * @return string php類別標頭設定
  */
-Repository.prototype.generatorPHPRepositoryHeader = function(namespace, className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryHeader = function(namespace, className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '<' + '?php' + '\n';
     code += '\n';
@@ -62,10 +63,10 @@ Repository.prototype.generatorPHPRepositoryHeader = function(namespace, classNam
  * 生成建構式
  * @return void
  */
-Repository.prototype.generatorPHPRepositoryInit = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryInit = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('建構式', ['$' + shortClassName], 'void', '');
@@ -83,10 +84,10 @@ Repository.prototype.generatorPHPRepositoryInit = function(className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Repository.prototype.generatorPHPRepositoryGetAllList = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryGetAllList = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('取得所有資料', [''], 'object', className + '所有資料');
@@ -106,10 +107,10 @@ Repository.prototype.generatorPHPRepositoryGetAllList = function(className) {
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵取得資料函數
  */
-Repository.prototype.generatorPHPRepositoryGetList = function(className, namespace, bigFirstName) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryGetList = function(className, namespace, bigFirstName)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵取得資料', ['$' + shortClassName], 'object', className + '單筆資料');
     code += '    public function getList($' + shortClassName + ') \n';
@@ -127,10 +128,10 @@ Repository.prototype.generatorPHPRepositoryGetList = function(className, namespa
  * @param  string namespace    命名空間
  * @return string              生成插入多筆資料函數
  */
-Repository.prototype.generatorPHPRepositoryInsertBatch = function(className, namespace) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryInsertBatch = function(className, namespace)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('插入多筆資料', ['array $data 物件陣列'], 'int', '影響的資料筆數');
     code += '    public function insertBatch(array $data = array()) : int \n';
@@ -149,10 +150,10 @@ Repository.prototype.generatorPHPRepositoryInsertBatch = function(className, nam
  * @param  string namespace    命名空間
  * @return string              生成插入一筆資料函數
  */
-Repository.prototype.generatorPHPRepositoryInsert = function(className, namespace) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryInsert = function(className, namespace)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('插入一筆資料', ['$' + shortClassName], 'int', '影響的資料筆數');
     code += '    public function insert($' + shortClassName + ') : int \n';
@@ -172,10 +173,10 @@ Repository.prototype.generatorPHPRepositoryInsert = function(className, namespac
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵修改資料函數
  */
-Repository.prototype.generatorPHPRepositoryEdit = function(className, namespace, name, bigFirstName) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryEdit = function(className, namespace, name, bigFirstName)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵修改資料', ['$' + shortClassName], 'int', '影響的資料筆數');
     code += '    public function edit($' + shortClassName + ') : int \n';
@@ -195,10 +196,10 @@ Repository.prototype.generatorPHPRepositoryEdit = function(className, namespace,
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵刪除資料函數
  */
-Repository.prototype.generatorPHPRepositoryRemove = function(className, namespace, name, bigFirstName) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Repository.prototype.generatorPHPRepositoryRemove = function(className, namespace, name, bigFirstName)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵刪除資料', ['$' + shortClassName], 'int', '影響的資料筆數');
     code += '    public function remove($' + shortClassName + ') : int \n';
@@ -214,9 +215,9 @@ Repository.prototype.generatorPHPRepositoryRemove = function(className, namespac
  * 生成PHP Repository檔尾
  * @return string PHP Repository檔尾
  */
-Repository.prototype.generatorPHPRepositoryFooter = function() {
-
-    code = '';
+Repository.prototype.generatorPHPRepositoryFooter = function()
+{
+    let code = '';
 
     code += '}\n';
 

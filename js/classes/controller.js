@@ -1,4 +1,5 @@
-var Controller = function(docblock){
+var Controller = function(docblock)
+{
     this.docblock = docblock;
 };
 
@@ -9,15 +10,15 @@ var Controller = function(docblock){
  * @param  string namespace 命名空間
  * @return string           CI Controller
  */
-Controller.prototype.generatorPHPController = function(args, className, namespace) {
-
+Controller.prototype.generatorPHPController = function(args, className, namespace)
+{
     /** 初始化參數 **/
-    code = '';
+    let code = '';
 
     /** 生成屬性值 **/
-    name = args[0].split(':')[0];
-    description = args[0].split(':')[1];
-    bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+    let name = args[0].split(':')[0];
+    let description = args[0].split(':')[1];
+    let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
     code += this.generatorPHPControllerHeader(namespace, className);
     code += this.generatorPHPControllerInit(className);
@@ -35,10 +36,10 @@ Controller.prototype.generatorPHPController = function(args, className, namespac
  * 生成php類別標頭設定
  * @return string php類別標頭設定
  */
-Controller.prototype.generatorPHPControllerHeader = function(namespace, className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerHeader = function(namespace, className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '<' + '?php' + '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
@@ -58,10 +59,10 @@ Controller.prototype.generatorPHPControllerHeader = function(namespace, classNam
  * 生成建構式
  * @return void
  */
-Controller.prototype.generatorPHPControllerInit = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerInit = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorConstDocBlock('參數驗証失敗系統代號', 'string', "INVALIDATE_PARAMS_CODE");
@@ -93,10 +94,10 @@ Controller.prototype.generatorPHPControllerInit = function(className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Controller.prototype.generatorPHPControllerGetAllList = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerGetAllList = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('查詢所有資料頁面', [''], 'void', className + '所有資料');
@@ -130,12 +131,12 @@ Controller.prototype.generatorPHPControllerGetAllList = function(className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Controller.prototype.generatorPHPControllerEdit = function(args, className) {
-
-    code = '';
-    num = args.length;
-    pkName = args[0].split(':')[0];
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerEdit = function(args, className)
+{
+    let code = '';
+    let num = args.length;
+    let pkName = args[0].split(':')[0];
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('生成修改資料頁面', ['string $pk'], 'void', className + '所有資料');
@@ -207,13 +208,13 @@ Controller.prototype.generatorPHPControllerEdit = function(args, className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Controller.prototype.generatorPHPControllerRemove = function(args, className) {
-
-    code = '';
-    num = args.length;
-    pkName = args[0].split(':')[0];
-    pkType = args[0].split(':')[2];
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerRemove = function(args, className)
+{
+    let code = '';
+    let num = args.length;
+    let pkName = args[0].split(':')[0];
+    let pkType = args[0].split(':')[2];
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('生成刪除資料頁面', ['string $pk'], 'void', className + '所有資料');
@@ -262,12 +263,12 @@ Controller.prototype.generatorPHPControllerRemove = function(args, className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Controller.prototype.generatorPHPControllerInsert = function(args, className, namespace) {
-
-    code = '';
-    num = args.length;
-    pkName = args[0].split(':')[0];
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerInsert = function(args, className, namespace)
+{
+    let code = '';
+    let num = args.length;
+    let pkName = args[0].split(':')[0];
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('新增單筆資料頁面', [''], 'void', className + '單筆資料');
@@ -335,11 +336,11 @@ Controller.prototype.generatorPHPControllerInsert = function(args, className, na
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Controller.prototype.generatorPHPControllerCheckData = function (args, className) {
-
-    code = '';
-    pkName = args[0].split(':')[0];
-    shortClassName = className.toLowerCase();
+Controller.prototype.generatorPHPControllerCheckData = function (args, className)
+{
+    let code = '';
+    let pkName = args[0].split(':')[0];
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('生成檢查資料頁面', ['string $pk'], 'int', className + '所有資料');
@@ -362,9 +363,9 @@ Controller.prototype.generatorPHPControllerCheckData = function (args, className
  * 生成PHP Model檔尾
  * @return string PHP Model檔尾
  */
-Controller.prototype.generatorPHPControllerFooter = function () {
-
-    code = '';
+Controller.prototype.generatorPHPControllerFooter = function ()
+{
+    let code = '';
 
     code += '}\n';
 

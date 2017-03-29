@@ -1,12 +1,15 @@
-var Annotations = function() {};
+var Annotations = function()
+{
+
+};
 
 /**
  * 生成PHP 註解片段
  * @param  string      json
  * @return string      PHP Method
  */
-Annotations.prototype.generatorAnnotations = function(name, json, io) {
-
+Annotations.prototype.generatorAnnotations = function(name, json, io)
+{
     let code = '';
     let title = '1' === io.toString() ? '@param' : '@return';
     let index = '';
@@ -25,7 +28,7 @@ Annotations.prototype.generatorAnnotations = function(name, json, io) {
 
         if ('object' !== type && 0 > jQuery.inArray(i, deny1)) { /** 當屬性不為object時，且不為重覆之屬性名時 **/
 
-            description = localStorage.getItem('@' + i.toLowerCase());
+            let description = localStorage.getItem('@' + i.toLowerCase());
             description = JSON.parse(description);
             description = 'undefined' !== typeof(description.description) ? description.description : '';
 

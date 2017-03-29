@@ -1,8 +1,11 @@
-var Docblock = function() {};
+var Docblock = function()
+{
 
-Docblock.prototype.generatorPackageDocBlock = function(className, namespace) {
+}
 
-    code = '';
+Docblock.prototype.generatorPackageDocBlock = function(className, namespace)
+{
+    let code = '';
 
     code += '/**\n';
     code += ' * ' + className + '\n';
@@ -12,10 +15,10 @@ Docblock.prototype.generatorPackageDocBlock = function(className, namespace) {
     return code;
 }
 
-Docblock.prototype.generatorConstDocBlock = function(description, type, varName, spaceLength) {
-
-    code = '';
-    addSpace = '';
+Docblock.prototype.generatorConstDocBlock = function(description, type, varName, spaceLength)
+{
+    let code = '';
+    let addSpace = '';
 
     if('undefined' === typeof(spaceLength) || '' === spaceLength) {
         spaceLength = 4;
@@ -33,10 +36,10 @@ Docblock.prototype.generatorConstDocBlock = function(description, type, varName,
     return code;
 }
 
-Docblock.prototype.generatorVarDocBlock = function(description, type, varName, spaceLength) {
-
-    code = '';
-    addSpace = '';
+Docblock.prototype.generatorVarDocBlock = function(description, type, varName, spaceLength)
+{
+    let code = '';
+    let addSpace = '';
 
     if('undefined' === typeof(spaceLength) || '' === spaceLength) {
         spaceLength = 4;
@@ -54,11 +57,11 @@ Docblock.prototype.generatorVarDocBlock = function(description, type, varName, s
     return code;
 }
 
-Docblock.prototype.generatorMethodDocBlock = function(description, params, rtn, returnDescription, spaceLength) {
-
-    code = '';
-    num = params.length;
-    addSpace = '';
+Docblock.prototype.generatorMethodDocBlock = function(description, params, rtn, returnDescription, spaceLength)
+{
+    let code = '';
+    let num = params.length;
+    let addSpace = '';
 
     if('undefined' === typeof(spaceLength) || '' === spaceLength) {
         spaceLength = 4;
