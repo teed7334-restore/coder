@@ -1,4 +1,5 @@
-var Model = function(docblock) {
+var Model = function(docblock)
+{
     this.docblock = docblock;
 };
 
@@ -9,15 +10,15 @@ var Model = function(docblock) {
  * @param  string namespace 命名空間
  * @return string           PHP Model
  */
-Model.prototype.generatorModel = function(args, className, namespace) {
-
+Model.prototype.generatorModel = function(args, className, namespace)
+{
     /** 初始化參數 **/
-    code = '';
+    let code = '';
 
     /** 生成屬性值 **/
-    name = args[0].split(':')[0];
-    description = args[0].split(':')[1];
-    bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+    let name = args[0].split(':')[0];
+    let description = args[0].split(':')[1];
+    let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
     code += this.generatorPHPModelHeader(namespace, className);
     code += this.generatorPHPModelInit(className);
@@ -36,10 +37,10 @@ Model.prototype.generatorModel = function(args, className, namespace) {
  * 生成php類別標頭設定
  * @return string php類別標頭設定
  */
-Model.prototype.generatorPHPModelHeader = function(namespace, className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Model.prototype.generatorPHPModelHeader = function(namespace, className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '<' + '?php' + '\n';
     code += "defined('BASEPATH') or exit('No direct script access allowed');\n";
@@ -58,10 +59,10 @@ Model.prototype.generatorPHPModelHeader = function(namespace, className) {
  * 生成建構式
  * @return void
  */
-Model.prototype.generatorPHPModelInit = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Model.prototype.generatorPHPModelInit = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('建構式', [''], 'void', '');
@@ -79,9 +80,9 @@ Model.prototype.generatorPHPModelInit = function(className) {
  * @param  string className 類別名稱
  * @return string           取得所有資料函數
  */
-Model.prototype.generatorPHPModelGetAllList = function(className) {
-
-    code = '';
+Model.prototype.generatorPHPModelGetAllList = function(className)
+{
+    let code = '';
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('取得所有資料', [''], 'object', className + '所有資料');
@@ -101,10 +102,10 @@ Model.prototype.generatorPHPModelGetAllList = function(className) {
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵取得資料函數
  */
-Model.prototype.generatorPHPModelGetList = function(className, namespace, bigFirstName) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Model.prototype.generatorPHPModelGetList = function(className, namespace, bigFirstName)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵取得資料', ['$' + shortClassName], 'object', className + '單筆資料');
     code += '    public function getList($' + shortClassName + ') : array \n';
@@ -123,9 +124,9 @@ Model.prototype.generatorPHPModelGetList = function(className, namespace, bigFir
  * @param  string namespace    命名空間
  * @return string              生成插入多筆資料函數
  */
-Model.prototype.generatorPHPModelInsertBatch = function(className, namespace) {
-
-    code = '';
+Model.prototype.generatorPHPModelInsertBatch = function(className, namespace)
+{
+    let code = '';
 
     code += this.docblock.generatorMethodDocBlock('插入多筆資料', ['array $data 物件陣列'], 'int', '影響的資料筆數');
     code += '    public function insertBatch(array $data = array()) : int \n';
@@ -145,10 +146,10 @@ Model.prototype.generatorPHPModelInsertBatch = function(className, namespace) {
  * @param  string namespace    命名空間
  * @return string              生成插入一筆資料函數
  */
-Model.prototype.generatorPHPModelInsert = function(className, namespace) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Model.prototype.generatorPHPModelInsert = function(className, namespace)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('插入一筆資料', ['$' + shortClassName], 'int', '影響的資料筆數');
     code += '    public function insert($' + shortClassName + ') : int \n';
@@ -169,10 +170,10 @@ Model.prototype.generatorPHPModelInsert = function(className, namespace) {
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵修改資料函數
  */
-Model.prototype.generatorPHPModelEdit = function(className, namespace, name, bigFirstName) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Model.prototype.generatorPHPModelEdit = function(className, namespace, name, bigFirstName)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵修改資料', ['$' + shortClassName], 'int', '影響的資料筆數');
     code += '    public function edit($' + shortClassName + ') : int \n';
@@ -194,10 +195,10 @@ Model.prototype.generatorPHPModelEdit = function(className, namespace, name, big
  * @param  string bigFirstName 首字大寫
  * @return string              透過主鍵刪除資料函數
  */
-Model.prototype.generatorPHPModelRemove = function(className, namespace, name, bigFirstName) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Model.prototype.generatorPHPModelRemove = function(className, namespace, name, bigFirstName)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('透過主鍵刪除資料', ['$' + shortClassName], 'int', '影響的資料筆數');
     code += '    public function remove($' + shortClassName + ') : int \n';
@@ -215,9 +216,9 @@ Model.prototype.generatorPHPModelRemove = function(className, namespace, name, b
  * 生成PHP Model檔尾
  * @return string PHP Model檔尾
  */
-Model.prototype.generatorPHPModelFooter = function() {
-
-    code = '';
+Model.prototype.generatorPHPModelFooter = function()
+{
+    let code = '';
 
     code += '}\n';
 

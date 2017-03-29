@@ -1,16 +1,19 @@
-var Html = function() {};
+var Html = function()
+{
+
+};
 
 /**
  * 生成新增單筆資料用表單HTML
  * @param  array  args 要用到的變數
  * @return string      HTML標記
  */
-Html.prototype.generatorHTMLGetAllList = function(args, className) {
-
+Html.prototype.generatorHTMLGetAllList = function(args, className)
+{
     /** 初始化參數 **/
-    num = args.length;
-    html = '';
-    pkName = '';
+    let num = args.length;
+    let html = '';
+    let pkName = '';
 
     pkName = $.trim(args[0]).split(':')[0];
 
@@ -25,7 +28,7 @@ Html.prototype.generatorHTMLGetAllList = function(args, className) {
     html += '        <thead>\n';
     html += '            <tr>\n';
     for(i = 0; i < num; i++) {
-        description = $.trim(args[i]).split(':')[1];
+        let description = $.trim(args[i]).split(':')[1];
         html += '                <td>' + description + '</td>\n';
     }
     html += '                <td>動作</td>\n';
@@ -35,8 +38,8 @@ Html.prototype.generatorHTMLGetAllList = function(args, className) {
     html += '            <' + '?php foreach($' + className + ' as $row): ?>\n';
     html += '            <tr>\n';
     for(i = 0; i < num; i++) {
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
+        let name = $.trim(args[i]).split(':')[0];
+        let description = $.trim(args[i]).split(':')[1];
         html += '                <td><' + '?php echo $row->' + name + '; ?></td>\n';
     }
     html += '            <td>\n';
@@ -62,11 +65,11 @@ Html.prototype.generatorHTMLGetAllList = function(args, className) {
  * @param  array  args 要用到的變數
  * @return string      HTML標記
  */
-Html.prototype.generatorHTMLInsertForm = function(args, className) {
-
+Html.prototype.generatorHTMLInsertForm = function(args, className)
+{
     /** 初始化參數 **/
-    num = args.length;
-    html = '';
+    let num = args.length;
+    let html = '';
 
     /** 生成標頭設定 **/
     html += '<div class="row">\n';
@@ -75,9 +78,9 @@ Html.prototype.generatorHTMLInsertForm = function(args, className) {
     for(i = 1; i < num; i++) {
 
         /** 生成HTML INPUT **/
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        let name = $.trim(args[i]).split(':')[0];
+        let description = $.trim(args[i]).split(':')[1];
+        let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
         html += '        <div data-id="coder-' + name + '-div" class="form-group">\n'
         html += '            <label for="coder-' + name + '">' + description + '</label>\n';
         html += '            <input type="text" id="coder-' + name + '" name="' + name + '" class="form-control" placeholder="' + description + '" value="<' + '?php' + ' echo $' + className + '->get' + bigFirstName + '(); ?>" />\n';
@@ -106,11 +109,11 @@ Html.prototype.generatorHTMLInsertForm = function(args, className) {
  * @param  array  args 要用到的變數
  * @return string      HTML標記
  */
-Html.prototype.generatorHTMLEditForm = function(args, className) {
-
+Html.prototype.generatorHTMLEditForm = function(args, className)
+{
     /** 初始化參數 **/
-    num = args.length;
-    html = '';
+    let num = args.length;
+    let html = '';
 
     /** 生成標頭設定 **/
     html += '<div class="row">\n';
@@ -119,9 +122,9 @@ Html.prototype.generatorHTMLEditForm = function(args, className) {
     for(i = 0; i < num; i++) {
 
         /** 生成HTML INPUT **/
-        name = $.trim(args[i]).split(':')[0];
-        description = $.trim(args[i]).split(':')[1];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        let name = $.trim(args[i]).split(':')[0];
+        let description = $.trim(args[i]).split(':')[1];
+        let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         if(0 < i) {
             html += '        <div data-id="coder-' + name + '-div" class="form-group">\n'

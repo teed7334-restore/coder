@@ -1,10 +1,11 @@
-var Js = function(docblock) {
+var Js = function(docblock)
+{
     this.docblock = docblock;
 };
 
-Js.prototype.generatorJSGetAllList = function(args, className) {
-
-    code = '';
+Js.prototype.generatorJSGetAllList = function(args, className)
+{
+    let code = '';
 
     code += '<script>\n';
     code += this.generatorJSDocumentReadyTitle();
@@ -19,23 +20,9 @@ Js.prototype.generatorJSGetAllList = function(args, className) {
     return code;
 }
 
-Js.prototype.generatorJSInsertForm = function(args, className) {
-
-    code = '';
-
-    code += '<script>\n';
-    code += this.generatorJSDocumentReadyTitle();
-    code += this.generatorJSRunResultObjectAndReDirect(className);
-    code += this.generatorJSDocumentReadyFooter();
-    code += this.generatorJSResultObject(className);
-    code += '</script>\n';
-
-    return code;
-}
-
-Js.prototype.generatorJSEditForm = function(args, className) {
-
-    code = '';
+Js.prototype.generatorJSInsertForm = function(args, className)
+{
+    let code = '';
 
     code += '<script>\n';
     code += this.generatorJSDocumentReadyTitle();
@@ -47,9 +34,23 @@ Js.prototype.generatorJSEditForm = function(args, className) {
     return code;
 }
 
-Js.prototype.generatorJSDocumentReadyTitle = function() {
+Js.prototype.generatorJSEditForm = function(args, className)
+{
+    let code = '';
 
-    code = '';
+    code += '<script>\n';
+    code += this.generatorJSDocumentReadyTitle();
+    code += this.generatorJSRunResultObjectAndReDirect(className);
+    code += this.generatorJSDocumentReadyFooter();
+    code += this.generatorJSResultObject(className);
+    code += '</script>\n';
+
+    return code;
+}
+
+Js.prototype.generatorJSDocumentReadyTitle = function()
+{
+    let code = '';
 
     code += '$(document).ready(function() \n';
     code += '{\n';
@@ -57,17 +58,17 @@ Js.prototype.generatorJSDocumentReadyTitle = function() {
     return code;
 }
 
-Js.prototype.generatorJSRunResultObjectAndReDirect = function(className) {
-
-    code = '';
+Js.prototype.generatorJSRunResultObjectAndReDirect = function(className)
+{
+    let code = '';
     code += '    resultObject();\n';
 
     return code;
 }
 
-Js.prototype.generatorJSRunResultObject = function() {
-
-    code = '';
+Js.prototype.generatorJSRunResultObject = function()
+{
+    let code = '';
 
     code += '\n';
     code += '    resultObject();\n';
@@ -76,10 +77,10 @@ Js.prototype.generatorJSRunResultObject = function() {
     return code;
 }
 
-Js.prototype.generatorJSResultObject = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Js.prototype.generatorJSResultObject = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('處理伺服器端回傳訊息', [''], 'void', '', 0);
@@ -124,19 +125,19 @@ Js.prototype.generatorJSResultObject = function(className) {
     return code;
 }
 
-Js.prototype.generatorJSDocumentReadyFooter = function() {
-
-    code = '';
+Js.prototype.generatorJSDocumentReadyFooter = function()
+{
+    let code = '';
 
     code += '});\n';
 
     return code;
 }
 
-Js.prototype.generatorJSInsertClick = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Js.prototype.generatorJSInsertClick = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('新增按鈕被按下時觸發跳去新增頁面', [''], 'void', '', 4);
     code += "    $('button[data-group=insert]').click(function() \n";
@@ -148,10 +149,10 @@ Js.prototype.generatorJSInsertClick = function(className) {
     return code;
 }
 
-Js.prototype.generatorJSEditClick = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Js.prototype.generatorJSEditClick = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('修改按鈕被按下時觸發跳去修改頁面', [''], 'void', '', 4);
     code += "    $('button[data-group=edit]').click(function() \n";
@@ -164,10 +165,10 @@ Js.prototype.generatorJSEditClick = function(className) {
     return code;
 }
 
-Js.prototype.generatorJSRemoveClick = function(className) {
-
-    code = '';
-    shortClassName = className.toLowerCase();
+Js.prototype.generatorJSRemoveClick = function(className)
+{
+    let code = '';
+    let shortClassName = className.toLowerCase();
 
     code += this.docblock.generatorMethodDocBlock('刪除按鈕被按下時觸發跳去刪除頁面', [''], 'void', '', 4);
     code += "    $('button[data-group=remove]').click(function() \n";

@@ -1,4 +1,5 @@
-var Generator = function(docblock) {
+var Generator = function(docblock)
+{
     this.docblock = docblock;
 };
 
@@ -9,9 +10,9 @@ var Generator = function(docblock) {
  * @param  string namespace   命名空間
  * @return string             PHP程式碼
  */
-Generator.prototype.generatorClass = function(args, className, namespace) {
-
-    code = '';
+Generator.prototype.generatorClass = function(args, className, namespace)
+{
+    let code = '';
 
     code += this.generatorPHPClassHeader(namespace, className);
     code += this.generatorPHPDataVaildateRules(args);
@@ -32,9 +33,9 @@ Generator.prototype.generatorClass = function(args, className, namespace) {
  * @param  string className 類別名稱
  * @return string           php標頭設定
  */
-Generator.prototype.generatorPHPClassHeader = function(namespace, className) {
-
-    code = '';
+Generator.prototype.generatorPHPClassHeader = function(namespace, className)
+{
+    let code = '';
 
     code += '<' + '?php' + '\n';
     code += 'namespace viewModel\\' + namespace + ';\n';
@@ -54,15 +55,15 @@ Generator.prototype.generatorPHPClassHeader = function(namespace, className) {
  * @param  array  args    屬性設定
  * @return string         驗証規則
  */
-Generator.prototype.generatorPHPDataVaildateRules = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPDataVaildateRules = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     for(i = 0; i < num; i++) {
 
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
+        let name = args[i].split(':')[0];
+        let description = args[i].split(':')[1];
 
         code += '    /**\n';
         code += '     * @const string VALIDATE_' + name.toUpperCase() + '_RULE ' + description + '欄位驗証規則\n';
@@ -79,18 +80,18 @@ Generator.prototype.generatorPHPDataVaildateRules = function(args) {
  * @param  array  args    屬性設定
  * @return string         驗証失敗訊息內容
  */
-Generator.prototype.generatorPHPFailureMessage = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPFailureMessage = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     code += '\n';
     for(i = 0; i < num; i++) {
 
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        type = args[i].split(':')[2];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        let name = args[i].split(':')[0];
+        let description = args[i].split(':')[1];
+        let type = args[i].split(':')[2];
+        let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         code += '    /**\n';
         code += '     * @const string VALIDATE_' + name.toUpperCase() + '_MESSAGE ' + description + '欄位驗証失敗訊息\n';
@@ -107,17 +108,17 @@ Generator.prototype.generatorPHPFailureMessage = function(args) {
  * @param  array  args    屬性設定
  * @return string         類別屬性
  */
-Generator.prototype.generatorPHPClassProperty = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPClassProperty = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     for(i = 0; i < num; i++) {
 
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        type = args[i].split(':')[2];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        let name = args[i].split(':')[0];
+        let description = args[i].split(':')[1];
+        let type = args[i].split(':')[2];
+        let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         /** 生成屬性值 **/
         code += '\n';
@@ -143,10 +144,10 @@ Generator.prototype.generatorPHPClassProperty = function(args) {
  * 生成資料綁定
  * @return string 資料綁定函式
  */
-Generator.prototype.generatorPHPDataBind = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPDataBind = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('資料綁定函式', ['array $data 要綁定的資料'], 'void', '');
@@ -166,10 +167,10 @@ Generator.prototype.generatorPHPDataBind = function(args) {
  * 生成資料驗証
  * @return string 資料驗証函式
  */
-Generator.prototype.generatorPHPDataVaildate = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPDataVaildate = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     code += '\n';
     code += this.docblock.generatorMethodDocBlock('資料驗証函式', ['array $deny 要排除的驗証'], 'array', '未通過驗証的欄位');
@@ -193,9 +194,9 @@ Generator.prototype.generatorPHPDataVaildate = function(args) {
     return code;
 }
 
-Generator.prototype.generatorPHPResultObject = function() {
-
-    code = '';
+Generator.prototype.generatorPHPResultObject = function()
+{
+    let code = '';
 
     code += '<' + '?php' + '\n';
     code += 'namespace status;\n';
@@ -282,17 +283,17 @@ Generator.prototype.generatorPHPResultObject = function() {
  * @param  array  args    屬性設定
  * @return string         get方法
  */
-Generator.prototype.generatorPHPGetMethod = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPGetMethod = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     for(i = 0; i < num; i++) {
 
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        type = args[i].split(':')[2];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        let name = args[i].split(':')[0];
+        let description = args[i].split(':')[1];
+        let type = args[i].split(':')[2];
+        let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         /** 生成get函數 **/
         code += '\n';
@@ -314,17 +315,17 @@ Generator.prototype.generatorPHPGetMethod = function(args) {
  * @param  array  args    屬性設定
  * @return string         set方法
  */
-Generator.prototype.generatorPHPSetMethod = function(args) {
-
-    code = '';
-    num = args.length;
+Generator.prototype.generatorPHPSetMethod = function(args)
+{
+    let code = '';
+    let num = args.length;
 
     for(i = 0; i < num; i++) {
 
-        name = args[i].split(':')[0];
-        description = args[i].split(':')[1];
-        type = args[i].split(':')[2];
-        bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
+        let name = args[i].split(':')[0];
+        let description = args[i].split(':')[1];
+        let type = args[i].split(':')[2];
+        let bigFirstName = name.replace(/^\S/g,function(s){return s.toUpperCase();});
 
         code += '\n';
         code += '    /**\n';
@@ -341,9 +342,9 @@ Generator.prototype.generatorPHPSetMethod = function(args) {
     return code;
 }
 
-Generator.prototype.generatorPHPClassFooter = function() {
-
-    code = '';
+Generator.prototype.generatorPHPClassFooter = function()
+{
+    let code = '';
 
     code += '\n';
     code += '}\n';
