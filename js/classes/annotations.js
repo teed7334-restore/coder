@@ -30,7 +30,7 @@ Annotations.prototype.generatorAnnotations = function(name, json, io)
 
             let description = localStorage.getItem('@' + i.toLowerCase());
             description = JSON.parse(description);
-            description = 'undefined' !== typeof(description.description) ? description.description : '';
+            description = null !== description ? description.description : '';
 
             if(isNaN(i)) {
                 code += ' * ' + title + ' ' + type + ' $' + name + '->' + i + ' ' + description + '\n';
@@ -50,7 +50,7 @@ Annotations.prototype.generatorAnnotations = function(name, json, io)
 
                     description = localStorage.getItem('@' + j.toLowerCase());
                     description = JSON.parse(description);
-                    description = 'undefined' !== typeof(description.description) ? description.description : '';
+                    description = null !== description ? description.description : '';
 
                     if(isNaN(i) && isNaN(j)) { /** 當第一層與第二層皆為屬性時 **/
                         code += ' * ' + title + ' ' + type + ' $' + name + '->' + i + '->' + j + ' ' + description + ';\n';
