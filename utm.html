@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>UTM 產生器</title>
+<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="page-header">
+        <h1>UTM <small>產生器</small></h1>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="url">
+                網址
+            </label>
+            <input class="form-control" type="text" id="url" data-id="url" value="" />
+        </div>
+        <div class="form-group">
+            <label for="utmTemplate">
+                腳本
+            </label>
+            <select id="utmTemplate" data-id="utmTemplate" class="form-control">
+                <option selected="selected" disabled="disabled">請選擇</option>
+                <option value="facebook_cbc">Facebook CBC</option>
+                <option value="facebook_page">Facebook Page</option>
+                <option value="outbrain">Outbrain</option>
+                <option value="taboola">Taboola</option>
+                <option value="newsletter">Newsletter</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="source">
+                *Source
+            </label>
+            <input class="form-control" type="text" id="source" data-id="source" value="" />
+        </div>
+        <div class="form-group">
+            <label for="source">
+                *Medium
+            </label>
+            <input class="form-control" type="text" id="medium" data-id="medium" value="" />
+        </div>
+        <div class="form-group">
+            <label for="term">
+                term
+            </label>
+            <input class="form-control" type="text" id="term" data-id="term" value="" />
+        </div>
+        <div class="form-group">
+            <label for="content">
+                *Content
+            </label>
+            <input class="form-control" type="text" id="content" data-id="content" value="" />
+        </div>
+        <div class="form-group">
+            <label for="campaign">
+                *Campaign
+            </label>
+            <input class="form-control" type="text" id="campaign" data-id="campaign" value="" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" data-id="go" type="button">
+                <i class="fa fa-clone"> 送出</i>
+            </button>
+            <button class="btn btn-danger" type="reset">
+                <i class="fa fa-close"> 重置</i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <p>UTM網址</p>
+        <pre data-id="display-utm">
+        </pre>
+    </div>
+</div>
+<script src="node_modules/code-prettify/loader/prettify.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/classes/utm.js"></script>
+<script src="js/utm.js"></script>
+</body>
+</html>

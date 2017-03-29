@@ -1,49 +1,85 @@
-/**
- * 碼農主程式
- *
- * @version 0.2
- * @author Peter teed7334@gmail.com
- */
-
-
 $(document).ready(function() {
     $('button[data-id=go]').click(function() {
 
-        var docblock = new Docblock();
-        var controller = new Controller(docblock);
-        var generator = new Generator(docblock);
-        var html = new Html();
-        var js = new Js(docblock);
-        var model = new Model(docblock);
-        var repository = new Repository(docblock);
+        let docblock = new Docblock();
+        let controller = new Controller(docblock);
+        let generator = new Generator(docblock);
+        let html = new Html();
+        let js = new Js(docblock);
+        let model = new Model(docblock);
+        let repository = new Repository(docblock);
 
-        var namespace = $('input[data-id=namespace]').val();
-        var className = $('input[data-id=class]').val();
-        var args = $('input[data-id=args]').val().split(',');
+        let namespace = $('input[data-id=namespace]').val();
+        let className = $('input[data-id=class]').val();
+        let args = $('input[data-id=args]').val().split(',');
 
-        var htmlGetAllList = html.generatorHTMLGetAllList(args, className);
-        var jsGetAllListForm = js.generatorJSGetAllList(args, className);
-        var htmlInsertForm = html.generatorHTMLInsertForm(args, className);
-        var jsInsertForm = js.generatorJSInsertForm(args, className);
-        var htmlEditForm = html.generatorHTMLEditForm(args, className);
-        var jsEditForm = js.generatorJSEditForm(args, className);
-        var controllerCode = controller.generatorPHPController(args, className, namespace);
-        var classCode = generator.generatorClass(args, className, namespace);
-        var modelCode = model.generatorModel(args, className, namespace);
-        var repositoryCode = repository.generatorRepository(args, className, namespace);
-        var resultObject = generator.generatorPHPResultObject();
+        let htmlGetAllList = html.generatorHTMLGetAllList(args, className);
+        let jsGetAllListForm = js.generatorJSGetAllList(args, className);
+        let htmlInsertForm = html.generatorHTMLInsertForm(args, className);
+        let jsInsertForm = js.generatorJSInsertForm(args, className);
+        let htmlEditForm = html.generatorHTMLEditForm(args, className);
+        let jsEditForm = js.generatorJSEditForm(args, className);
+        let controllerCode = controller.generatorPHPController(args, className, namespace);
+        let classCode = generator.generatorClass(args, className, namespace);
+        let modelCode = model.generatorModel(args, className, namespace);
+        let repositoryCode = repository.generatorRepository(args, className, namespace);
+        let resultObject = generator.generatorPHPResultObject();
 
-        $('pre[data-id=display-generatorHTMLGetListForm]').text(htmlGetAllList).addClass('prettyprint');
-        $('pre[data-id=display-generatorJSGetListForm]').text(jsGetAllListForm).addClass('prettyprint');
-        $('pre[data-id=display-generatorHTMLInsertForm]').text(htmlInsertForm).addClass('prettyprint');
-        $('pre[data-id=display-generatorJSInsertForm]').text(jsInsertForm).addClass('prettyprint');
-        $('pre[data-id=display-generatorHTMLEditForm]').text(htmlEditForm).addClass('prettyprint');
-        $('pre[data-id=display-generatorJSEditForm]').text(jsEditForm).addClass('prettyprint');
-        $('pre[data-id=display-controller]').text(controllerCode).addClass('prettyprint');
-        $('pre[data-id=display-class]').text(classCode).addClass('prettyprint');
-        $('pre[data-id=display-model]').text(modelCode).addClass('prettyprint');
-        $('pre[data-id=display-repository]').text(repositoryCode).addClass('prettyprint');
-        $('pre[data-id=display-resultObject]').text(resultObject).addClass('prettyprint');
+        $('pre[data-id=display-generatorHTMLGetListForm]')
+            .text(htmlGetAllList)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-generatorJSGetListForm]')
+            .text(jsGetAllListForm)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-generatorHTMLInsertForm]')
+            .text(htmlInsertForm)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-generatorJSInsertForm]')
+            .text(jsInsertForm)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-generatorHTMLEditForm]')
+            .text(htmlEditForm)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-generatorJSEditForm]')
+            .text(jsEditForm)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-controller]')
+            .text(controllerCode)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-class]')
+            .text(classCode)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-model]')
+            .text(modelCode)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-repository]')
+            .text(repositoryCode)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
+        $('pre[data-id=display-resultObject]')
+            .text(resultObject)
+            .removeClass('prettyprinted')
+            .addClass('prettyprint');
+
         prettyPrint();
     });
 });
