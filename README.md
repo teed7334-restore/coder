@@ -12,17 +12,21 @@ crud.html  CRUD 產生器<br />
 method.html  Method 產生器<br />
 json2annotations.html  JSON 轉註解<br />
 js/crud.js CRUD 產生器主程式<br />
+js/event.js 自訂事件 產生器主程式<br />
 js/method.js Method 產生器主程式<br />
 js/json2annotations.js JSON 轉註解主程式<br />
+js/utm.js UTM 產生器主程式<br />
 <br />
 <br />
 # js/classes資料夾<br />
 annotations.js 負責將json轉成註解<br />
 controller.js 負責生成CI Controller<br />
 docblock.js 負責生成註解<br />
+event.js 負責生成自訂事件<br />
 generator.js 負責生成PHP class<br />
 html.js 負責生成View HTML<br />
 js.js 負責生成View JS<br />
 method.js 負責生成PHP method<br />
 model.js 負責生成CI Model<br />
 repository.js 負責生成Repository<br />
+utm.js 負責生成UTM網址<br />
