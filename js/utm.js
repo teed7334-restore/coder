@@ -1,79 +1,87 @@
-$(document).ready(function()
-{
+new Vue({
+    el: '#js-utm-app',
+    data: {
+        url: '',
+        utmTemplate: '',
+        source: '',
+        medium: '',
+        term: '',
+        content: '',
+        campaign: '',
+        code: '<xmp></xmp>'
+    },
+    methods: {
+        utmTemplateChange: function() { /** 處理腳本選擇 **/
+            switch (this.utmTemplate) {
+                case 'facebook_cbc':
+                    this.source = 'Facebook';
+                    this.medium = 'cbc';
+                    this.term = '';
+                    this.content = '';
+                    this.campaign = 'Promotion';
+                    break;
+                case 'facebook_page':
+                    this.source = 'Facebook';
+                    this.medium = 'Social';
+                    this.term = '';
+                    this.content = '';
+                    this.campaign = 'Promotion';
+                    break;
+                case 'outbrain':
+                    this.source = 'Outbrain';
+                    this.medium = 'Content Discovery';
+                    this.term = '{{ad_title}}';
+                    this.content = '{{origsrcname}}';
+                    this.campaign = 'Promotion';
+                    break;
+                case 'taboola':
+                    this.source = 'Taboola';
+                    this.medium = 'Content Discovery';
+                    this.term = '{title}';
+                    this.content = '{site}';
+                    this.campaign = 'Promotion';
+                    break;
+                case 'newsletter':
+                    this.source = 'Newsletter';
+                    this.medium = 'email';
+                    this.term = 'List Name';
+                    this.content = '';
+                    this.campaign = 'Promotion';
+                    break;
+                default:
+                    break;
+            }
+        },
+        generateGaUtm: function() { /** 產出GA UTM URL **/
 
-    let url = location.href;
-    $('input[data-id=url]').val(url);
+            if ('' === this.utmTemplate) { /** 未選擇腳本不處理 **/
+                return;
+            }
 
-    $('select[data-id=utmTemplate]').change(function()
-    {
-        let utmTemplate = $(this).val();
+            /** 將空白轉成+ **/
+            let url = this.url.replace(/\s+/g, '+');
+            let source = this.source.replace(/\s+/g, '+');
+            let medium = this.medium.replace(/\s+/g, '+');
+            let term = this.term.replace(/\s+/g, '+');
+            let content = this.content.replace(/\s+/g, '+');
+            let campaign = this.campaign.replace(/\s+/g, '+');
 
-        switch (utmTemplate) {
-            case 'facebook_cbc':
-                $('input[data-id=source]').val('Facebook');
-                $('input[data-id=medium]').val('cbc');
-                $('input[data-id=term]').val('');
-                $('input[data-id=content]').val('');
-                $('input[data-id=campaign]').val('Promotion');
-                break;
-            case 'facebook_page':
-                $('input[data-id=source]').val('Facebook');
-                $('input[data-id=medium]').val('Social');
-                $('input[data-id=term]').val('');
-                $('input[data-id=content]').val('');
-                $('input[data-id=campaign]').val('Promotion');
-                break;
-            case 'outbrain':
-                $('input[data-id=source]').val('Outbrain');
-                $('input[data-id=medium]').val('Content Discovery');
-                $('input[data-id=term]').val('{{ad_title}}');
-                $('input[data-id=content]').val('{{origsrcname}}');
-                $('input[data-id=campaign]').val('Promotion');
-                break;
-            case 'taboola':
-                $('input[data-id=source]').val('Taboola');
-                $('input[data-id=medium]').val('Content Discovery');
-                $('input[data-id=term]').val('{title}');
-                $('input[data-id=content]').val('{site}');
-                $('input[data-id=campaign]').val('Promotion');
-                break;
-            case 'newsletter':
-                $('input[data-id=source]').val('Newsletter');
-                $('input[data-id=medium]').val('email');
-                $('input[data-id=term]').val('List Name');
-                $('input[data-id=content]').val('');
-                $('input[data-id=campaign]').val('Promotion');
-                break;
-            default:
-                break;
+            /** 組成代入Service參數 **/
+            let params = {
+                url: url,
+                source: source,
+                medium: medium,
+                term: term,
+                content: content,
+                campaign: campaign
+            };
+
+            /** 啟用UTM Service **/
+            let utm = new UTM();
+
+            /** 將結果輸出，並啟用程式碼上色 **/
+            this.code = '<xmp class="prettyprint">' + utm.generatorUTM(params) + '</xmp>';
+            prettyPrint();
         }
-    });
-
-    $('button[data-id=go]').click(function()
-    {
-        let utm = new UTM();
-        let url = $('input[data-id=url]').val();
-        let source = $('input[data-id=source]').val();
-        let medium = $('input[data-id=medium]').val();
-        let term = $('input[data-id=term]').val();
-        let content = $('input[data-id=content]').val();
-        let campaign = $('input[data-id=campaign]').val();
-        let params = {
-            url: url,
-            source: source,
-            medium: medium,
-            term: term,
-            content: content,
-            campaign: campaign
-        };
-        let code = utm.generatorUTM(params);
-
-        $('pre[data-id=display-utm]')
-            .text(code)
-            .removeClass('prettyprinted')
-            .addClass('prettyprint');
-
-        prettyPrint();
-    });
-
+    }
 });
