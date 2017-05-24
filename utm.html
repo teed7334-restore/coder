@@ -8,7 +8,7 @@
 <link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
 </head>
 <body>
-<div class="container container-fluid">
+<div id="js-utm-app" class="container container-fluid">
     <div class="page-header">
         <h1>UTM <small>產生器</small></h1>
     </div>
@@ -17,14 +17,14 @@
             <label for="url">
                 網址
             </label>
-            <input class="form-control" type="text" id="url" data-id="url" value="" />
+            <input class="form-control" type="text" id="url" v-model="url" value="" />
         </div>
         <div class="form-group">
             <label for="utmTemplate">
                 腳本
             </label>
-            <select id="utmTemplate" data-id="utmTemplate" class="form-control">
-                <option selected="selected" disabled="disabled">請選擇</option>
+            <select id="utmTemplate" v-model="utmTemplate" v-on:change="utmTemplateChange" class="form-control">
+                <option selected="selected" disabled="disabled" value="">請選擇</option>
                 <option value="facebook_cbc">Facebook CBC</option>
                 <option value="facebook_page">Facebook Page</option>
                 <option value="outbrain">Outbrain</option>
@@ -36,47 +36,44 @@
             <label for="source">
                 *Source
             </label>
-            <input class="form-control" type="text" id="source" data-id="source" value="" />
+            <input class="form-control" type="text" id="source" v-model="source" value="" />
         </div>
         <div class="form-group">
             <label for="source">
                 *Medium
             </label>
-            <input class="form-control" type="text" id="medium" data-id="medium" value="" />
+            <input class="form-control" type="text" id="medium" v-model="medium" value="" />
         </div>
         <div class="form-group">
             <label for="term">
                 term
             </label>
-            <input class="form-control" type="text" id="term" data-id="term" value="" />
+            <input class="form-control" type="text" id="term" v-model="term" value="" />
         </div>
         <div class="form-group">
             <label for="content">
                 *Content
             </label>
-            <input class="form-control" type="text" id="content" data-id="content" value="" />
+            <input class="form-control" type="text" id="content" v-model="content" value="" />
         </div>
         <div class="form-group">
             <label for="campaign">
                 *Campaign
             </label>
-            <input class="form-control" type="text" id="campaign" data-id="campaign" value="" />
+            <input class="form-control" type="text" id="campaign" v-model="campaign" value="" />
         </div>
         <div class="form-group">
-            <button class="btn btn-success" data-id="go" type="button">
+            <button class="btn btn-success" v-on:click="generateGaUtm" type="button">
                 <i class="fa fa-clone"> 送出</i>
-            </button>
-            <button class="btn btn-danger" type="reset">
-                <i class="fa fa-close"> 重置</i>
             </button>
         </div>
     </div>
     <div class="row">
-        <p>UTM網址</p>
-        <pre data-id="display-utm">
-        </pre>
+        <label for="code">UTM網址</label>
+        <div id="code" v-html="code"></div>
     </div>
 </div>
+<script src="node_modules/vue/dist/vue.min.js"></script>
 <script src="node_modules/code-prettify/loader/prettify.js"></script>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
