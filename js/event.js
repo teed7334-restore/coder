@@ -1,31 +1,57 @@
-$(document).ready(function()
-{
-    $('button[data-id=go]').click(function()
-    {
-        let gaEvent = new Event();
+new Vue({
+    el: '#js-event-app',
+    data: {
+        element: '',
+        event: '',
+        eventCategory: '',
+        eventAction: '',
+        eventLabel: '',
+        eventValue: '',
+        code: '<xmp></xmp>',
+        method: ''
+    },
+    methods: {
+        eventOnChange: function() { /** 處理觸發條件 **/
+            switch (this.event) {
+                case 'blur':
+                    this.method = 'onBlur';
+                    break;
+                case 'change':
+                    this.method = 'onChange';
+                    break;
+                case 'click':
+                    this.method = 'onClick';
+                    break;
+                case 'dblclick':
+                    this.method = 'onDblclick';
+                    break;
+                case 'focus':
+                    this.method = 'onFocus';
+                    break;
+                case 'mouseenter':
+                    this.method = 'onMouseEnter';
+                    break;
+                case 'mouseover':
+                    this.method = 'onMouseOver';
+                    break;
+                case 'mouseleave':
+                    this.method = 'onMouseLeave';
+                    break;
+                default:
+                    break;
+            }
+        },
+        generateEvent: function() { /** 產出GA 自訂事件原始碼 **/
 
-        let domId = $('input[data-id=domId]').val();
-        let domName = $('input[data-id=domName]').val();
-        let domEvent = $('select[data-id=event]').val();
-        let category = $('input[data-id=category]').val();
-        let action = $('input[data-id=action]').val();
-        let label = $('input[data-id=label]').val();
+            /** 未選擇觸發條件與未輸入網址不處理 **/
+            if('' === this.element || '' === this.event) {
+                alert('請觸發條件與輸入網址');
+                return;
+            }
 
-        let params = {
-            domId: domId,
-            domName: domName,
-            domEvent: domEvent,
-            category: category,
-            action: action,
-            label: label
+            let code = document.getElementById('hiddenCodeUI').innerText;
+            this.code = '<xmp class="prettyprint">' + code + '</xmp>';
+            prettyPrint();
         }
-        let eventCode = gaEvent.generatorEvent(params);
-
-        $('pre[data-id=display-event]')
-            .text(eventCode)
-            .removeClass('prettyprinted')
-            .addClass('prettyprint');
-
-        prettyPrint();
-    });
+    }
 });
