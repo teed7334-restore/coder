@@ -8,29 +8,23 @@
 <link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
 </head>
 <body>
-<div class="container container-fluid">
+<div id="js-event-app" class="container container-fluid">
     <div class="page-header">
         <h1>自訂事件 <small>產生器</small></h1>
     </div>
     <div class="row">
         <div class="form-group">
-            <label for="domId">
-                Dom ID
+            <label for="element">
+                Vue App Element
             </label>
-            <input class="form-control" type="text" id="domId" data-id="domId" value="" />
-        </div>
-        <div class="form-group">
-            <label for="domName">
-                Dom Name
-            </label>
-            <input class="form-control" type="text" id="domName" data-id="domName" value="" />
+            <input class="form-control" type="text" id="element" v-model="element" value="" />
         </div>
         <div class="form-group">
             <label for="event">
                 觸發條件
             </label>
-            <select id="event" data-id="event" class="form-control">
-                <option selected="selected" disabled="disabled">請選擇</option>
+            <select id="event" v-on:change="eventOnChange" v-model="event" class="form-control">
+                <option selected="selected" disabled="disabled" value="">請選擇</option>
                 <option value="blur">失焦(blur)</option>
                 <option value="change">修改後(change)</option>
                 <option value="click">點擊(click)</option>
@@ -45,39 +39,54 @@
             <label for="category">
                 Category
             </label>
-            <input class="form-control" type="text" id="category" data-id="category" value="" />
+            <input class="form-control" type="text" id="category" v-model="eventCategory" value="" />
         </div>
         <div class="form-group">
             <label for="action">
                 Action
             </label>
-            <input class="form-control" type="text" id="action" data-id="action" value="" />
+            <input class="form-control" type="text" id="action" v-model="eventAction" value="" />
         </div>
         <div class="form-group">
             <label for="label">
                 Label
             </label>
-            <input class="form-control" type="text" id="label" data-id="label" value="" />
+            <input class="form-control" type="text" id="label" v-model="eventLabel" value="" />
         </div>
         <div class="form-group">
-            <button class="btn btn-success" data-id="go" type="button">
+            <label for="label">
+                Value
+            </label>
+            <input class="form-control" type="text" id="value" v-model="eventValue" value="" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" data-id="go" type="button" v-on:click="generateEvent">
                 <i class="fa fa-clone"> 送出</i>
-            </button>
-            <button class="btn btn-danger" type="reset">
-                <i class="fa fa-close"> 重置</i>
             </button>
         </div>
     </div>
     <div class="row">
-        <p>自訂事件 程式碼</p>
-        <pre data-id="display-event">
-        </pre>
+        <label for="code">自訂事件 程式碼</label>
+        <div id="code" v-html="code"></div>
+        <xmp id="hiddenCodeUI" style="display: none;">
+new Vue({
+    el: '{{element}}',
+    methods: {
+        {{method}}: function() {
+            ga('send', 'event', {
+                eventCategory: '{{eventCategory}}',
+                eventAction: '{{eventAction}}',
+                eventLabel: '{{eventLabel}}',
+                eventValue: '{{eventValue}}'
+            });
+        }
+    }
+});
+        </xmp>
     </div>
 </div>
+<script src="node_modules/vue/dist/vue.min.js"></script>
 <script src="node_modules/code-prettify/loader/prettify.js"></script>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="js/classes/event.js"></script>
 <script src="js/event.js"></script>
 </body>
 </html>

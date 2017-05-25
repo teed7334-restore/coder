@@ -54,7 +54,9 @@ new Vue({
         },
         generateGaUtm: function() { /** 產出GA UTM URL **/
 
-            if ('' === this.utmTemplate) { /** 未選擇腳本不處理 **/
+            /** 未選擇腳本與未輸入網址不處理 **/
+            if ('' === this.utmTemplate && '' === this.url) {
+                alert('請選擇腳本與輸入網址');
                 return;
             }
 
@@ -66,21 +68,31 @@ new Vue({
             let content = this.content.replace(/\s+/g, '+');
             let campaign = this.campaign.replace(/\s+/g, '+');
 
-            /** 組成代入Service參數 **/
-            let params = {
-                url: url,
-                source: source,
-                medium: medium,
-                term: term,
-                content: content,
-                campaign: campaign
-            };
+            /** 在網址最後面加上? **/
+            this.code = url + '?';
 
-            /** 啟用UTM Service **/
-            let utm = new UTM();
+            /** 將UTM屬性加上網址 **/
+            if ('' !== source) {
+                this.code += 'utm_source=' + encodeURI(source) + '&';
+            }
+            if ('' !== medium) {
+                this.code += 'utm_medium=' + encodeURI(medium) + '&';
+            }
+            if ('' !== term) {
+                this.code += 'utm_term=' + encodeURI(term) + '&';
+            }
+            if ('' !== content) {
+                this.code += 'utm_content=' + encodeURI(content) + '&';
+            }
+            if ('' !== campaign) {
+                this.code += 'utm_campaign=' + encodeURI(campaign) + '&';
+            }
+
+            /** 移除網址參數最後一個& **/
+            this.code = this.code.substring(0, this.code.length -1);
 
             /** 將結果輸出，並啟用程式碼上色 **/
-            this.code = '<xmp class="prettyprint">' + utm.generatorUTM(params) + '</xmp>';
+            this.code = '<xmp class="prettyprint">' + this.code + '</xmp>';
             prettyPrint();
         }
     }
