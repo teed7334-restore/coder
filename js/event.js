@@ -49,7 +49,7 @@ new Vue({
                 return;
             }
 
-            let code = document.getElementById('hiddenCodeUI').innerText;
+            let code = this.$refs.hiddenCodeUI.innerText;
             this.code = '<xmp class="prettyprint">' + code + '</xmp>';
             prettyPrint();
         }
