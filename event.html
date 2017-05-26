@@ -68,7 +68,7 @@
     <div class="row">
         <label for="code">自訂事件 程式碼</label>
         <div id="code" v-html="code"></div>
-        <xmp id="hiddenCodeUI" style="display: none;">
+        <xmp ref="hiddenCodeUI" style="display: none;">
 new Vue({
     el: '{{element}}',
     methods: {
