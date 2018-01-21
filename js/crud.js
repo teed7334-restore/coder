@@ -1,6 +1,7 @@
 let crud = new Vue({
     el: '#crud',
     data: {
+        is_show: false,
         class_: 'User',
         controller_name: '',
         params: 'name:string:姓名,\npassword:password:密碼,\nborn:date:生日,\ndescription:text:敘述,\ngender:int:姓別,\nemail:email:個人信箱,\nwebsite:url:個人網址,\ncreateAt:datetime:新增日期,\nupdateAt:datetime:修改日期\n',
@@ -13,6 +14,7 @@ let crud = new Vue({
         controller: '',
         list: '',
         add_form: '',
+        bind_php: '',
         vue_model_data: '',
         migration_data: '',
         result_object_data: '',
@@ -20,7 +22,8 @@ let crud = new Vue({
         model_data: '',
         list_title_data: '',
         list_data: '',
-        add_form_data: ''
+        add_form_data: '',
+        bind_php_data: ''
     },
     methods: {
         reset: function() {
@@ -34,6 +37,7 @@ let crud = new Vue({
             this.controller = ''
             this.list = ''
             this.add_form = ''
+            this.bind_php = ''
         },
         generate_code: function() {
             let params = crud.do_normalization()
@@ -44,6 +48,7 @@ let crud = new Vue({
             if (0 === total_rows) {
                 return
             }
+            this.is_show = false
             for (i = 0; i < total_rows; i++) {
                 data = params[i].split(':')
                 if (0 === data.length) {
@@ -57,7 +62,9 @@ let crud = new Vue({
                 crud.generate_controller_code()
                 crud.generate_list_code(data, i, total_rows)
                 crud.generate_add_form_code(data, i, total_rows)
+                crud.generate_bind_php_code()
             }
+            this.is_show = true
         },
         clear_code: function() {
             this.vue_model_data = ''
@@ -68,6 +75,7 @@ let crud = new Vue({
             this.list_title_data = ''
             this.list_data = ''
             this.add_form_data = ''
+            this.bind_php_data = ''
         },
         do_normalization: function() {
             let params = this.params.split(',')
@@ -182,6 +190,9 @@ let crud = new Vue({
                     this.add_form_data = '<table>\n' + space + '<tr>\n' + this.add_form_data + space + '</tr>\n' + '</table>\n'
                 }
             },
+            generate_bind_php_code: function() {
+                return
+            },
             render: function() {
                 this.$nextTick(function() {
                     let code = ''
@@ -201,6 +212,8 @@ let crud = new Vue({
                     this.list = code
                     code = this.$refs.add_form_code.innerText
                     this.add_form = code
+                    code = this.$refs.bind_php_code.innerText
+                    this.bind_php = code
                     prettyPrint()
                 })
             }

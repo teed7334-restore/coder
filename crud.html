@@ -30,143 +30,174 @@
             </button>
         </div>
     </div>
+    <template v-if="is_show">
     <div>
         <p>Vue Model</p>
-        <pre v-text="vue_model"></pre>
+        <pre class="prettyprint" v-text="vue_model"></pre>
     </div>
-    <xmp ref="vue_model_code" style="display: none;">
-let {{ class_ }} = new Vue({
-    el: '{{class_}}',
-    data: {
-        id: '',
-        {{ vue_model_data }}
-    },
-    methods: {
-        get_all: function() {
-            if (!{{ class_ }}.validate) {
-                //請在這塞入資料驗証失敗要處理的動作
-            }
-
-            axios.interceptors.request.use(function (config) {
-                //請在這塞入AJAX before send要處理的動作
-                return config
-            });
-
-            axios.post (
-                '{{ controller_name }}/ajaxGetAll',
-                this.$data,
-            )
-            .then (function (response) {
-                //請在這塞入取得response之後要處理的動作
-            })
-            .catch (function (error) {
-                //請在這塞入AJAX Error之後要處理的動作
-            });
-        },
-        get: function(id) {
-            if (!{{ class_ }}.validate) {
-                //請在這塞入資料驗証失敗要處理的動作
-            }
-
-            axios.interceptors.request.use(function (config) {
-                //請在這塞入AJAX before send要處理的動作
-                return config
-            });
-
-            axios.post (
-                '{{ controller_name }}/ajaxGet',
-                this.$data,
-            )
-            .then (function (response) {
-                //請在這塞入取得response之後要處理的動作
-            })
-            .catch (function (error) {
-                //請在這塞入AJAX Error之後要處理的動作
-            });
-        },
-        add: function() {
-            if (!{{ class_ }}.validate) {
-                //請在這塞入資料驗証失敗要處理的動作
-            }
-
-            axios.interceptors.request.use(function (config) {
-                //請在這塞入AJAX before send要處理的動作
-                return config
-            });
-
-            axios.post (
-                '{{ controller_name }}/ajaxAdd',
-                this.$data,
-            )
-            .then (function (response) {
-                //請在這塞入取得response之後要處理的動作
-            })
-            .catch (function (error) {
-                //請在這塞入AJAX Error之後要處理的動作
-            });
-        },
-        edit: function(id) {
-            if (!{{ class_ }}.validate) {
-                //請在這塞入資料驗証失敗要處理的動作
-            }
-
-            //將資料透過AJAX Response塞回到Model
-            {{ class_ }}.get(id)
-
-            axios.interceptors.request.use(function (config) {
-                //請在這塞入AJAX before send要處理的動作
-                return config
-            });
-
-            axios.post (
-                '{{ controller_name }}/ajaxEdit',
-                this.$data,
-            )
-            .then (function (response) {
-                //請在這塞入取得response之後要處理的動作
-            })
-            .catch (function (error) {
-                //請在這塞入AJAX Error之後要處理的動作
-            });
-        },
-        remove: function(id) {
-            if (!{{ class_ }}.validate) {
-                //請在這塞入資料驗証失敗要處理的動作
-            }
-
-            axios.interceptors.request.use(function (config) {
-                //請在這塞入AJAX before send要處理的動作
-                return config
-            });
-
-            axios.post (
-                '{{ controller_name }}/ajaxRemove',
-                this.$data,
-            )
-            .then (function (response) {
-                //請在這塞入取得response之後要處理的動作
-            })
-            .catch (function (error) {
-                //請在這塞入AJAX Error之後要處理的動作
-            });
-        },
-        request: function() {
-            if (0 === id.length) { //Model中沒有id就設定為新增
-                {{ class_ }}.add()
-            } else { //Model中有id就設定為修改
-                {{ class_ }}.remove()
-            }
-        },
-        vaildate: function(validate) {
-            //請在這塞入資料驗証要處理的動作，驗證程式validate透過依賴注入，請自行決定想使用的驗証程式
-        }
-    }
-})
-    </xmp>
     <div>
         <p>Migration</p>
-        <pre v-text="migration"></pre>
+        <pre class="prettyprint" v-text="migration"></pre>
     </div>
+    <div>
+        <p>resultObject</p>
+        <pre class="prettyprint" v-text="result_object"></pre>
+    </div>
+
+    <div>
+        <p>Model</p>
+        <pre class="prettyprint" v-text="model"></pre>
+    </div>
+    <div>
+        <p>Service</p>
+        <pre class="prettyprint" v-text="service"></pre>
+    </div>
+    <div>
+        <p>Controller</p>
+        <pre class="prettyprint" v-text="controller"></pre>
+    </div>
+    <div>
+        <p>資料列表HTML</p>
+        <pre class="prettyprint" v-text="list"></pre>
+    </div>
+    <div>
+        <p>新增/修改單筆資料用表單HTML</p>
+        <pre class="prettyprint" v-text="add_form"></pre>
+    </div>
+    <div>
+        <p>Bind.php</p>
+        <pre class="prettyprint" v-text="bind_php"></pre>
+    </div>
+    </template>
+    <xmp ref="vue_model_code" style="display: none;">
+let {{ class_ }} = new Vue({
+el: '{{class_}}',
+data: {
+    id: '',
+    {{ vue_model_data }}
+},
+methods: {
+    get_all: function() {
+        if (!{{ class_ }}.validate) {
+            //請在這塞入資料驗証失敗要處理的動作
+        }
+
+        axios.interceptors.request.use(function (config) {
+            //請在這塞入AJAX before send要處理的動作
+            return config
+        });
+
+        axios.post (
+            '{{ controller_name }}/ajaxGetAll',
+            this.$data,
+        )
+        .then (function (response) {
+            //請在這塞入取得response之後要處理的動作
+        })
+        .catch (function (error) {
+            //請在這塞入AJAX Error之後要處理的動作
+        });
+    },
+    get: function(id) {
+        if (!{{ class_ }}.validate) {
+            //請在這塞入資料驗証失敗要處理的動作
+        }
+
+        axios.interceptors.request.use(function (config) {
+            //請在這塞入AJAX before send要處理的動作
+            return config
+        });
+
+        axios.post (
+            '{{ controller_name }}/ajaxGet',
+            this.$data,
+        )
+        .then (function (response) {
+            //請在這塞入取得response之後要處理的動作
+        })
+        .catch (function (error) {
+            //請在這塞入AJAX Error之後要處理的動作
+        });
+    },
+    add: function() {
+        if (!{{ class_ }}.validate) {
+            //請在這塞入資料驗証失敗要處理的動作
+        }
+
+        axios.interceptors.request.use(function (config) {
+            //請在這塞入AJAX before send要處理的動作
+            return config
+        });
+
+        axios.post (
+            '{{ controller_name }}/ajaxAdd',
+            this.$data,
+        )
+        .then (function (response) {
+            //請在這塞入取得response之後要處理的動作
+        })
+        .catch (function (error) {
+            //請在這塞入AJAX Error之後要處理的動作
+        });
+    },
+    edit: function(id) {
+        if (!{{ class_ }}.validate) {
+            //請在這塞入資料驗証失敗要處理的動作
+        }
+
+        //將資料透過AJAX Response塞回到Model
+        {{ class_ }}.get(id)
+
+        axios.interceptors.request.use(function (config) {
+            //請在這塞入AJAX before send要處理的動作
+            return config
+        });
+
+        axios.post (
+            '{{ controller_name }}/ajaxEdit',
+            this.$data,
+        )
+        .then (function (response) {
+            //請在這塞入取得response之後要處理的動作
+        })
+        .catch (function (error) {
+            //請在這塞入AJAX Error之後要處理的動作
+        });
+    },
+    remove: function(id) {
+        if (!{{ class_ }}.validate) {
+            //請在這塞入資料驗証失敗要處理的動作
+        }
+
+        axios.interceptors.request.use(function (config) {
+            //請在這塞入AJAX before send要處理的動作
+            return config
+        });
+
+        axios.post (
+            '{{ controller_name }}/ajaxRemove',
+            this.$data,
+        )
+        .then (function (response) {
+            //請在這塞入取得response之後要處理的動作
+        })
+        .catch (function (error) {
+            //請在這塞入AJAX Error之後要處理的動作
+        });
+    },
+    request: function() {
+        if (0 === id.length) { //Model中沒有id就設定為新增
+            {{ class_ }}.add()
+        } else { //Model中有id就設定為修改
+            {{ class_ }}.remove()
+        }
+    },
+    vaildate: function(validate) {
+        //請在這塞入資料驗証要處理的動作，驗證程式validate透過依賴注入，請自行決定想使用的驗証程式
+    }
+}
+})
+    </xmp>
     <xmp ref="migration_code" style="display: none;">
 {{ php_tag }} if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -199,10 +230,6 @@ class Migration_Init extends CI_Migration
     }
 }
     </xmp>
-    <div>
-        <p>resultObject</p>
-        <pre v-text="result_object"></pre>
-    </div>
     <xmp ref="result_object_code" style="display: none;">
 {{ php_tag }} if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -212,10 +239,6 @@ class {{ class_ }}
 {
 {{ result_object_data }}}
     </xmp>
-    <div>
-        <p>Model</p>
-        <pre v-text="model"></pre>
-    </div>
     <xmp ref="model_code" style="display: none;">
 {{ php_tag }} if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -276,10 +299,6 @@ class {{ class_ }}Model extends CI_Model
 
 {{ model_data }}}
     </xmp>
-    <div>
-        <p>Service</p>
-        <pre v-text="service"></pre>
-    </div>
     <xmp ref="service_code" style="display: none;">
 {{ php_tag }} if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -352,10 +371,6 @@ class {{ class_ }}Service
     }
 }
     </xmp>
-    <div>
-        <p>Controller</p>
-        <pre v-text="controller"></pre>
-    </div>
     <xmp ref="controller_code" style="display: none;">
 {{ php_tag }} if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -435,20 +450,50 @@ class {{ controller_name }} extends CI_Controller
     }
 }
     </xmp>
-    <div>
-        <p>資料列表HTML</p>
-        <pre v-text="list"></pre>
-    </div>
     <xmp ref="list_code" style="display: none;">
 {{ list_title_data }}
 {{ list_data }}
     </xmp>
-    <div>
-        <p>新增/修改單筆資料用表單HTML</p>
-        <pre v-text="add_form"></pre>
-    </div>
     <xmp ref="add_form_code" style="display: none;">
 {{ add_form_data }}
+    </xmp>
+    <xmp ref="bind_php_code" style="display: none;">
+{{ php_tag }} if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+/**
+ * 變數綁定到物件用
+ */
+class Bind
+{
+    public $resultObject;
+    public $params;
+
+    public function __construct()
+    {
+        $this->resultObject = new stdClass();
+        $this->params = [];
+    }
+
+    /**
+     * 變數與物件綁定
+     * @param  object $resultObject 物件
+     * @param  array $params 變數
+     * @return none
+     */
+    public function bind($resultObject, $params)
+    {
+        $this->resultObject = $resultObject;
+        $this->params = (array) $params;
+
+        foreach ($this->resultObject as $key => $value) {
+            if (isset($this->params[$key])) {
+                $this->resultObject->{$key} = $this->params[$key];
+            }
+        }
+    }
+}
     </xmp>
 </div>
 <script src="node_modules/code-prettify/loader/prettify.js"></script>
