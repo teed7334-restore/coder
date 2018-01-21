@@ -8,98 +8,452 @@
 <link href="node_modules/code-prettify/loader/prettify.css" rel="stylesheet">
 </head>
 <body>
-<div class="container container-fluid">
+<div id="crud" class="container container-fluid">
     <div class="page-header">
         <h1>CRUD <small>產生器</small></h1>
     </div>
-    <div class="row">
-        <div class="form-group">
-            <label for="namespace">namespace</label>
-            <input class="form-control" type="text" id="namespace" data-id="namespace" value="Linux\Groups" />
-        </div>
+    <div>
         <div class="form-group">
             <label for="class">Class</label>
-            <input class="form-control" type="text" id="class" data-id="class" value="Users" />
+            <input class="form-control" id="class" type="text" v-model="class_" />
         </div>
         <div class="form-group">
-            <label for="args">屬性︰格式-[屬性名稱]:[註解內容]:[資料格式]</label>
-            <input class="form-control" type="text" id="args" data-id="args" value="id:使用者id:int,name:使用者名稱:string,account:使用者帳號:string,password:使用者密碼:string" />
+            <label for="params">屬性︰格式-[屬性名稱]:[註解內容]:[資料格式]</label>
+            <textarea class="form-control" style="height:200px;" type="text" id="params" v-model="params"></textarea>
         </div>
         <div class="form-group">
-            <button class="btn btn-success" data-id="go" type="button">
+            <button class="btn btn-success" v-on:click="generate_code" type="button">
                 <i class="fa fa-clone"> 送出</i>
             </button>
-            <button class="btn btn-danger" type="reset">
+            <button class="btn btn-danger" v-on:click="reset">
                 <i class="fa fa-close"> 重置</i>
             </button>
         </div>
     </div>
-    <div class="row">
-        <p>viewModel</p>
-        <pre data-id="display-class">
-        </pre>
+    <div>
+        <p>Vue Model</p>
+        <pre v-text="vue_model"></pre>
     </div>
-    <div class="row">
+    <xmp ref="vue_model_code" style="display: none;">
+let {{ class_ }} = new Vue({
+    el: '{{class_}}',
+    data: {
+        id: '',
+        {{ vue_model_data }}
+    },
+    methods: {
+        get_all: function() {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxGetAll',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        get: function(id) {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxGet',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        add: function() {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxAdd',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        edit: function(id) {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            //將資料透過AJAX Response塞回到Model
+            {{ class_ }}.get(id)
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxEdit',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        remove: function(id) {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxRemove',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        request: function() {
+            if (0 === id.length) { //Model中沒有id就設定為新增
+                {{ class_ }}.add()
+            } else { //Model中有id就設定為修改
+                {{ class_ }}.remove()
+            }
+        },
+        vaildate: function(validate) {
+            //請在這塞入資料驗証要處理的動作，驗證程式validate透過依賴注入，請自行決定想使用的驗証程式
+        }
+    }
+})
+    </xmp>
+    <div>
+        <p>Migration</p>
+        <pre v-text="migration"></pre>
+    </div>
+    <xmp ref="migration_code" style="display: none;">
+{{ php_tag }} if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+class Migration_Init extends CI_Migration
+{
+    public function down()
+    {
+        $this->dbforge->drop_table({{ class_ }});
+    }
+
+    public function up()
+    {
+        $this->_init_{{ class_ }}();
+    }
+
+    private function _init_{{ class_ }}()
+    {
+        $table = '{{ class_ }}';
+        $this->dbforge->add_field([
+            'id' => [ //主鍵
+                'type' => 'BIGINT',
+                'auto_increment' => true,
+                'unsigned' => true,
+            ],
+{{ migration_data }}        ]);
+        $this->dbforge->add_key('id', true);
+        $this->dbforge->create_table($table, true);
+    }
+}
+    </xmp>
+    <div>
+        <p>resultObject</p>
+        <pre v-text="result_object"></pre>
+    </div>
+    <xmp ref="result_object_code" style="display: none;">
+{{ php_tag }} if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+class {{ class_ }}
+{
+{{ result_object_data }}}
+    </xmp>
+    <div>
         <p>Model</p>
-        <pre data-id="display-model">
-        </pre>
+        <pre v-text="model"></pre>
     </div>
-    <div class="row">
-        <p>Repository</p>
-        <pre data-id="display-repository">
-        </pre>
+    <xmp ref="model_code" style="display: none;">
+{{ php_tag }} if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+class {{ class_ }}Model extends CI_Model
+{
+    const TABLE = '{{ class_ }}';
+
+    public function __construct() {
+        parent::__construct();
+    }
+
+    /**
+     * 取得{{ class_ }}資料表資料
+     * @return object {{ class_ }}資料表資料
+     */
+    public function get() {
+        $query = $this->db->get(self::TABLE);
+        if (empty($query)) {
+            return [];
+        }
+        $result = $query->result();
+        return $result;
+    }
+
+    /**
+     * 新增一筆資料到{{ class_ }}資料表
+     * @param array $data 新增用資料
+     * @return int 新增的資料id
+     */
+    public function add($data) {
+        $this->db->insert(self::TABLE, $data);
+        $id = $this->db->insert_id();
+        return $id;
+    }
+
+    /**
+     * 修改{{ class_ }}資料表
+     * @param  array $data 修改用資料
+     * @return int 影響筆數
+     */
+    public function edit($data) {
+        $this->db->update(self::TABLE, $data);
+        $num = $this->db->affected_rows()
+        return $num;
+    }
+
+    /**
+     * 刪除{{ class_ }}資料表
+     * @return int 影響筆數
+     */
+    public function remove() {
+        $this->db->delete(self::TABLE);
+        $num = $this->db->affected_rows()
+        return $num;
+    }
+
+{{ model_data }}}
+    </xmp>
+    <div>
+        <p>Service</p>
+        <pre v-text="service"></pre>
     </div>
-    <div class="row">
-        <p>ResultObject</p>
-        <pre data-id="display-resultObject">
-        </pre>
-    </div>
-    <div class="row">
+    <xmp ref="service_code" style="display: none;">
+{{ php_tag }} if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+class {{ class_ }}Service
+{
+    /**
+     * 取得{{ class_ }}資料表所有資料
+     * @return object {{ class_ }}資料表資料
+     */
+    public function getAll($model) {
+        $result = $model->get($params);
+        return $result;
+    }
+
+    /**
+     * 取得{{ class_ }}資料表資料
+     * @param  object $data 取得資料範圍條件
+     * @param  object $model {{ class_ }}資料模型
+     * @return object {{ class_ }}資料表資料
+     */
+    public function get($data, $model) {
+        $model->scopeId($data->id);
+        $params = (array) $data;
+        unset($params['id']);
+        $result = $model->get($params);
+        return $result;
+    }
+
+    /**
+     * 新增{{ class_ }}資料表資料
+     * @param  object $data 新增用資料
+     * @param  object $model {{ class_ }}資料模型
+     * @return int 新增的資料id
+     */
+    public function add($data, $model) {
+        $params = (array) $data;
+        unset($params['id']);
+        $id = $model->add($params);
+        return $id;
+    }
+
+    /**
+     * 修改{{ class_ }}資料表資料
+     * @param  object $data 修改用資料
+     * @param  object $model {{ class_ }}資料模型
+     * @return int 影響筆數
+     */
+    public function edit($data, $model) {
+        $model->scopeId($data->id);
+        $params = (array) $data;
+        unset($params['id']);
+        $num = $model->edit($params);
+        return $num;
+    }
+
+    /**
+     * 刪除{{ class_ }}資料表資料
+     * @param  object $data 取得資料範圍條件
+     * @param  object $model {{ class_ }}資料模型
+     * @return int 影響筆數
+     */
+    public function remove($data, $model) {
+        $model->scopeId($data->id);
+        $params = (array) $data;
+        unset($params['id']);
+        $num = $model->remove($params);
+        return $num;
+    }
+}
+    </xmp>
+    <div>
         <p>Controller</p>
-        <pre data-id="display-controller">
-        </pre>
+        <pre v-text="controller"></pre>
     </div>
-    <div class="row">
+    <xmp ref="controller_code" style="display: none;">
+{{ php_tag }} if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+class {{ controller_name }} extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('resultObject/{{ class_ }}', null, '{{ class_ }}');
+        $this->load->model('{{ class_ }}Model');
+        $this->load->library('service/{{ class_ }}Service', null, '{{ class_ }}Service');
+        $this->load->library('Bind', null, 'Bind');
+        $this->filterVars();
+    }
+
+    /**
+     * 取得{{ class_ }}資料表所有資料
+     * @return none
+     */
+    public function ajaxGetAll() {
+        $data = $this->{{ class_ }}Service->getAll($this->{{ class_ }}Model);
+        echo json_encode($data);
+    }
+
+    /**
+     * 取得{{ class_ }}資料表資料
+     * @return none
+     */
+    public function ajaxGet() {
+        $data = $this->{{ class_ }}Service->get($this->{{ class_ }}, $this->{{ class_ }}Model);
+        echo json_encode($data);
+    }
+
+    /**
+     * 新增{{ class_ }}資料表資料
+     * @return none
+     */
+    public function ajaxAdd($data, $model) {
+        $data = $this->{{ class_ }}Service->add($this->{{ class_ }}, $this->{{ class_ }}Model);
+        echo json_encode($data);
+    }
+
+    /**
+     * 修改{{ class_ }}資料表資料
+     * @return none
+     */
+    public function ajaxEdit($data, $model) {
+        $data = $this->{{ class_ }}Service->edit($this->{{ class_ }}, $this->{{ class_ }}Model);
+        echo json_encode($data);
+    }
+
+    /**
+     * 刪除{{ class_ }}資料表資料
+     * @return int none
+     */
+    public function ajaxRemove($data, $model) {
+        $data = $this->{{ class_ }}Service->remove($this->{{ class_ }}, $this->{{ class_ }}Model);
+        echo json_encode($data);
+    }
+
+    /**
+     * 過濾代入參數
+     * @return bool true:成功|false:失敗
+     */
+    protected function filterVars()
+    {
+        $data = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? json_decode($GLOBALS['HTTP_RAW_POST_DATA']) : null;
+
+        if (empty($data)) {
+            return false;
+        }
+
+        $this->Bind->bind($this->{{ class_ }}, $data);
+        return true;
+    }
+}
+    </xmp>
+    <div>
         <p>資料列表HTML</p>
-        <pre data-id="display-generatorHTMLGetListForm">
-        </pre>
+        <pre v-text="list"></pre>
     </div>
-    <div class="row">
-        <p>資料列表JS</p>
-        <pre data-id="display-generatorJSGetListForm">
-        </pre>
+    <xmp ref="list_code" style="display: none;">
+{{ list_title_data }}
+{{ list_data }}
+    </xmp>
+    <div>
+        <p>新增/修改單筆資料用表單HTML</p>
+        <pre v-text="add_form"></pre>
     </div>
-    <div class="row">
-        <p>新增單筆資料用表單HTML</p>
-        <pre data-id="display-generatorHTMLInsertForm">
-        </pre>
-    </div>
-    <div class="row">
-        <p>新增單筆資料用表單JS</p>
-        <pre data-id="display-generatorJSInsertForm">
-        </pre>
-    </div>
-    <div class="row">
-        <p>修改單筆資料用表單HTML</p>
-        <pre data-id="display-generatorHTMLEditForm">
-        </pre>
-    </div>
-    <div class="row">
-        <p>修改單筆資料用表單JS</p>
-        <pre data-id="display-generatorJSEditForm">
-        </pre>
-    </div>
+    <xmp ref="add_form_code" style="display: none;">
+{{ add_form_data }}
+    </xmp>
 </div>
 <script src="node_modules/code-prettify/loader/prettify.js"></script>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="js/classes/docblock.js"></script>
-<script src="js/classes/html.js"></script>
-<script src="js/classes/js.js"></script>
-<script src="js/classes/generator.js"></script>
-<script src="js/classes/controller.js"></script>
-<script src="js/classes/model.js"></script>
-<script src="js/classes/repository.js"></script>
+<script src="node_modules/vue/dist/vue.js"></script>
 <script src="js/crud.js"></script>
+<script src="js/common.js"></script>
 </body>
 </html>

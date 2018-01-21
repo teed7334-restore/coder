@@ -16,7 +16,8 @@ export type Config = {
   performance: boolean;
   devtools: boolean;
   errorHandler: ?(err: Error, vm: Component, info: string) => void;
-  ignoredElements: Array<string>;
+  warnHandler: ?(msg: string, vm: Component, trace: string) => void;
+  ignoredElements: Array<string | RegExp>;
   keyCodes: { [key: string]: number | Array<number> };
 
   // platform
@@ -35,6 +36,7 @@ export default ({
   /**
    * Option merge strategies (used in core/util/options)
    */
+  // $flow-disable-line
   optionMergeStrategies: Object.create(null),
 
   /**
@@ -63,6 +65,11 @@ export default ({
   errorHandler: null,
 
   /**
+   * Warn handler for watcher warns
+   */
+  warnHandler: null,
+
+  /**
    * Ignore certain custom elements
    */
   ignoredElements: [],
@@ -70,6 +77,7 @@ export default ({
   /**
    * Custom user key aliases for v-on
    */
+  // $flow-disable-line
   keyCodes: Object.create(null),
 
   /**
