@@ -107,8 +107,8 @@ let crud = new Vue({
             switch (type) {
                 case 'int':
                     this.migration_data += space + name + ' => [ //' + description + '\n' + space + "    type => 'INT',\n" + space + "    null => false,\n" + space + "    constraint => " + table_int_length + '\n' + space + '], \n'
+                    break;
                 case 'string':
-                break;
                     this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'VARCHAR',\n" + space + "    null => true," + space + "    constraint => " + table_string_length + '\n' + space + '], \n'
                     break;
                 case 'text':
