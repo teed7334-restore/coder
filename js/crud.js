@@ -106,28 +106,28 @@ let crud = new Vue({
             let space = 0 === current ? '' : '            ';
             switch (type) {
                 case 'int':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space + "    type => 'INT',\n" + space + "    null => false,\n" + space + "    constraint => " + table_int_length + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space + "    'type' => 'INT',\n" + space + "    'null' => false,\n" + space + "    'constraint' => " + table_int_length + '\n' + space + '], \n'
                     break;
                 case 'string':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'VARCHAR',\n" + space + "    null => true," + space + "    constraint => " + table_string_length + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'VARCHAR',\n" + space + "    'null' => true,\n" + space + "    'constraint' => " + table_string_length + '\n' + space + '], \n'
                     break;
                 case 'text':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'TEXT',\n" + space + "    null => true" + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'TEXT',\n" + space + "    'null' => true\n" + space + '], \n'
                     break;
                 case 'date':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'DATE',\n" + space + "    null => true" + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'DATE',\n" + space + "    'null' => true\n" + space + '], \n'
                     break;
                 case 'datetime':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'DATETIME',\n" + space + "    null => true" + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'DATETIME',\n" + space + "    'null' => true\n" + space + '], \n'
                     break;
                 case 'url':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'VARCHAR',\n" + space + "    null => true,\n" + space + "    constraint => " + table_url_length + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'VARCHAR',\n" + space + "    'null' => true,\n" + space + "    'constraint' => " + table_url_length + '\n' + space + '], \n'
                     break;
                 case 'email':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'VARCHAR',\n" + space + "    null => true,\n" + space + "    constraint => " + table_email_length + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'VARCHAR',\n" + space + "    'null' => true,\n" + space + "    'constraint' => " + table_email_length + '\n' + space + '], \n'
                     break;
                 case 'password':
-                    this.migration_data += space + name + ' => [ //' + description + '\n' + space  + "    type => 'VARCHAR',\n" + space + "    null => true,\n" + space + "    constraint => " + table_password_length + '\n' + space + '], \n'
+                    this.migration_data += space + "'" + name + "'" + ' => [ //' + description + '\n' + space  + "    'type' => 'VARCHAR',\n" + space + "    'null' => true,\n" + space + "    'constraint' => " + table_password_length + '\n' + space + '], \n'
                     break;
                 }
                 if (current + 1 === total_rows) {
