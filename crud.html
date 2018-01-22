@@ -71,131 +71,131 @@
     </template>
     <xmp ref="vue_model_code" style="display: none;">
 let {{ class_ }} = new Vue({
-el: '{{class_}}',
-data: {
-    id: '',
-    {{ vue_model_data }}
-},
-methods: {
-    get_all: function() {
-        if (!{{ class_ }}.validate) {
-            //請在這塞入資料驗証失敗要處理的動作
-        }
-
-        axios.interceptors.request.use(function (config) {
-            //請在這塞入AJAX before send要處理的動作
-            return config
-        });
-
-        axios.post (
-            '{{ controller_name }}/ajaxGetAll',
-            this.$data,
-        )
-        .then (function (response) {
-            //請在這塞入取得response之後要處理的動作
-        })
-        .catch (function (error) {
-            //請在這塞入AJAX Error之後要處理的動作
-        });
+    el: '{{class_}}',
+    data: {
+        id: '',
+        {{ vue_model_data }}
     },
-    get: function(id) {
-        if (!{{ class_ }}.validate) {
-            //請在這塞入資料驗証失敗要處理的動作
+    methods: {
+        get_all: function() {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxGetAll',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        get: function(id) {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxGet',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        add: function() {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxAdd',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        edit: function(id) {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            //將資料透過AJAX Response塞回到Model
+            {{ class_ }}.get(id)
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxEdit',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        remove: function(id) {
+            if (!{{ class_ }}.validate) {
+                //請在這塞入資料驗証失敗要處理的動作
+            }
+
+            axios.interceptors.request.use(function (config) {
+                //請在這塞入AJAX before send要處理的動作
+                return config
+            });
+
+            axios.post (
+                '{{ controller_name }}/ajaxRemove',
+                this.$data,
+            )
+            .then (function (response) {
+                //請在這塞入取得response之後要處理的動作
+            })
+            .catch (function (error) {
+                //請在這塞入AJAX Error之後要處理的動作
+            });
+        },
+        request: function() {
+            if (0 === id.length) { //Model中沒有id就設定為新增
+                {{ class_ }}.add()
+            } else { //Model中有id就設定為修改
+                {{ class_ }}.remove()
+            }
+        },
+        vaildate: function(validate) {
+            //請在這塞入資料驗証要處理的動作，驗證程式validate透過依賴注入，請自行決定想使用的驗証程式
         }
-
-        axios.interceptors.request.use(function (config) {
-            //請在這塞入AJAX before send要處理的動作
-            return config
-        });
-
-        axios.post (
-            '{{ controller_name }}/ajaxGet',
-            this.$data,
-        )
-        .then (function (response) {
-            //請在這塞入取得response之後要處理的動作
-        })
-        .catch (function (error) {
-            //請在這塞入AJAX Error之後要處理的動作
-        });
-    },
-    add: function() {
-        if (!{{ class_ }}.validate) {
-            //請在這塞入資料驗証失敗要處理的動作
-        }
-
-        axios.interceptors.request.use(function (config) {
-            //請在這塞入AJAX before send要處理的動作
-            return config
-        });
-
-        axios.post (
-            '{{ controller_name }}/ajaxAdd',
-            this.$data,
-        )
-        .then (function (response) {
-            //請在這塞入取得response之後要處理的動作
-        })
-        .catch (function (error) {
-            //請在這塞入AJAX Error之後要處理的動作
-        });
-    },
-    edit: function(id) {
-        if (!{{ class_ }}.validate) {
-            //請在這塞入資料驗証失敗要處理的動作
-        }
-
-        //將資料透過AJAX Response塞回到Model
-        {{ class_ }}.get(id)
-
-        axios.interceptors.request.use(function (config) {
-            //請在這塞入AJAX before send要處理的動作
-            return config
-        });
-
-        axios.post (
-            '{{ controller_name }}/ajaxEdit',
-            this.$data,
-        )
-        .then (function (response) {
-            //請在這塞入取得response之後要處理的動作
-        })
-        .catch (function (error) {
-            //請在這塞入AJAX Error之後要處理的動作
-        });
-    },
-    remove: function(id) {
-        if (!{{ class_ }}.validate) {
-            //請在這塞入資料驗証失敗要處理的動作
-        }
-
-        axios.interceptors.request.use(function (config) {
-            //請在這塞入AJAX before send要處理的動作
-            return config
-        });
-
-        axios.post (
-            '{{ controller_name }}/ajaxRemove',
-            this.$data,
-        )
-        .then (function (response) {
-            //請在這塞入取得response之後要處理的動作
-        })
-        .catch (function (error) {
-            //請在這塞入AJAX Error之後要處理的動作
-        });
-    },
-    request: function() {
-        if (0 === id.length) { //Model中沒有id就設定為新增
-            {{ class_ }}.add()
-        } else { //Model中有id就設定為修改
-            {{ class_ }}.remove()
-        }
-    },
-    vaildate: function(validate) {
-        //請在這塞入資料驗証要處理的動作，驗證程式validate透過依賴注入，請自行決定想使用的驗証程式
     }
-}
 })
     </xmp>
     <xmp ref="migration_code" style="display: none;">
@@ -304,14 +304,14 @@ class {{ class_ }}Model extends CI_Model
     }
 
     /**
-    * 追加過濾主鍵
-    * @param string $id
-    * @return object $this
-    */
-   public function scopeId($id) {
-       $this->db->where('name', $name);
-       return $this;
-   }
+     * 追加過濾主鍵
+     * @param string $id
+     * @return object $this
+     */
+    public function scopeId($id) {
+        $this->db->where('name', $name);
+        return $this;
+    }
 
 {{ model_data }}}
     </xmp>
