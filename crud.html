@@ -237,6 +237,12 @@ class Migration_Init extends CI_Migration
 
 class {{ class_ }}
 {
+    /**
+     * 主鍵
+     * @var string $id
+     */
+    public $id;
+    
 {{ result_object_data }}}
     </xmp>
     <xmp ref="model_code" style="display: none;">
@@ -296,6 +302,16 @@ class {{ class_ }}Model extends CI_Model
         $num = $this->db->affected_rows()
         return $num;
     }
+
+    /**
+    * 追加過濾主鍵
+    * @param string $id
+    * @return object $this
+    */
+   public function scopeId($id) {
+       $this->db->where('name', $name);
+       return $this;
+   }
 
 {{ model_data }}}
     </xmp>
