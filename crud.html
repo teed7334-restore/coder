@@ -207,7 +207,7 @@ class Migration_Init extends CI_Migration
 {
     public function down()
     {
-        $this->dbforge->drop_table({{ class_ }});
+        $this->dbforge->drop_table('{{ class_ }}');
     }
 
     public function up()
