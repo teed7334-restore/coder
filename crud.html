@@ -18,7 +18,7 @@
             <input class="form-control" id="class" type="text" v-model="class_" />
         </div>
         <div class="form-group">
-            <label for="params">屬性︰格式-[屬性名稱]:[註解內容]:[資料格式]</label>
+            <label for="params">屬性︰格式-[屬性名稱]:[資料格式]:[註解內容]</label>
             <textarea class="form-control" style="height:200px;" type="text" id="params" v-model="params"></textarea>
         </div>
         <div class="form-group">
@@ -242,7 +242,7 @@ class {{ class_ }}
      * @var string $id
      */
     public $id;
-    
+
 {{ result_object_data }}}
     </xmp>
     <xmp ref="model_code" style="display: none;">
